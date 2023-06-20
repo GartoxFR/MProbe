@@ -15,3 +15,10 @@
 * Notes
   - {:notes-debut:}[Notes debut du stage]
   - {:etude-procfs:}[Etude du format de retour du procfs]
+
+* Notes pour demain
+
+  Le premier prototype est capable d'explorer les descendant du processus etudie et
+  compter le nombre de boucle qu'il peut faire.
+
+  TODO : Ajouter la vraie mesure
