@@ -1,0 +1,97 @@
+* Source
+
+
+* Memory related files
+{https://www.kernel.org/doc/html/latest/filesystems/proc.html}[Source]
+
+** status
+   Global status of a program
+
+   Interesting fields :
+
+   - `VmPeak`: Peak virtual memory size (all mappings even non resident)
+   - `VmSize`: Current virtual memory size
+   - `VmHWM`: Stands for High Water Mark = Peak RSS
+   - `VmRSS`: Current RSS = `RssAnon + RssFile + RssShmem`
+   - `RssAnon`: Size of resident anonymous memory
+   - `RssFile`: Size of resident file mapppings
+   - `RssShmem`: Size of resident shmem memory (includes SysV shm, mapping of
+     tmpfs and shared anonymous mappings)
+
+   > For making accounting scalable, RSS related information are handled in an
+   > asynchronous manner and the value may not be very precise. To see a precise
+   > snapshot of a moment, you can see `/proc/<pid>/smaps` file and scan page
+   > table. It's slow but very precise
+
+** maps
+
+   Contains the currently mapped memory region and their access permissions.
+
+*** Format 
+
+   `address           perms  offset  dev  inode      pathname`
+
+**** Special pathnames :
+
+     - `[heap]`
+     - `[stack]`: stack of the *main thread*
+     - `[vdso]`: virtual dynamic object = the kernel system call handler
+     - `[anon:<name>]`: A private anonymous mapping that has been named by userspace
+     - `[anon_shmem:<name>]`: an anonymous shared memory mapping that has been named by
+       userspace
+     - Empty means anonymous mapping
+
+
+** smaps
+
+   Extension based on `maps`, showing the memory consumption for each of the
+   process's mappings. 
+
+   Interesting fields for each mappings :
+
+   - `Rss`: Resident memory for this mapping
+   - `Pss`: Proportional set size for this mapping
+   - `Swap`
+   - `SwapPss`
+
+   $ Proportional Page Size (PSS)
+   For each page in the mapping, size of the page divided by number of process using the page
+
+** smaps_rollup
+
+   Summed fields of `smaps`. Faster to let the kernel do the aggregation
+
+   Additional fields :
+   - `Pss_Anon`
+   - `Pss_File`
+   - `Pss_Shmem`
+
+   > They represent the proportional shares of anonymous, file, and shmem pages, as
+   > described for smaps above. These fields are omitted in smaps since each
+   > mapping identifies the type (anon, file, or shmem) of all pages it contains.
+   > Thus all information in smaps_rollup can be derived from smaps, but at a
+   > significantly higher cost.
+
+* Question: maps of process vs maps of a task ?
+
+  I don't know the relation between `/proc/<pid>/maps` and `/proc/<pid>/task/<tid>/maps`
+
+  Using `diff` on multiplie examples, they were the same. Maybe we should try to go deeper
+  on this and try to understand if there are task specific mappings.
+
+  {https://stackoverflow.com/a/44858613}[stackoverflow answer]
+  This answer claim that other thread's stack are allocated using `mmap(MAP_ANONYMOUS | MAP_STACK)`
+  and that `MAP_STACK` is a `no-op`. So other thread's stack should appear as anonymous mappings
+  in the process `maps` file.
+
+* Retrieving children
+
+  We have to be able to measure memory of a process that fork/exec like Makefiles. This is important
+  to study the memory used by `make -j8` for example.
+
+  The procfs exposes `/proc/<pid>/task/<tid>/children` to list the children a task has created.
+
+  Notes : 
+  - This is only the direct children so if we want to find all descendant we have to recurse
+  - Multiple task may have children so scan `/proc/<pid>/task/`
+  - Maybe we should check for uniqueness ? Can 2 task have the same child ?

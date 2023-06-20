@@ -1,0 +1,84 @@
+* Discussions
+** Complexité de la mesure mémoire
+
+   La mesure d'utilisation mémoire est un sujet complexe : 
+   - Concept d'overcommit : la mémoire virtuel n'est pas forcément 
+     résidente
+   - Pages partagées
+   - Utilisation d'autre moyen de stockage : swap ?
+
+** Comment représenter le temps dans nos mesures
+
+   - Seconde classique
+   - Temps en Bytes alloués 
+
+** Chronologie de mon projet
+*** Mise au point des outils de mesures
+    
+    - Peut être en Rust ?
+    - Dans un premier temps, le sondage du procfs semble le plus
+      pertinent
+    - Essayer d'avoir le détails des pages
+    -- `/proc/<id>/maps`  : liste basique de pages
+    -- `/proc/<id>/smaps` : liste plus détaillée
+
+*** Utilisation des outils sur l'implémentation de 3 programmes en plusieurs \
+    language
+
+    - Un Hello world
+    - Un algo plus complexe à déterminée avec plusieurs critères
+    -- Doit utiliser de la mémoire dynamique
+    -- Doit idélement pouvoir être implémenté de la même façon sur
+       les différents language
+    - La toolchain du language
+
+* Rapoprt des étudiants
+
+  {file:///home/ewan/work/Rapport_Ouverture-laptop-1000-15719-16167000568519299139.pdf}[Rapport]
+
+** Etude bibliographique
+
+*** An Empirical Comparison of 7 Programming Languages
+    {https://doi.org/10.1109/2.876288}[Lien]
+
+    Ils ont globalement retenu les résultats mais pas vraiment la méthodologie
+
+*** A Comparative Study of Programming Languages in Rosetta Code
+    {https://doi.org/10.1109/ICSE.2015.90}[Lien]
+
+    - Mesure de mémoire en mesurant le pic de RSS
+    - Moyenne de mémoire utilisée souvent bien inférieur au pic
+
+** 3 approches de mesure
+*** Sondage du procfs (memTool)
+
+    Cette approche utilise les fichiers du procfs afin de lire les variables
+    VSS (Virtual memory) et RSS (Resident memory)
+
+*** Interception d'appels systèmes (logReader) 
+
+    Uilise `strace` afin de récolter les appels à `mmap` et `munmap` afin
+    d'obtenir la quantité de mémoire allouée
+
+*** Utilisation de conteneurisation (cgroup)
+
+    Permet d'assigner une limite mémoire à un programme mais permet aussi 
+    de voir la mémoire utilisée
+
+* Références du rapport
+*** A Comparative Study of Programming Languages in Rosetta Code
+
+    Utilisation de GNU `time -v` pour mesurer le pic de mémoire.
+    (Maximum RSS)
+
+*** A Comparative Study of Programming Languages in Rosetta Code
+
+    - Utilisation plutôt de la médianne
+    - bad-to-good ratio : 
+    > Imagine the data split into an upper and lower half,
+    > with the bad-to-good ratio being the median of the
+    > upper half divided by the median of the lower half
+    - L'hypothèse du trade-off temps/mémoire ne tiens pas forcément
+      pour les languages de script
+
+

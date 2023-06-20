@@ -1,0 +1,17 @@
+* TODO
+  - (x) Lire rapport
+
+  - (x) Lire papiers cités
+  -- (x) An Empirical Comparison of 7 Programming Languages
+  -- (x) A Comparative Study of Programming Languages in Rosetta Code
+  -- (x) Informatique et société
+
+  - (x) Hello world rust
+
+  - (x) Allouer X octets dont on écrit Y octets
+  -- (x) Écrire le programme
+  -- (x) Tester avec `time -v`
+
+* Notes
+  - {:notes-debut:}[Notes debut du stage]
+  - {:etude-procfs:}[Etude du format de retour du procfs]
