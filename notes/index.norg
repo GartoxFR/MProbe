@@ -15,10 +15,11 @@
 * Notes
   - {:notes-debut:}[Notes debut du stage]
   - {:etude-procfs:}[Etude du format de retour du procfs]
+  - {:recherche-biblio:}[Recherche bilblio]
 
-* Notes pour demain
+* Idées
+** Aggrégation des donnés des différents process
 
-  Le premier prototype est capable d'explorer les descendant du processus etudie et
-  compter le nombre de boucle qu'il peut faire.
+   - On choisit la durée d'un timestep 
+   - On parcours les timesteps et, pour chaque processus, on prend sa consommation max durant ce timestep pour la sommer à la consommation de ce timestep.
 
-  TODO : Ajouter la vraie mesure

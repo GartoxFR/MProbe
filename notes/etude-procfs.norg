@@ -1,8 +1,8 @@
 * Source
 
+{https://www.kernel.org/doc/html/latest/filesystems/proc.html}[Source]
 
 * Memory related files
-{https://www.kernel.org/doc/html/latest/filesystems/proc.html}[Source]
 
 ** status
    Global status of a program
