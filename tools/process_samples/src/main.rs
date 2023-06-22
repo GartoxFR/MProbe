@@ -1,58 +1,30 @@
-use std::collections::HashMap;
+use itertools::Itertools;
 use std::env;
 use std::fs::File;
-use std::io::{Write, BufReader, BufWriter};
-use itertools::Itertools;
+use std::io::{BufReader, BufWriter, Write};
 
-use common::{ProcessInfo, SampleValue};
+use common::{Round, SampleValue, TimeMicro, Sample};
 
 fn main() {
     let json_path = env::args().nth(1).unwrap();
     let json_file = BufReader::new(File::open(json_path).unwrap());
-    let process_infos: HashMap<usize, ProcessInfo> = serde_json::from_reader(json_file).unwrap();
-    println!("{}", process_infos.len());
-    const TIME_STEP_US: u128 = 1_000;
-    let mut iters: Vec<_> = process_infos
-        .values()
-        .map(|pinfo| (SampleValue::default(), pinfo.measurements.iter().peekable()))
-        .collect();
+    let rounds: Vec<Round> = serde_json::from_reader(json_file).unwrap();
+    println!("{}", rounds.len());
 
-    let res: Vec<_> = (1..)
-        .map_while(|next_time_step| {
-            let mut sum = SampleValue::default();
-            let mut stop = true;
-            for (prev, iter) in iters.iter_mut().filter(|(_, iter)| iter.len() > 0) {
-                stop = false;
-                match iter
-                    .peeking_take_while(|measure| measure.time_us < next_time_step * TIME_STEP_US)
-                    .map(|measure| measure.value)
-                    .max()
-                {
-                    Some(max) => {
-                        *prev = max;
-                        sum += max
-                    }
-                    None => {
-                        sum += *prev;
-                    }
-                }
-            }
-            if stop {
-                None
-            } else {
-                Some(sum)
-            }
-        })
+    let res: Vec<(TimeMicro, SampleValue, usize, TimeMicro)> = rounds
+        .iter()
+        .map(|round| (round.start_time, round.samples.iter().map(|(_, Sample {value, ..},)| value).copied().sum(), round.samples.len(), round.end_time - round.start_time))
         .collect();
 
     let mut out = BufWriter::new(File::create("res_seconds.csv").unwrap());
-    for (i, m) in res.iter().enumerate() {
-        writeln!(out, "{},{}", i as u128 * TIME_STEP_US, m.pss).unwrap();
+    writeln!(out, "Time,Memory,Process count,Duration").unwrap();
+    for (start_time, sample, process_count, duration) in res.iter() {
+        writeln!(out, "{},{},{},{}", start_time, sample.pss, process_count, duration).unwrap();
     }
 
     let res_byte = res
         .iter()
-        .scan((0, 0), |(acc, prev), m| {
+        .scan((0, 0), |(acc, prev), (_, m, _, _)| {
             *acc += m.pss.saturating_sub(*prev);
             *prev = m.pss;
 
@@ -64,5 +36,4 @@ fn main() {
     for (i, m) in res_byte {
         writeln!(out, "{},{}", i, m.pss).unwrap();
     }
-
 }

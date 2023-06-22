@@ -12,14 +12,51 @@
   -- (x) Écrire le programme
   -- (x) Tester avec `time -v`
 
+  - (-) Optimiser outils
+  -- (-) Associer à chaque mesure son "round" = tour de boucle de l'echantillonage
+  -- (x) Pas de multithread donc buffer de lecture global
+  -- (x) Redecouvrir tous les process à chaque fois
+
+  - ( ) Remplacer linux par toolchain rust
+
+  - ( ) Ecrire le programme `allocations` en plusieurs languages
+
+  - ( ) Rechercher comment faire les courbes
+  -- ( ) Tester bindings Rust matplotlib
+  -- ( ) Tester R
+  -- ( ) Tester pure rust (charts crate ou autre)
+
+  - ( ) Interface utilisateur de l'outil
+  -- ( ) Pouvoir tout lancer d'un coup (p-e makefile)
+  -- ( ) Pouvoir spécifier le nom des fichiers de sortie
+
+  - ( ) Lire papier de la biblio
+
 * Notes
   - {:notes-debut:}[Notes debut du stage]
   - {:etude-procfs:}[Etude du format de retour du procfs]
   - {:recherche-biblio:}[Recherche bilblio]
+
+* Meetings
+  - Vendredi 30 juin 14h - 15h
+  - Jeudi 6 juillet 9h30
+
+* Autre conf
+  - Vendredi 23 juin 10h - 12h : hdr (amphi TC)
+  - Lundi 26 juin 14h : Seminaire (Salle TD en face du CITI)
 
 * Idées
 ** Aggrégation des donnés des différents process
 
    - On choisit la durée d'un timestep 
    - On parcours les timesteps et, pour chaque processus, on prend sa consommation max durant ce timestep pour la sommer à la consommation de ce timestep.
+
+** Systeme de round à l'echantillonage
+
+   - Associer à chaque mesure son "round" = tour de boucle de l'echantillonage
+
+** Idees d'optimisations
+
+   - ( ) Pas de multithread donc buffer de lecture global
+   - ( ) Redecouvrir tous les process à chaque fois
 

@@ -1,11 +1,16 @@
+use std::collections::HashMap;
+use std::iter::Sum;
 use std::ops::{Add, AddAssign};
 
 use serde::{Serialize, Deserialize};
 
+pub type Pid = u32;
+pub type TimeMicro = u64;
+ 
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Sample {
-    pub time_us: u128,
+    pub time: TimeMicro,
     pub value: SampleValue
 }
 
@@ -15,6 +20,13 @@ pub struct SampleValue {
     pub pss_anon: usize,
     pub pss_file: usize,
     pub pss_shmem: usize,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Round {
+    pub start_time: TimeMicro,
+    pub end_time: TimeMicro,
+    pub samples: HashMap<Pid, Sample>
 }
 
 impl Add for SampleValue {
@@ -39,7 +51,12 @@ impl AddAssign for SampleValue {
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize)]
-pub struct ProcessInfo {
-    pub measurements: Vec<Sample>,
+impl Sum for SampleValue {
+    fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
+        let mut sum = SampleValue::default();
+        for s in iter {
+            sum += s;
+        }
+        sum
+    }
 }
