@@ -9,15 +9,15 @@ use std::fmt::Write;
 
 use common::{Pid, Round, Sample, SampleValue, TimeMicro};
 
-type Result<T> = io::Result<T>;
+struct Error;
 
-pub fn measure(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample> {
+fn measure(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample, Error> {
     buffer.clear();
     write!(buffer, "/proc/{}/smaps_rollup", pid).expect("Should be able to write fmt to a string");
-    let mut smaps_rollup = File::open(&buffer)?;
+    let mut smaps_rollup = File::open(&buffer).map_err(|_| Error)?;
 
     buffer.clear();
-    smaps_rollup.read_to_string(buffer)?;
+    smaps_rollup.read_to_string(buffer).map_err(|_| Error)?;
 
     let mut lines = buffer.lines();
     let pss = parse_line(2, &mut lines)?;
@@ -39,15 +39,15 @@ pub fn measure(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sam
 fn parse_line<'a, 'b>(
     line: usize,
     lines: &mut (impl Iterator<Item = &'b str> + 'a),
-) -> Result<usize> {
+) -> Result<usize, Error> {
     lines
         .nth(line)
-        .ok_or(io::Error::new(io::ErrorKind::UnexpectedEof, "Line"))?
+        .ok_or(Error)?
         .split_whitespace()
         .nth(1)
-        .ok_or(io::Error::new(io::ErrorKind::UnexpectedEof, "Tab"))?
+        .ok_or(Error)?
         .parse()
-        .map_err(|_| io::Error::new(io::ErrorKind::Other, ""))
+        .map_err(|_| Error)
 }
 
 fn main() {
@@ -106,14 +106,24 @@ fn explore_children(
     }
 }
 
-fn list_children(pid: Pid, to_explore: &mut Vec<Pid>, buffer: &mut String) -> Result<()> {
+fn list_children(pid: Pid, to_explore: &mut Vec<Pid>, buffer: &mut String) -> Result<(), io::Error> {
     buffer.clear();
     write!(buffer, "/proc/{pid}/task").expect("Should be able to write fmt to a string");
     for dir_entry in fs::read_dir(&*buffer)? {
         buffer.clear();
-        let mut task_dir = dir_entry.expect("Cannot read dir entry").path();
-        task_dir.push("children");
-        File::open(task_dir)?.read_to_string(buffer).unwrap();
+        write!(
+            buffer,
+            "/proc/{pid}/task/{}/children",
+            dir_entry?
+                .file_name()
+                .as_os_str()
+                .to_str()
+                .expect("Dir name should be valid utf 8")
+        )
+        .expect("Should be able to write fmt to a string");
+        let mut file = File::open(&mut *buffer)?;
+        buffer.clear();
+        file.read_to_string(buffer).unwrap();
         to_explore.extend(buffer.split(' ').filter_map(|str| str.parse::<u32>().ok()));
     }
 
