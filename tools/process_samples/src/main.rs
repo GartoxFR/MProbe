@@ -1,39 +1,54 @@
-use itertools::Itertools;
-use std::env;
 use std::fs::File;
-use std::io::{BufReader, BufWriter, Write};
+use std::io::BufReader;
 
-use common::{Round, SampleValue, TimeMicro, Sample};
+use clap::Parser;
+use common::{Round, Sample, SampleValue, TimeMicro};
+
+use crate::args::{Arguments, GraphType};
+use crate::plots::{plot_memory, plot_process_duration};
+
+mod plots;
+mod args;
 
 fn main() {
-    let json_path = env::args().nth(1).unwrap();
-    let json_file = BufReader::new(File::open(json_path).unwrap());
+    let args = Arguments::parse();
+    
+    let json_file = BufReader::new(File::open(args.input).unwrap());
     let rounds: Vec<Round> = serde_json::from_reader(json_file).unwrap();
     println!("{}", rounds.len());
 
     let res: Vec<(TimeMicro, SampleValue, usize, TimeMicro)> = rounds
         .iter()
-        .map(|round| (round.start_time, round.samples.iter().map(|(_, Sample {value, ..},)| value).copied().sum(), round.samples.len(), round.end_time - round.start_time))
+        .map(|round| {
+            (
+                round.start_time,
+                round
+                    .samples
+                    .iter()
+                    .map(|(_, Sample { value, .. })| value)
+                    .copied()
+                    .sum(),
+                round.samples.len(),
+                round.end_time - round.start_time,
+            )
+        })
         .collect();
 
-    let mut out = BufWriter::new(File::create("res_seconds.csv").unwrap());
-    writeln!(out, "Time,Memory,Process count,Duration").unwrap();
-    for (start_time, sample, process_count, duration) in res.iter() {
-        writeln!(out, "{},{},{},{}", start_time, sample.pss, process_count, duration).unwrap();
+    match args.r#type {
+        GraphType::Memory => 
+            plot_memory(
+                args.output.as_ref().map(|s| &s[..]),
+                res.iter().map(|(x, y, _, _)| (*x as usize, y.pss)),
+                !args.queit
+            )
+            .unwrap(),
+        GraphType::Duration => 
+            plot_process_duration(
+                args.output.as_ref().map(|s| &s[..]),
+                res.iter().map(|(_, _, x, y)| (*x, *y as usize)),
+                !args.queit
+            )
+            .unwrap()
     }
 
-    let res_byte = res
-        .iter()
-        .scan((0, 0), |(acc, prev), (_, m, _, _)| {
-            *acc += m.pss.saturating_sub(*prev);
-            *prev = m.pss;
-
-            Some((*acc, m))
-        })
-        .dedup();
-
-    let mut out = BufWriter::new(File::create("res_bytes.csv").unwrap());
-    for (i, m) in res_byte {
-        writeln!(out, "{},{}", i, m.pss).unwrap();
-    }
 }

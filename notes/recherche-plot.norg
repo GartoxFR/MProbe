@@ -1,0 +1,48 @@
+* R
+** Librairie standard de R
+   Pas intéractive et assez basique
+
+** ggplot2
+   Pas intéractive mais assez jolie
+
+* Plotly
+
+ Interactif
+
+** Languages disponibles
+   - Python
+   - R
+   - Julia
+   - JS
+   - F#
+   - Matlab
+   - Dash
+
+** Utilisation depuis rust
+
+   La crate plotly génère des fichiers html qui font appels à plotly.js pour
+   être intéractifs dans le navigateur.
+
+   Peut aussi générer des images statiques.
+
+* Matplotlib
+
+  - Interactif mais en python
+
+  - Bindings rust très peu élégants
+
+* Plotters
+
+  - Librairie pur rust
+  - Pas intéractive
+  - Actif
+  - Hautement adaptable
+  - Possibilité de l'intégrer à une fenêtre et implémenter l'intéractivité à
+    la main (piston backend for window)
+
+* Charts
+
+  - Librairie pur rust
+  - Semble moins active et moins flexible que Plotters
+
+

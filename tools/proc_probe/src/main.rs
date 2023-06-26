@@ -21,9 +21,13 @@ fn measure(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample,
 
     let mut lines = buffer.lines();
     let pss = parse_line(2, &mut lines)?;
-    let pss_anon = parse_line(1, &mut lines)?;
-    let pss_file = parse_line(0, &mut lines)?;
-    let pss_shmem = parse_line(0, &mut lines)?;
+    // let pss_anon = parse_line(1, &mut lines)?;
+    // let pss_file = parse_line(0, &mut lines)?;
+    // let pss_shmem = parse_line(0, &mut lines)?;
+
+    let pss_anon = 0;
+    let pss_file = 0;
+    let pss_shmem = 0;
 
     Ok(Sample {
         time: start_time.elapsed().as_micros() as u64,
@@ -60,14 +64,12 @@ fn main() {
     let command = args.next().unwrap();
 
     let mut handle = Command::new(command).args(args).spawn().unwrap();
-    let start_time = Instant::now();
 
     let pid = handle.id() as Pid;
-
+    let mut last_round_end = 0;
+    let start_time = Instant::now();
     while handle.try_wait().unwrap().is_none() {
         // Round start
-        let round_start = start_time.elapsed().as_micros() as TimeMicro;
-
         // We look for new children
         explore_children(pid, &mut processes, &mut to_explore, &mut buffer);
 
@@ -81,10 +83,11 @@ fn main() {
 
         let round_end = start_time.elapsed().as_micros() as TimeMicro;
         rounds.push(Round {
-            start_time: round_start,
+            start_time: last_round_end,
             end_time: round_end,
             samples,
-        })
+        });
+        last_round_end = round_end;
         // Round end
     }
 
@@ -106,7 +109,11 @@ fn explore_children(
     }
 }
 
-fn list_children(pid: Pid, to_explore: &mut Vec<Pid>, buffer: &mut String) -> Result<(), io::Error> {
+fn list_children(
+    pid: Pid,
+    to_explore: &mut Vec<Pid>,
+    buffer: &mut String,
+) -> Result<(), io::Error> {
     buffer.clear();
     write!(buffer, "/proc/{pid}/task").expect("Should be able to write fmt to a string");
     for dir_entry in fs::read_dir(&*buffer)? {

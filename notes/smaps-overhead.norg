@@ -1,0 +1,39 @@
+* Source
+  {https://gitlab.com/gitlab-com/gl-infra/reliability/-/issues/10966}[Source]
+
+* Probleme
+
+  Le temps nécessaire à calculer les infos du fichier `smaps_rollup` est proportionel 
+  au nombre de page du programme observé.
+
+  Ainsi, pour les programmes les plus gourmands en mémoire, cette lecture peut approcher 
+  les 100ms voir 1000ms. C'est évidemment problématique pour notre sonde. 
+
+* Potentiels solutions
+
+  On pourrait distinguer 2 grands types de programmes que l'on mesurerait différemment
+
+** Les programmes monolithiques
+
+   On considère les programmes qui ont un faible nombre de processus qui composent la 
+   majorité des pages utilisés (e.g. une base de donnée). Pour un tel programme, les quantité
+   de page partagé peut étre considérée négligeable devant la mémoire utilisés seulement
+   pour le processus. Ainsi, une mesure du Rss dans le fichier `/proc/<pid>/status` peut
+   être suffisante et beaucoup plus rapide.
+
+** Les programme qui fork beaucoup type `make`
+
+   De tels programme prennent grandement avantage du partage des pages mappés à l'executable.
+   Par exemple pour les builds systemes, les différents appels paralèles de CC peuvent
+   partager les même page de code.
+
+   Pour de tels programme, l'utilisation du PSS semble important et sera forcément
+   moins coûteuse dû à la nature des processus enfant assez légers.
+
+* Importance de comparer Rss et Pss pour faire un choix raisonné
+
+  À terme, il semble important d'être capable de comparer le Rss et le Pss même si 
+  les mesures de Pss sont plus espacés. Ces comparaisons pourront nous permettre
+  de confirmer ou rejeter nos hypothèses quand à l'importance de mesurer le Pss
+  et non le Rss.
+

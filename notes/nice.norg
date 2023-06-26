@@ -1,0 +1,6 @@
+La valeur nice d'un processe est un boost de priorité que l'on peut donner
+Elle va de -20 à 20
+
+`nice <value> command` pour lancer avec une valeur particulière
+
+`renice -n <value> -p <pid>` pour modifier la valeur d'un process donné
