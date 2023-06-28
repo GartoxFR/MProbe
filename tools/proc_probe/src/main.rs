@@ -7,7 +7,12 @@ use std::time::Instant;
 
 use std::fmt::Write;
 
+use clap::Parser;
 use common::{Pid, Round, Sample, SampleValue, TimeMicro};
+
+use self::args::Arguments;
+
+mod args;
 
 struct Error;
 
@@ -55,43 +60,46 @@ fn parse_line<'a, 'b>(
 }
 
 fn main() {
+    let args = Arguments::parse();
     let mut buffer = String::with_capacity(1024);
     let mut rounds = Vec::with_capacity(1024);
     let mut processes = Vec::with_capacity(100);
     let mut to_explore = Vec::with_capacity(100);
 
-    let mut args = env::args().skip(1);
-    let command = args.next().unwrap();
+    if let Some(command) = args.program.first() {
+        let mut handle = Command::new(command)
+            .args(&args.program[1..])
+            .spawn()
+            .unwrap();
 
-    let mut handle = Command::new(command).args(args).spawn().unwrap();
+        let pid = handle.id() as Pid;
+        let mut last_round_end = 0;
+        let start_time = Instant::now();
+        while handle.try_wait().unwrap().is_none() {
+            // Round start
+            // We look for new children
+            explore_children(pid, &mut processes, &mut to_explore, &mut buffer);
 
-    let pid = handle.id() as Pid;
-    let mut last_round_end = 0;
-    let start_time = Instant::now();
-    while handle.try_wait().unwrap().is_none() {
-        // Round start
-        // We look for new children
-        explore_children(pid, &mut processes, &mut to_explore, &mut buffer);
-
-        // We sample all of them
-        let mut samples = HashMap::with_capacity(processes.len());
-        for process in processes.drain(..) {
-            if let Ok(sample) = measure(process, &mut buffer, start_time) {
-                samples.insert(process, sample);
+            // We sample all of them
+            let mut samples = HashMap::with_capacity(processes.len());
+            for process in processes.drain(..) {
+                if let Ok(sample) = measure(process, &mut buffer, start_time) {
+                    samples.insert(process, sample);
+                }
             }
-        }
 
-        let round_end = start_time.elapsed().as_micros() as TimeMicro;
-        rounds.push(Round {
-            start_time: last_round_end,
-            end_time: round_end,
-            samples,
-        });
-        last_round_end = round_end;
-        // Round end
+            let round_end = start_time.elapsed().as_micros() as TimeMicro;
+            rounds.push(Round {
+                start_time: last_round_end,
+                end_time: round_end,
+                samples,
+            });
+            last_round_end = round_end;
+            // Round end
+        }
     }
 
-    serialize_result(rounds);
+    serialize_result(&args.output.unwrap_or("detail.json".into()), rounds);
 }
 
 fn explore_children(
@@ -137,8 +145,8 @@ fn list_children(
     Ok(())
 }
 
-fn serialize_result(rounds: Vec<Round>) {
-    let mut out = BufWriter::new(File::create("detail.json").unwrap());
+fn serialize_result(filename: &str, rounds: Vec<Round>) {
+    let mut out = BufWriter::new(File::create(filename).unwrap());
     serde_json::to_writer_pretty(&mut out, &rounds).unwrap();
     // println!("{res:?}")
 }

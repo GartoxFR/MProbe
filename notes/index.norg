@@ -27,8 +27,9 @@
   -- (x) Tester pure rust (charts crate ou autre (plotters))
 
   - (-) Interface utilisateur de l'outil
-  -- ( ) Pouvoir tout lancer d'un coup (p-e makefile)
-  -- (-) Pouvoir spécifier le nom des fichiers de sortie
+  -- (x) Pouvoir tout lancer d'un coup (p-e makefile)
+  -- (x) Pouvoir spécifier le nom des fichiers de sortie
+  -- ( ) Readme sur comment utiliser le Makefile
 
   - ( ) Lire papier de la biblio
 

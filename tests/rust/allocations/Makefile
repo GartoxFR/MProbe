@@ -1,0 +1,15 @@
+BIN := target/release/allocations
+
+-include target/release/allocations.d
+
+probe_exec: $(BIN)
+	$(PROBE) -o $(PROBE_OUTPUT) $(BIN) 100000 50000
+
+probe_build:
+	@cargo clean
+	$(PROBE) -o $(PROBE_OUTPUT) -- cargo build --release
+
+$(BIN): Cargo.toml
+	cargo build --release
+	
+

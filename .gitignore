@@ -1,3 +1,4 @@
 /tools/*/target
 /tests/rust/*/target
 /results/
+/bin/
