@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::BufReader;
 
 use clap::Parser;
-use common::{Round, Sample, SampleValue, TimeMicro};
+use common::{Sample, SampleValue, TimeMicro, SaveFile};
 
 use crate::args::{Arguments, GraphType};
 use crate::plots::{plot_memory, plot_process_duration};
@@ -14,10 +14,13 @@ fn main() {
     let args = Arguments::parse();
     
     let json_file = BufReader::new(File::open(args.input).unwrap());
-    let rounds: Vec<Round> = serde_json::from_reader(json_file).unwrap();
-    println!("{}", rounds.len());
+    let save_file: SaveFile = serde_json::from_reader(json_file).unwrap();
 
-    let res: Vec<(TimeMicro, SampleValue, usize, TimeMicro)> = rounds
+    if save_file.rounds.is_empty() {
+        return;
+    }
+
+    let res: Vec<(TimeMicro, SampleValue, usize, TimeMicro)> = save_file.rounds
         .iter()
         .map(|round| {
             (

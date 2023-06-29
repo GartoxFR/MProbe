@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::env;
 use std::fs::{self, File};
 use std::io::{self, BufWriter, Read};
 use std::process::Command;
@@ -7,8 +6,9 @@ use std::time::Instant;
 
 use std::fmt::Write;
 
+use chrono::Local;
 use clap::Parser;
-use common::{Pid, Round, Sample, SampleValue, TimeMicro};
+use common::{Pid, Round, Sample, SampleValue, TimeMicro, HeaderInfo, SaveFile};
 
 use self::args::Arguments;
 
@@ -66,6 +66,8 @@ fn main() {
     let mut processes = Vec::with_capacity(100);
     let mut to_explore = Vec::with_capacity(100);
 
+    let start_date = Local::now();
+
     if let Some(command) = args.program.first() {
         let mut handle = Command::new(command)
             .args(&args.program[1..])
@@ -99,7 +101,23 @@ fn main() {
         }
     }
 
-    serialize_result(&args.output.unwrap_or("detail.json".into()), rounds);
+    let end_date = Local::now();
+
+    let header = HeaderInfo {
+        start_date,
+        end_date,
+        probe_commit_sha: env!("VERGEN_GIT_SHA").to_owned(),
+        probe_build_date: env!("VERGEN_BUILD_DATE").to_owned(),
+        round_count: rounds.len(),
+        command: args.program.join(" "),
+    };
+
+    let save_file_content = SaveFile {
+        header,
+        rounds
+    };
+
+    serialize_result(&args.output.unwrap_or("detail.json".into()), &save_file_content);
 }
 
 fn explore_children(
@@ -145,8 +163,7 @@ fn list_children(
     Ok(())
 }
 
-fn serialize_result(filename: &str, rounds: Vec<Round>) {
+fn serialize_result(filename: &str, save_file_content: &SaveFile) {
     let mut out = BufWriter::new(File::create(filename).unwrap());
-    serde_json::to_writer_pretty(&mut out, &rounds).unwrap();
-    // println!("{res:?}")
+    serde_json::to_writer_pretty(&mut out, save_file_content).unwrap();
 }

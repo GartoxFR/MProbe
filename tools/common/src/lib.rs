@@ -2,11 +2,29 @@ use std::collections::HashMap;
 use std::iter::Sum;
 use std::ops::{Add, AddAssign};
 
+use chrono::{DateTime, Local};
 use serde::{Serialize, Deserialize};
 
 pub type Pid = u32;
 pub type TimeMicro = u64;
  
+
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct HeaderInfo {
+    pub start_date: DateTime<Local>,
+    pub end_date: DateTime<Local>,
+    pub probe_commit_sha: String,
+    pub probe_build_date: String,
+    pub round_count: usize,
+    pub command: String
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SaveFile {
+    pub header: HeaderInfo,
+    pub rounds: Vec<Round>
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Sample {

@@ -1,5 +1,5 @@
 O ?= results/last
-O := $(abspath $O)
+O_ABS := $(abspath $O)
 TESTS_SRC = $(wildcard tests/*/*)
 TESTS = $(TESTS_SRC:tests/%=%/build) $(TESTS_SRC:tests/%=%/exec)
 
@@ -61,26 +61,26 @@ clean:
 	@$(CARGO) clean --manifest-path=$(PROC_PROBE_MANIFEST)
 
 
-%/exec: $(O)/%/exec/memory.svg $(O)/%/exec/duration.svg
+%/exec: $(O_ABS)/%/exec/memory.svg $(O_ABS)/%/exec/duration.svg
 	@$(NOOP)
 
-%/build: $(O)/%/build/memory.svg $(O)/%/build/duration.svg
+%/build: $(O_ABS)/%/build/memory.svg $(O_ABS)/%/build/duration.svg
 	@$(NOOP)
 
-%/memory.svg: %/detail.json
+%/memory.svg: %/detail.json $(PROCESS_SAMPLES_FINAL_BIN)
 	$(PROCESS_SAMPLES_FINAL_BIN) -q -t memory -o $@ $<
 
-%/duration.svg: %/detail.json
+%/duration.svg: %/detail.json $(PROCESS_SAMPLES_FINAL_BIN)
 	$(PROCESS_SAMPLES_FINAL_BIN) -q -t duration -o $@ $<
 
-$(O)/%/build/detail.json: FORCE
+$(O_ABS)/%/build/detail.json: $(PROC_PROBE_FINAL_BIN) FORCE
 	mkdir -p $(@D)
 	$(MAKE) PROBE=$(PROBE) PROBE_OUTPUT=$@ -C tests/$* probe_build
 
-$(O)/%/exec/detail.json: FORCE | $(O)/%/build/detail.json 
+$(O_ABS)/%/exec/detail.json: $(PROC_PROBE_FINAL_BIN) FORCE | $(O_ABS)/%/build/detail.json 
 	mkdir -p $(@D)
 	$(MAKE) PROBE=$(PROBE) PROBE_OUTPUT=$@ -C tests/$* probe_exec
 
 FORCE:
 
-.PRECIOUS: %/memory.svg %/duration.svg $(O)/%/build/detail.json $(O)/%/exec/detail.json
+.PRECIOUS: %/memory.svg %/duration.svg $(O_ABS)/%/build/detail.json $(O_ABS)/%/exec/detail.json
