@@ -1,14 +1,14 @@
 CC = javac
-BIN = Main.class
+BIN = HelloWorld.class
 
 .PHONY = probe_exec probe_build
 
 probe_exec: $(BIN) 
-	$(PROBE) -o $(PROBE_OUTPUT) -- java Main
+	$(PROBE) -o $(PROBE_OUTPUT) -- java HelloWorld
 
 probe_build: 
-	$(PROBE) -o $(PROBE_OUTPUT) -- $(CC) Main.java
+	$(PROBE) -o $(PROBE_OUTPUT) -- $(CC) HelloWorld.java
 
-$(BIN): Main.java
+$(BIN): HelloWorld.java
 	$(CC) $<
 

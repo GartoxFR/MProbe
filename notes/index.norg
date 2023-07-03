@@ -40,7 +40,11 @@
   -- (x) Regarder du coté des axes logarithmiques (Possible mais pas très concluant)
   -- (x) Mediane et 90e percentile a la place de la moyenne
 
-  - ( ) Ecrire le programme `allocations` en plusieurs languages (allouer 2Go et écrire 1Go par défaut)
+  - (-) Ecrire le programme `allocations` en plusieurs languages (allouer 2Go et écrire 1Go par défaut)
+  -- (x) C
+  -- (x) CPP
+  -- ( ) Java
+  -- ( ) Python
 
   - (x) Pour C et CPP, mettre O2 ou O3
 

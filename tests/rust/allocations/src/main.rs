@@ -16,11 +16,11 @@ fn main() {
 
     let mut buffer: Vec<u8> = Vec::default();
 
-    // On alloue x KB
-    buffer.reserve(x * 1024); 
+    // On alloue x MB
+    buffer.reserve(x * 1024 * 1024); 
 
-    // On écrit y KB
-    buffer.extend((0..(y * 1024)).map(|_| 42u8)); 
+    // On écrit y MB
+    buffer.extend((0..(y * 1024 * 1024)).map(|_| 42u8)); 
 
     black_box(buffer);
 

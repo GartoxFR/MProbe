@@ -5,7 +5,7 @@ BIN := $(abspath target/release/allocations)
 -include target/release/allocations.d
 
 probe_exec: $(BIN) 
-	$(PROBE) -o $(PROBE_OUTPUT) $(BIN) 100000 50000
+	$(PROBE) -o $(PROBE_OUTPUT) $(BIN) 2048 1024
 
 probe_build: 
 	@cargo clean
