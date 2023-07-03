@@ -2,3 +2,5 @@
 /tests/rust/*/target
 /results/
 /bin/
+
+build/

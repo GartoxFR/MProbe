@@ -2,6 +2,7 @@ O ?= results/last
 O_ABS := $(abspath $O)
 TESTS_SRC = $(wildcard tests/*/*)
 TESTS = $(TESTS_SRC:tests/%=%/build) $(TESTS_SRC:tests/%=%/exec)
+EXCLUDED_DEFAULT_TESTS = rust/toolchain/build rust/toolchain/exec
 
 
 .PHONY = tools clean tests $(TESTS)
@@ -35,7 +36,7 @@ PROBE := $(abspath $(PROC_PROBE_FINAL_BIN))
 
 tools:  $(TOOLS) 
 
-tests: $(TESTS)
+tests: $(filter-out $(EXCLUDED_DEFAULT_TESTS),$(TESTS))
 
 -include $(DEPS)
 
@@ -60,6 +61,9 @@ clean:
 	@$(CARGO) clean --manifest-path=$(PROCESS_SAMPLES_MANIFEST)
 	@$(CARGO) clean --manifest-path=$(PROC_PROBE_MANIFEST)
 
+
+%/all: %/build %/exec
+	@$(NOOP)
 
 %/exec: $(O_ABS)/%/exec/memory.svg $(O_ABS)/%/exec/duration.svg
 	@$(NOOP)

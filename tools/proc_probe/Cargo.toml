@@ -18,4 +18,4 @@ vergen = { version = "8.0.0", features = ["build", "git", "gitcl"] }
 build = "build.rs"
 
 [profile.release]
-# debug = true # Useful for flamegraph
+debug = true # Useful for flamegraph

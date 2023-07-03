@@ -2,5 +2,74 @@
 
   {https://dl-acm-org.docelec.insa-lyon.fr/doi/pdf/10.1145/3485134}[pdf]
 
+  > This article reports a systematic literature review of published works centered on software visualizations
+  > for analyzing the memory consumption of programs
+
+
   - Focuses on visualizations
   - Present a lot of articles to maybe dig but related to visualization
+
+** Method to find the papers
+
+   ~ Keyword searches against 3 popular scientific databases
+   ~ Then 2 dimensional snowbolling i.e. looking at references in both direction
+
+** Research questions
+
+   - *RQ1:* Which tasks are supported by the software visualizations to help
+     users with the analysis of memory consumption?
+
+   - *RQ2:* What aspects of the software are abstracted by the software
+     visualizations to help users with the analysis of memory consumption?
+
+   - *RQ3:* Which software visualizations have been proposed to help users with
+     the analysis of memory consumption?
+   -- *RQ3.1:* Which visual techniques are used?
+   -- *RQ3.2:* Which interaction tasks are supported?
+   -- *RQ3.3:* Where are the visual elements rendered?
+
+   - *RQ4:* How are software visualizations to help users with the analysis of
+     memory consumption evaluated?
+
+   - *RQ5:* What software visualization tools or prototypes are available to
+     help users with the analysis of memory consumption?
+
+** Data analysis
+
+   Method to categorize the different articles into theme
+
+   ~ Familiarization
+   ~ Generating codes (/Detection of memory fragmentation/ for instance)
+   ~ Construction initial themes
+   ~ Reviewing themes
+   ~ Defining and naming themes
+
+** RQ1 Problem domain 
+***  Focus point analysis
+
+   - General
+   - Specific architecture (HPC, parallel, embeded, distributed). Usually
+     visualize how data is used by multiple threads or processor
+   - Data structure
+   - Cache performance
+   - Memory regression i.e. identifying memory consumption augmentation between
+     commits
+
+*** Issue detection
+    - Memory leak
+    - Memory bloat
+    - Memory fragmentation
+    - Memory churn i.e. spending to much time allocating a lot of small objects
+      and then spending more time in garbage collection
+
+** RQ2 Data
+*** Program execution
+    - Memory allocation
+    - Memory allocation and release
+    - Memory accesses
+
+*** Source code analysis
+
+*** Version control
+
+

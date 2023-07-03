@@ -17,21 +17,39 @@
   -- (x) Pas de multithread donc buffer de lecture global
   -- (x) Redecouvrir tous les process à chaque fois
 
-  - ( ) Remplacer linux par toolchain rust
+  - (x) Remplacer linux par toolchain rust
 
-  - ( ) Ecrire le programme `allocations` en plusieurs languages
+  - (x) Ecrire le programme `hello_world` en plusieurs languages
 
   - (x) Rechercher comment faire les courbes
   -- (x) Tester bindings Rust matplotlib
   -- (x) Tester R
   -- (x) Tester pure rust (charts crate ou autre (plotters))
 
-  - (-) Interface utilisateur de l'outil
+  - (x) Interface utilisateur de l'outil
   -- (x) Pouvoir tout lancer d'un coup (p-e makefile)
   -- (x) Pouvoir spécifier le nom des fichiers de sortie
-  -- ( ) Readme sur comment utiliser le Makefile
+  -- (x) Readme sur comment utiliser le Makefile
 
-  - ( ) Lire papier de la biblio
+  - (-) Lire papier de la biblio
+
+  - (x) Ameliorer visualation
+  -- (x) Ajouter la commande surveillée en guise de titre
+  -- (x) Adapter les unités sur le temps
+  -- (x) Adapter les unités sur la mémoire (MiB etc..)
+  -- (x) Regarder du coté des axes logarithmiques (Possible mais pas très concluant)
+  -- (x) Mediane et 90e percentile a la place de la moyenne
+
+  - ( ) Ecrire le programme `allocations` en plusieurs languages (allouer 2Go et écrire 1Go par défaut)
+
+  - (x) Pour C et CPP, mettre O2 ou O3
+
+  - ( ) Autres toolchain
+
+  - ( ) Ajouter aux metadata :
+  -- (_) Nombre max de process observé lors d'un round
+  -- (_) Durée du plus long round
+
 
 * Notes
   - {:notes-debut:}[Notes debut du stage]
