@@ -8,7 +8,7 @@ use std::fmt::Write;
 
 use chrono::Local;
 use clap::Parser;
-use common::{Pid, Round, Sample, SampleValue, TimeMicro, HeaderInfo, SaveFile};
+use common::{HeaderInfo, Pid, Round, Sample, SaveFile, TimeMicro};
 
 use self::args::Arguments;
 
@@ -16,7 +16,7 @@ mod args;
 
 struct Error;
 
-fn measure(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample, Error> {
+fn measure_pss(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample, Error> {
     buffer.clear();
     write!(buffer, "/proc/{}/smaps_rollup", pid).expect("Should be able to write fmt to a string");
     let mut smaps_rollup = File::open(&buffer).map_err(|_| Error)?;
@@ -30,18 +30,36 @@ fn measure(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample,
     // let pss_file = parse_line(0, &mut lines)?;
     // let pss_shmem = parse_line(0, &mut lines)?;
 
-    let pss_anon = 0;
-    let pss_file = 0;
-    let pss_shmem = 0;
+    // let pss_anon = 0;
+    // let pss_file = 0;
+    // let pss_shmem = 0;
 
     Ok(Sample {
         time: start_time.elapsed().as_micros() as u64,
-        value: SampleValue {
-            pss,
-            pss_anon,
-            pss_file,
-            pss_shmem,
-        },
+        value: pss,
+    })
+}
+
+fn measure_rss(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample, Error> {
+    buffer.clear();
+    write!(buffer, "/proc/{}/statm", pid).expect("Should be able to write fmt to a string");
+    let mut statm = File::open(&buffer).map_err(|_| Error)?;
+
+    buffer.clear();
+    statm.read_to_string(buffer).map_err(|_| Error)?;
+
+    let page_count: usize = buffer
+        .split_ascii_whitespace()
+        .nth(1)
+        .ok_or(Error)?
+        .parse()
+        .map_err(|_| Error)?;
+
+    let rss = page_count * 4;
+
+    Ok(Sample {
+        time: start_time.elapsed().as_micros() as u64,
+        value: rss,
     })
 }
 
@@ -61,6 +79,12 @@ fn parse_line<'a, 'b>(
 
 fn main() {
     let args = Arguments::parse();
+
+    let measure = match args.method {
+        args::Method::Pss => measure_pss,
+        args::Method::Rss => measure_rss,
+    };
+
     let mut buffer = String::with_capacity(1024);
     let mut rounds = Vec::with_capacity(1024);
     let mut processes = Vec::with_capacity(100);
@@ -110,14 +134,15 @@ fn main() {
         probe_build_date: env!("VERGEN_BUILD_DATE").to_owned(),
         round_count: rounds.len(),
         command: args.program.join(" "),
+        method: args.method.to_string()
     };
 
-    let save_file_content = SaveFile {
-        header,
-        rounds
-    };
+    let save_file_content = SaveFile { header, rounds };
 
-    serialize_result(&args.output.unwrap_or("detail.json".into()), &save_file_content);
+    serialize_result(
+        &args.output.unwrap_or("detail.json".into()),
+        &save_file_content,
+    );
 }
 
 fn explore_children(

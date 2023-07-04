@@ -1,0 +1,15 @@
+* Problemes
+  - Compilation vraiment longues
+  - Je ne peux rien faire sur mon pc pendant ce temps pour ne rien fausser
+  - Le serveur de calcul semble tourner sur HDD ce qui déplace le bottleneck sur le disque
+  - Compilation parfois gourmande en mémoire (par exemple compiler gcc en -j8 remplis ma RAM + mon Swap et fait donc planter le pc)
+  - Amène à la question de quel nombre de job on veut mesurer ? Evidemment $- de thread = - de conso mémoire$
+
+* Dépendences 
+
+** GCC et G++
+   GCC dépend d'un compilateur C++ même si l'on ne compile que le compilateur C
+
+** Rust
+   Rust dépend de LLVM qui a besoin de C++ pour build donc potentiellement c++, g++ ou encore clang++
+

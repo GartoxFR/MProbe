@@ -2,7 +2,7 @@ O ?= results/last
 O_ABS := $(abspath $O)
 TESTS_SRC = $(wildcard tests/*/*)
 TESTS = $(TESTS_SRC:tests/%=%/build) $(TESTS_SRC:tests/%=%/exec)
-EXCLUDED_DEFAULT_TESTS = rust/toolchain/build rust/toolchain/exec
+EXCLUDED_DEFAULT_TESTS = rust/toolchain/build rust/toolchain/exec c/toolchain/build c/toolchain/exec python/wx/exec
 
 
 .PHONY = tools clean tests $(TESTS)
@@ -33,6 +33,8 @@ TOOLS += $(PROCESS_SAMPLES_FINAL_BIN)
 DEPS += $(PROCESS_SAMPLES_DEPS)
 
 PROBE := $(abspath $(PROC_PROBE_FINAL_BIN))
+PROBE_METHOD ?= pss
+PROBE += -m $(PROBE_METHOD)
 
 tools:  $(TOOLS) 
 
@@ -79,11 +81,11 @@ clean:
 
 $(O_ABS)/%/build/detail.json: $(PROC_PROBE_FINAL_BIN) FORCE
 	mkdir -p $(@D)
-	$(MAKE) PROBE=$(PROBE) PROBE_OUTPUT=$@ -C tests/$* probe_build
+	$(MAKE) PROBE="$(PROBE)" PROBE_OUTPUT=$@ -C tests/$* probe_build
 
 $(O_ABS)/%/exec/detail.json: $(PROC_PROBE_FINAL_BIN) FORCE | $(O_ABS)/%/build/detail.json 
 	mkdir -p $(@D)
-	$(MAKE) PROBE=$(PROBE) PROBE_OUTPUT=$@ -C tests/$* probe_exec
+	$(MAKE) PROBE="$(PROBE)" PROBE_OUTPUT=$@ -C tests/$* probe_exec
 
 FORCE:
 

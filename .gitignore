@@ -1,5 +1,6 @@
 /tools/*/target
 /tests/rust/*/target
+/tests/c/toolchain
 /results/
 /bin/
 

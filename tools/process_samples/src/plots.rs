@@ -76,11 +76,11 @@ pub fn plot_process_duration(
     curve_mediane
         .set_label("Médiane")
         .set_line_style("--")
-        .set_marker_style("");
+        .set_marker_style("o");
     curve_percentile
         .set_label("90e percentile")
         .set_line_style("--")
-        .set_marker_style("");
+        .set_marker_style("o");
 
     curve_mediane.points_begin();
     curve_percentile.points_begin();

@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::BufReader;
 
 use clap::Parser;
-use common::{Sample, SampleValue, SaveFile, TimeMicro};
+use common::{Sample, SaveFile, TimeMicro};
 
 use crate::args::{Arguments, GraphType};
 use crate::plots::{plot_memory, plot_process_duration};
@@ -21,7 +21,7 @@ fn main() {
         return;
     }
 
-    let res: Vec<(TimeMicro, SampleValue, usize, TimeMicro)> = save_file
+    let res: Vec<(TimeMicro, usize, usize, TimeMicro)> = save_file
         .rounds
         .iter()
         .map(|round| {
@@ -43,13 +43,25 @@ fn main() {
         GraphType::Memory => {
             let vec: Vec<_> = res
                 .iter()
-                .map(|(x, y, _, _)| (*x as usize, y.pss))
+                .map(|(x, y, _, _)| (*x as usize, *y))
                 .collect();
-            plot_memory(args.output.as_ref().map(|s| &s[..]), &vec, &save_file.header.command, !args.queit).unwrap();
+            plot_memory(
+                args.output.as_ref().map(|s| &s[..]),
+                &vec,
+                &format!("Mesure {} : {}", save_file.header.method, save_file.header.command),
+                !args.queit,
+            )
+            .unwrap();
         }
         GraphType::Duration => {
             let vec: Vec<_> = res.iter().map(|(_, _, x, y)| (*x, *y as usize)).collect();
-            plot_process_duration(args.output.as_ref().map(|s| &s[..]), &vec, &save_file.header.command, !args.queit).unwrap();
+            plot_process_duration(
+                args.output.as_ref().map(|s| &s[..]),
+                &vec,
+                &format!("Mesure {} : {}", save_file.header.method, save_file.header.command),
+                !args.queit,
+            )
+            .unwrap();
         }
     }
 }

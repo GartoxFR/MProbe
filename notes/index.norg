@@ -40,17 +40,21 @@
   -- (x) Regarder du coté des axes logarithmiques (Possible mais pas très concluant)
   -- (x) Mediane et 90e percentile a la place de la moyenne
 
-  - (-) Ecrire le programme `allocations` en plusieurs languages (allouer 2Go et écrire 1Go par défaut)
+  - (x) Ecrire le programme `allocations` en plusieurs languages (allouer 2Go et écrire 1Go par défaut)
   -- (x) C
   -- (x) CPP
-  -- ( ) Java
-  -- ( ) Python
+  -- (x) Java
+  -- (x) Python
 
   - (x) Pour C et CPP, mettre O2 ou O3
 
   - ( ) Autres toolchain
+  -- ( ) gcc
+  -- ( ) g++
+  -- ( ) CPython
+  -- ( ) JVM
 
-  - ( ) Ajouter aux metadata :
+  - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round
   -- (_) Durée du plus long round
 
@@ -61,6 +65,7 @@
   - {:recherche-biblio:}[Recherche bilblio]
   - {:recherche-plot:}[Recherche sur les librairies pour les figures]
   - {:smaps-overhead:}[Probleme avec smaps]
+  - {:toolchains:}[Notes sur les toolchains]
 
 * Meetings
   - Vendredi 30 juin 14h - 15h
