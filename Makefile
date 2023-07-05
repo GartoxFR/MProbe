@@ -2,8 +2,9 @@ O ?= results/last
 O_ABS := $(abspath $O)
 TESTS_SRC = $(wildcard tests/*/*)
 TESTS = $(TESTS_SRC:tests/%=%/build) $(TESTS_SRC:tests/%=%/exec)
-EXCLUDED_DEFAULT_TESTS = rust/toolchain/build rust/toolchain/exec c/toolchain/build c/toolchain/exec python/wx/exec
-
+EXCLUDED_DEFAULT_TESTS = rust/toolchain/build rust/toolchain/exec c/toolchain/build c/toolchain/exec python/wx/exec \
+						 python/toolchain/build python/toolchain/exec \
+						 java/toolchain/build java/toolchain/exec
 
 .PHONY = tools clean tests $(TESTS)
 
