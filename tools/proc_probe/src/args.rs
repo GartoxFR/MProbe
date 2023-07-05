@@ -11,8 +11,11 @@ pub struct Arguments {
     pub program: Vec<String>,
 
     #[clap(short, long, value_enum, default_value_t = Method::Pss)]
-    pub method: Method
+    pub method: Method,
 
+    /// Use gzip to compress the json file
+    #[clap(long)]
+    pub compress: bool,
 
 }
 

@@ -9,6 +9,7 @@ use std::fmt::Write;
 use chrono::Local;
 use clap::Parser;
 use common::{HeaderInfo, Pid, Round, Sample, SaveFile, TimeMicro};
+use flate2::{Compression, GzBuilder};
 
 use self::args::Arguments;
 
@@ -134,14 +135,20 @@ fn main() {
         probe_build_date: env!("VERGEN_BUILD_DATE").to_owned(),
         round_count: rounds.len(),
         command: args.program.join(" "),
-        method: args.method.to_string()
+        method: args.method.to_string(),
     };
 
     let save_file_content = SaveFile { header, rounds };
 
+    let default_name = match args.compress {
+        true => "detail.json.gz",
+        false => "detail.json",
+    };
+
     serialize_result(
-        &args.output.unwrap_or("detail.json".into()),
+        args.output.as_ref().map_or(default_name, |s| s.as_str()),
         &save_file_content,
+        args.compress,
     );
 }
 
@@ -188,7 +195,15 @@ fn list_children(
     Ok(())
 }
 
-fn serialize_result(filename: &str, save_file_content: &SaveFile) {
+fn serialize_result(filename: &str, save_file_content: &SaveFile, compress: bool) {
     let mut out = BufWriter::new(File::create(filename).unwrap());
-    serde_json::to_writer_pretty(&mut out, save_file_content).unwrap();
+
+    match compress {
+        false => serde_json::to_writer(&mut out, save_file_content).unwrap(),
+        true => {
+            let mut out = GzBuilder::new().write(out, Compression::best());
+            serde_json::to_writer(&mut out, save_file_content).unwrap();
+            out.finish().unwrap();
+        }
+    }
 }
