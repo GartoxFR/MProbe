@@ -48,11 +48,28 @@
 
   - (x) Pour C et CPP, mettre O2 ou O3
 
-  - ( ) Autres toolchain
-  -- ( ) gcc
-  -- ( ) g++
-  -- ( ) CPython
+  - (-) Autres toolchain
+  -- (x) gcc
+  -- (x) g++
+  -- (x) CPython
   -- ( ) JVM
+
+  - (!) Lire "Reflections on truting trust" de Ken THOMPSON
+
+  - ( ) Pour bootsraper cpp regarder {https://bootstrappable.org/}[Site]
+  - ( ) Mesurer des bootstrap qui partent de TCC
+  -- ( ) TCC -> CPython
+  -- ( ) TCC -> Rust = TCC -> GCC entierement en C mais qui compile cpp -> GCC récent -> LLVM et rustc
+
+  - (!) Réduire taille JSON
+  -- (!) Sommer les conso des processus
+  -- (!) Sous échantillonner à la volé
+
+  - ( ) Prioriser seulement le j1
+
+  - ( ) À la visualation, compter les "missed samples" et leur proportion
+
+  - (!) Mesurer la compilation de TCC par lui même
 
   - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round
@@ -68,11 +85,9 @@
   - {:toolchains:}[Notes sur les toolchains]
 
 * Meetings
-  - Vendredi 30 juin 14h - 15h
-  - Jeudi 6 juillet 9h30
+  - Jeudi 13 juillet 13h30
 
 * Autre conf
-  - Lundi 26 juin 14h : Seminaire (Salle TD en face du CITI)
 
 * Idées
 ** Aggrégation des donnés des différents process
