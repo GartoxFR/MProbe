@@ -11,9 +11,10 @@ pub struct Arguments {
     /// Program to run
     pub program: Vec<String>,
 
-    #[clap(short, long, value_enum, default_value_t = Method::Pss)]
+    #[clap(short, long, value_enum, default_value_t = Method::Rss)]
     pub method: Method,
 
+    /// Sample period in micro second
     #[clap(short, long, default_value_t = 1000)]
     pub sample_period: TimeMicro
 }
