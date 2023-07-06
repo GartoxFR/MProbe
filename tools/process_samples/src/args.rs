@@ -23,5 +23,4 @@ pub struct Arguments {
 #[derive(ValueEnum, Clone, Copy)]
 pub enum GraphType {
     Memory,
-    Duration
 }

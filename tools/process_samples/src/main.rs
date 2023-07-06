@@ -2,10 +2,10 @@ use std::fs::File;
 use std::io::BufReader;
 
 use clap::Parser;
-use common::{Sample, SaveFile, TimeMicro};
+use common::SaveFile;
 
 use crate::args::{Arguments, GraphType};
-use crate::plots::{plot_memory, plot_process_duration};
+use crate::plots::plot_memory;
 
 mod args;
 mod plots;
@@ -17,48 +17,42 @@ fn main() {
     let json_file = BufReader::new(File::open(args.input).unwrap());
     let save_file: SaveFile = serde_json::from_reader(json_file).unwrap();
 
-    if save_file.rounds.is_empty() {
+    if save_file.data.is_empty() {
         return;
     }
 
-    let res: Vec<(TimeMicro, usize, usize, TimeMicro)> = save_file
-        .rounds
+    let mut missed_sample_count = 0;
+    let res: Vec<_> = save_file
+        .data
         .iter()
-        .map(|round| {
-            (
-                round.start_time,
-                round
-                    .samples
-                    .iter()
-                    .map(|(_, Sample { value, .. })| value)
-                    .copied()
-                    .sum(),
-                round.samples.len(),
-                round.end_time - round.start_time,
-            )
+        .enumerate()
+        .filter_map(|(index, memory)| match *memory {
+            0 => {
+                missed_sample_count += 1;
+                None
+            }
+            memory => Some((index * save_file.header.sample_period as usize, memory)),
         })
         .collect();
 
+    match missed_sample_count {
+        0 => eprintln!("No sample missed."),
+        missed_sample_count => eprintln!(
+            "{} sample missed ({:.2} %)",
+            missed_sample_count,
+            missed_sample_count as f64 / save_file.data.len() as f64 * 100f64
+        ),
+    }
+
     match args.r#type {
         GraphType::Memory => {
-            let vec: Vec<_> = res
-                .iter()
-                .map(|(x, y, _, _)| (*x as usize, *y))
-                .collect();
             plot_memory(
                 args.output.as_ref().map(|s| &s[..]),
-                &vec,
-                &format!("Mesure {} : {}", save_file.header.method, save_file.header.command),
-                !args.queit,
-            )
-            .unwrap();
-        }
-        GraphType::Duration => {
-            let vec: Vec<_> = res.iter().map(|(_, _, x, y)| (*x, *y as usize)).collect();
-            plot_process_duration(
-                args.output.as_ref().map(|s| &s[..]),
-                &vec,
-                &format!("Mesure {} : {}", save_file.header.method, save_file.header.command),
+                &res,
+                &format!(
+                    "Mesure {} : {}",
+                    save_file.header.method, save_file.header.command
+                ),
                 !args.queit,
             )
             .unwrap();

@@ -41,7 +41,7 @@ pub fn plot_memory(
     Ok(())
 }
 
-pub fn plot_process_duration(
+pub fn _plot_process_duration(
     path: Option<&str>,
     points: &[(usize, usize)],
     title: &str,

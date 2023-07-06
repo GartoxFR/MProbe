@@ -1,4 +1,5 @@
 use clap::{Parser, ValueEnum};
+use common::TimeMicro;
 
 #[derive(Parser)]
 #[command(author, version, about)]
@@ -13,10 +14,8 @@ pub struct Arguments {
     #[clap(short, long, value_enum, default_value_t = Method::Pss)]
     pub method: Method,
 
-    /// Use gzip to compress the json file
-    #[clap(long)]
-    pub compress: bool,
-
+    #[clap(short, long, default_value_t = 1000)]
+    pub sample_period: TimeMicro
 }
 
 #[derive(ValueEnum, Clone, Copy)]

@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use chrono::{DateTime, Local};
 use serde::{Deserialize, Serialize};
 
@@ -14,24 +12,14 @@ pub struct HeaderInfo {
     pub probe_build_date: String,
     pub round_count: usize,
     pub command: String,
-    pub method: String
+    pub method: String,
+    pub sample_period: TimeMicro
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SaveFile {
     pub header: HeaderInfo,
-    pub rounds: Vec<Round>,
+    pub data: Vec<usize>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Sample {
-    pub time: TimeMicro,
-    pub value: usize,
-}
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Round {
-    pub start_time: TimeMicro,
-    pub end_time: TimeMicro,
-    pub samples: HashMap<Pid, Sample>,
-}

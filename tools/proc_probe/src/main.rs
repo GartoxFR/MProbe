@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::fs::{self, File};
 use std::io::{self, BufWriter, Read};
 use std::process::Command;
@@ -8,8 +7,7 @@ use std::fmt::Write;
 
 use chrono::Local;
 use clap::Parser;
-use common::{HeaderInfo, Pid, Round, Sample, SaveFile, TimeMicro};
-use flate2::{Compression, GzBuilder};
+use common::{HeaderInfo, Pid, SaveFile};
 
 use self::args::Arguments;
 
@@ -17,7 +15,7 @@ mod args;
 
 struct Error;
 
-fn measure_pss(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample, Error> {
+fn measure_pss(pid: u32, buffer: &mut String) -> Result<usize, Error> {
     buffer.clear();
     write!(buffer, "/proc/{}/smaps_rollup", pid).expect("Should be able to write fmt to a string");
     let mut smaps_rollup = File::open(&buffer).map_err(|_| Error)?;
@@ -35,13 +33,10 @@ fn measure_pss(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sam
     // let pss_file = 0;
     // let pss_shmem = 0;
 
-    Ok(Sample {
-        time: start_time.elapsed().as_micros() as u64,
-        value: pss,
-    })
+    Ok(pss)
 }
 
-fn measure_rss(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sample, Error> {
+fn measure_rss(pid: u32, buffer: &mut String) -> Result<usize, Error> {
     buffer.clear();
     write!(buffer, "/proc/{}/statm", pid).expect("Should be able to write fmt to a string");
     let mut statm = File::open(&buffer).map_err(|_| Error)?;
@@ -58,10 +53,7 @@ fn measure_rss(pid: u32, buffer: &mut String, start_time: Instant) -> Result<Sam
 
     let rss = page_count * 4;
 
-    Ok(Sample {
-        time: start_time.elapsed().as_micros() as u64,
-        value: rss,
-    })
+    Ok(rss)
 }
 
 fn parse_line<'a, 'b>(
@@ -93,6 +85,11 @@ fn main() {
 
     let start_date = Local::now();
 
+    let sample_period = args.sample_period;
+    let mut max_memory_sampled = 0;
+    let mut current_sample_index = 0;
+
+    let mut round_count = 0;
     if let Some(command) = args.program.first() {
         let mut handle = Command::new(command)
             .args(&args.program[1..])
@@ -100,29 +97,39 @@ fn main() {
             .unwrap();
 
         let pid = handle.id() as Pid;
-        let mut last_round_end = 0;
         let start_time = Instant::now();
+
         while handle.try_wait().unwrap().is_none() {
+            round_count += 1;
+            // First we check in wich sample we are
+            let new_sample_index =
+                (start_time.elapsed().as_micros() as usize) / sample_period as usize;
+
+            if new_sample_index != current_sample_index {
+                if rounds.len() < current_sample_index {
+                    rounds.resize(current_sample_index, 0);
+                }
+                rounds.push(max_memory_sampled);
+
+                current_sample_index = new_sample_index;
+                max_memory_sampled = 0;
+            }
             // Round start
             // We look for new children
             explore_children(pid, &mut processes, &mut to_explore, &mut buffer);
 
             // We sample all of them
-            let mut samples = HashMap::with_capacity(processes.len());
-            for process in processes.drain(..) {
-                if let Ok(sample) = measure(process, &mut buffer, start_time) {
-                    samples.insert(process, sample);
-                }
-            }
+            let sum = processes
+                .drain(..)
+                .filter_map(|pid| measure(pid, &mut buffer).ok())
+                .sum();
 
-            let round_end = start_time.elapsed().as_micros() as TimeMicro;
-            rounds.push(Round {
-                start_time: last_round_end,
-                end_time: round_end,
-                samples,
-            });
-            last_round_end = round_end;
+            max_memory_sampled = usize::max(max_memory_sampled, sum);
+
             // Round end
+        }
+        if max_memory_sampled > 0 {
+            rounds.push(max_memory_sampled);
         }
     }
 
@@ -133,22 +140,22 @@ fn main() {
         end_date,
         probe_commit_sha: env!("VERGEN_GIT_SHA").to_owned(),
         probe_build_date: env!("VERGEN_BUILD_DATE").to_owned(),
-        round_count: rounds.len(),
+        round_count,
         command: args.program.join(" "),
         method: args.method.to_string(),
+        sample_period,
     };
 
-    let save_file_content = SaveFile { header, rounds };
-
-    let default_name = match args.compress {
-        true => "detail.json.gz",
-        false => "detail.json",
+    let save_file_content = SaveFile {
+        header,
+        data: rounds,
     };
+
+    let default_name = "samples.json";
 
     serialize_result(
         args.output.as_ref().map_or(default_name, |s| s.as_str()),
         &save_file_content,
-        args.compress,
     );
 }
 
@@ -195,15 +202,8 @@ fn list_children(
     Ok(())
 }
 
-fn serialize_result(filename: &str, save_file_content: &SaveFile, compress: bool) {
+fn serialize_result(filename: &str, save_file_content: &SaveFile) {
     let mut out = BufWriter::new(File::create(filename).unwrap());
 
-    match compress {
-        false => serde_json::to_writer(&mut out, save_file_content).unwrap(),
-        true => {
-            let mut out = GzBuilder::new().write(out, Compression::best());
-            serde_json::to_writer(&mut out, save_file_content).unwrap();
-            out.finish().unwrap();
-        }
-    }
+    serde_json::to_writer(&mut out, save_file_content).unwrap();
 }

@@ -34,7 +34,7 @@ TOOLS += $(PROCESS_SAMPLES_FINAL_BIN)
 DEPS += $(PROCESS_SAMPLES_DEPS)
 
 PROBE := $(abspath $(PROC_PROBE_FINAL_BIN))
-PROBE_METHOD ?= pss
+PROBE_METHOD ?= rss
 PROBE += -m $(PROBE_METHOD)
 
 tools:  $(TOOLS) 
@@ -68,17 +68,14 @@ clean:
 %/all: %/build %/exec
 	@$(NOOP)
 
-%/exec: $(O_ABS)/%/exec/memory.svg $(O_ABS)/%/exec/duration.svg
+%/exec: $(O_ABS)/%/exec/memory.svg 
 	@$(NOOP)
 
-%/build: $(O_ABS)/%/build/memory.svg $(O_ABS)/%/build/duration.svg
+%/build: $(O_ABS)/%/build/memory.svg
 	@$(NOOP)
 
 %/memory.svg: %/detail.json $(PROCESS_SAMPLES_FINAL_BIN)
 	$(PROCESS_SAMPLES_FINAL_BIN) -q -t memory -o $@ $<
-
-%/duration.svg: %/detail.json $(PROCESS_SAMPLES_FINAL_BIN)
-	$(PROCESS_SAMPLES_FINAL_BIN) -q -t duration -o $@ $<
 
 $(O_ABS)/%/build/detail.json: $(PROC_PROBE_FINAL_BIN) FORCE
 	mkdir -p $(@D)
