@@ -16,7 +16,10 @@ pub struct Arguments {
 
     /// Sample period in micro second
     #[clap(short, long, default_value_t = 1000)]
-    pub sample_period: TimeMicro
+    pub sample_period: TimeMicro,
+
+    #[clap(long)]
+    pub title: Option<String>,
 }
 
 #[derive(ValueEnum, Clone, Copy)]

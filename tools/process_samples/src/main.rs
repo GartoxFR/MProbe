@@ -49,10 +49,7 @@ fn main() {
             plot_memory(
                 args.output.as_ref().map(|s| &s[..]),
                 &res,
-                &format!(
-                    "Mesure {} : {}",
-                    save_file.header.method, save_file.header.command
-                ),
+                save_file.header.title.unwrap_or(save_file.header.command).as_str(),
                 !args.queit,
             )
             .unwrap();

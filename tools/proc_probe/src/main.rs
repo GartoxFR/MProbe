@@ -144,6 +144,7 @@ fn main() {
         command: args.program.join(" "),
         method: args.method.to_string(),
         sample_period,
+        title: args.title
     };
 
     let save_file_content = SaveFile {

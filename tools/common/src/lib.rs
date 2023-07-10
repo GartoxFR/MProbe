@@ -13,7 +13,8 @@ pub struct HeaderInfo {
     pub round_count: usize,
     pub command: String,
     pub method: String,
-    pub sample_period: TimeMicro
+    pub sample_period: TimeMicro,
+    pub title: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -21,5 +22,3 @@ pub struct SaveFile {
     pub header: HeaderInfo,
     pub data: Vec<usize>,
 }
-
-
