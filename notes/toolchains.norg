@@ -1,20 +1,186 @@
-* Problemes
-  - Compilation vraiment longues
-  - Je ne peux rien faire sur mon pc pendant ce temps pour ne rien fausser
-  - Le serveur de calcul semble tourner sur HDD ce qui déplace le bottleneck sur le disque
-  - Compilation parfois gourmande en mémoire (par exemple compiler gcc en -j8 remplis ma RAM + mon Swap et fait donc planter le pc)
-  - Amène à la question de quel nombre de job on veut mesurer ? Evidemment $- de thread = - de conso mémoire$
+* Méthodologie
 
-* Dépendences 
+** Toolchain de type 1
 
-** GCC et G++
-   GCC dépend d'un compilateur C++ même si l'on ne compile que le compilateur C
+   On appelle toolchain de type 1 celle qui sont self-hosted. C'est à dire que 
+   la toolchain est capable de compiler son propre code source. 
 
-** Rust
-   Rust dépend de LLVM qui a besoin de C++ pour build donc potentiellement c++, g++ ou encore clang++
+*** Quoi mesurer ?
 
-** Python
-   >   libssl-dev zlib1g-dev libncurses5-dev 
-   >   libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev 
-   >   libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev
+    Pour ces toolchain, il est intéressant de mesurer la compilation de son
+    code source par la toolchain produite par ce code source.
+
+
+*** Comment ?
+
+    ~ Avoir une version de la toolchain produite par les sources dont l'on veut mesurer la compilation 
+    ~~ Compilation multistage (bootstrap) à partir d'un compilateur quelconque compatible
+    ~~ Installation du résultat dans un dossier spécifique
+    ~ Mesure de la compilation en -j1 de la toolchain en utilisant celle tout juste bootstrapée
+
+*** Influence du compilateur utilisé pour le bootstrap 
+
+    Avec cette méthode, le compilateur utilisé pour le stage0 du bootstrap n'a aucun impact, ce
+    qui rend cette expérience plus reproductible
+
+** Toolchain de type 2
+
+   On appelle toolchain de type 2 celle qui ne peuvent pas compiler leur propre code sources.
+   Par exemple CPython.
+
+*** Quoi mesurer ?
+
+    On est obligé de considérer la compilation de la toolchain X par une toolchain Y à choisir.
+
+*** Influence de la toolchain Y
+
+    Les optimisation que peut réaliser la toolchain Y peut donc influencer la compilation 
+    de ce qui nous intéresse. 
+
+    Par exemple, compiler CPython avec un compilateur C non optimisant coûtera sûrement moins cher
+    que le compiler avec les optimisation, et ce indépendemment de la version de CPython étudiée
+
+* Environnement de mesure
+** Matériel
+   - 16 coeurs
+   - 128GB de RAM
+
+** Système d'exploitation
+   `uname -a`
+   > Linux luuna 5.10.0-15-amd64 #1 SMP Debian 5.10.120-1 (2022-06-09) x86_64 GNU/Linux
+
+
+** Outils de compilation
+
+   Notre serveur de calcul possède déjà certains outils que nous ne recompileront pas. Ces outils
+   proviennent des repository Debian.
+
+*** Make
+    `make --version`
+    > GNU Make 4.3 
+
+*** Ninja 
+    `ninja --version`
+    > 1.10.1
+
+*** CMake
+    `cmake --version`
+    > cmake version 3.18.4
+
+* Toolchains
+
+**  Clang + lld + LLVM
+
+*** Description
+
+    - Clang es le frontend C/C++ de LLVM. Il ne fait donc pas sens 
+    de le compiler sans LLVM. Les deux réunis forment une toolchain 
+    de type 1. 
+    - lld est linker de LLVM, needed because we want a full usable toolchain
+
+*** Version 
+
+    - LLVM `16.0.2` (Même que pour rust)
+    - Clang `16.0.2` 
+
+*** Sources
+
+    - Download : {https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.2/llvm-project-16.0.2.src.tar.xz}
+    - sha256 : 6d8acae041ccd34abe144cda6eaa76210e1491f286574815b7261b3f2e58734c
+
+*** Commands
+**** Bootstrap 
+     @code bash
+     cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+     -DCLANG_ENABLE_BOOTSTRAP=On \
+     -DCLANG_BOOTSTRAP_PASSTHROUGH="CMAKE_INSTALL_PREFIX;CMAKE_VERBOSE_MAKEFILE" \
+     -DLLVM_ENABLE_PROJECTS="clang" \
+     -DCMAKE_INSTALL_PREFIX=/data/ewan/clang/out \
+     ../llvm-project-16.0.2/llvm
+
+     ninja stage2 install
+     @end
+
+**** Mesure
+     @code bash
+     cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+     -DLLVM_ENABLE_PROJECTS="clang;lld" \
+     -DCMAKE_C_COMPILER="/data/ewan/clang/out/bin/clang" \
+     -DCMAKE_CXX_COMPILER="/data/ewan/clang/out/bin/clang++" \
+     -DCMAKE_AR="/data/ewan/clang/out/bin/llvm-ar" \
+     -DLLVM_USE_LINKER="/data/ewan/clang/out/bin/ld.lld" \
+     -DCMAKE_INSTALL_PREFIX=/data/ewan/clang/mesure_out \
+     ../llvm-project-16.0.2/llvm
+
+     proc_probe --method rss -o /data/ewan/results/clang.json \
+     -s 100000  \
+     --title "Compilation de clang" \
+     -- ninja -j 1
+     @end
+
+** Rustc
+*** Description 
+
+    `rustc` est un le compilateur de rust. Il utilise LLVM comme backend.
+    `rustc` êtant écrit en rust, on le considère comme une toolchain de type 1.
+    
+*** Version
+
+    - rustc : `1.70.0`
+    - LLVM : `16.0.2`
+
+*** Sources 
+  
+    @code bash
+    git clone https://github.com/rust-lang/rust.git --depth 1 --single-branch --branch=1.70.0 
+    cd rust
+    git submodule update --init --depth 1 src/llvm-project
+    @end
+
+*** Méthodologie
+
+    ~ On mesure la compilation de LLVM patché par rust (même version que le LLVM utilisé pour clang
+      mais avec des patch supplémentaire) en utilisant notre `clang` compilé pour l'expérience {** Clang + lld + LLVM}
+    ~ On bootstrap rust afin d'avoir les artéfacts stage2 (rustc compilé par lui même)
+    ~ On mesure la compilation d'un stage3 (rustc + libstd) à partir de notre artéfact stage2
+    ~ (Optional) On compare notre stage3 et stage2 afin de s'assurer qu'on à mesuré ce que l'on cherchait
+
+
+*** Commandes
+
+  Ces étapes doivent être réalisée dans l'ordre au moins une fois.
+    
+**** Mesure LLVM
+     @code bash
+     rm -rf build/x86_64-unknown-linux-gnu/llvm
+
+     ./configure --set llvm.download-ci-llvm=false \
+     --set target.x86_64-unknown-linux-gnu.cc=/data/ewan/clang/out/bin/clang \
+     --set target.x86_64-unknown-linux-gnu.cxx=/data/ewan/clang/out/bin/clang++ \
+     --set target.x86_64-unknown-linux-gnu.ar=/data/ewan/clang/out/bin/llvm-ar 
+
+     proc_probe --method rss -o /data/ewan/results/llvm-rust.json \
+     -s 100000  \
+     --title "Compilation de LLVM pour Rust" \
+     -- ./x build llvm -j 1
+     @end
+    
+**** Bootstrap rustc
+     @code bash
+     ./x clean
+
+     ./x build --stage 2 library
+     @end
+**** Mesure rustc
+
+     S'assurer que les stage1 et 2 sont déjà présents
+
+     @code bash
+     rm -rf build/stage3
+
+     proc_probe --method rss -o /data/ewan/results/rustc.json \
+     -s 100000  \
+     --title "Compilation de rustc" \
+     -- ./x build --stage 3 library
+     @end
 

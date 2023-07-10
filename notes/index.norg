@@ -1,6 +1,5 @@
 * TODO
   - (x) Lire rapport
-
   - (x) Lire papiers cités
   -- (x) An Empirical Comparison of 7 Programming Languages
   -- (x) A Comparative Study of Programming Languages in Rosetta Code
@@ -31,7 +30,7 @@
   -- (x) Pouvoir spécifier le nom des fichiers de sortie
   -- (x) Readme sur comment utiliser le Makefile
 
-  - (-) Lire papier de la biblio
+  - (x) Lire papier de la biblio
 
   - (x) Ameliorer visualation
   -- (x) Ajouter la commande surveillée en guise de titre
@@ -56,20 +55,24 @@
 
   - (!) Lire "Reflections on truting trust" de Ken THOMPSON
 
-  - ( ) Pour bootsraper cpp regarder {https://bootstrappable.org/}[Site]
-  - ( ) Mesurer des bootstrap qui partent de TCC
-  -- ( ) TCC -> CPython
-  -- ( ) TCC -> Rust = TCC -> GCC entierement en C mais qui compile cpp -> GCC récent -> LLVM et rustc
+  - (_) Pour bootsraper cpp regarder {https://bootstrappable.org/}[Site]
+  - (_) Mesurer des bootstrap qui partent de TCC
+  -- (_) TCC -> CPython
+  -- (_) TCC -> Rust = TCC -> GCC entierement en C mais qui compile cpp -> GCC récent -> LLVM et rustc
 
-  - (!) Réduire taille JSON
-  -- (!) Sommer les conso des processus
-  -- (!) Sous échantillonner à la volé
+  - (x) Réduire taille JSON
+  -- (x) Sommer les conso des processus
+  -- (x) Sous échantillonner à la volé
 
-  - ( ) Prioriser seulement le j1
+  - (x) Prioriser seulement le j1
 
-  - ( ) À la visualation, compter les "missed samples" et leur proportion
+  - (x) À la visualation, compter les "missed samples" et leur proportion
 
-  - (!) Mesurer la compilation de TCC par lui même
+  - (x) Mesurer la compilation de TCC par lui même
+
+  - Dorenavant GCC = C et CPP
+
+  - Mesurer LLVM
 
   - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round
@@ -83,9 +86,10 @@
   - {:recherche-plot:}[Recherche sur les librairies pour les figures]
   - {:smaps-overhead:}[Probleme avec smaps]
   - {:toolchains:}[Notes sur les toolchains]
+  
 
 * Meetings
-  - Jeudi 13 juillet 13h30
+  - {@ Thursday 13 July 2023} 13h30
 
 * Autre conf
 
