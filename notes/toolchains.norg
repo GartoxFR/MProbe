@@ -94,7 +94,7 @@
      cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
      -DCLANG_ENABLE_BOOTSTRAP=On \
      -DCLANG_BOOTSTRAP_PASSTHROUGH="CMAKE_INSTALL_PREFIX;CMAKE_VERBOSE_MAKEFILE" \
-     -DLLVM_ENABLE_PROJECTS="clang" \
+     -DLLVM_ENABLE_PROJECTS="clang;lld" \
      -DCMAKE_INSTALL_PREFIX=/data/ewan/clang/out \
      ../llvm-project-16.0.2/llvm
 
@@ -157,7 +157,8 @@
      ./configure --set llvm.download-ci-llvm=false \
      --set target.x86_64-unknown-linux-gnu.cc=/data/ewan/clang/out/bin/clang \
      --set target.x86_64-unknown-linux-gnu.cxx=/data/ewan/clang/out/bin/clang++ \
-     --set target.x86_64-unknown-linux-gnu.ar=/data/ewan/clang/out/bin/llvm-ar 
+     --set target.x86_64-unknown-linux-gnu.ar=/data/ewan/clang/out/bin/llvm-ar \
+     --set build.full-bootstrap=true
 
      proc_probe --method rss -o /data/ewan/results/llvm-rust.json \
      -s 100000  \
@@ -171,16 +172,123 @@
 
      ./x build --stage 2 library
      @end
+
 **** Mesure rustc
 
      S'assurer que les stage1 et 2 sont déjà présents
 
      @code bash
-     rm -rf build/stage3
+     rm -rf build/x86_64-unknown-linux-gnu/stage3*
 
      proc_probe --method rss -o /data/ewan/results/rustc.json \
      -s 100000  \
      --title "Compilation de rustc" \
-     -- ./x build --stage 3 library
+     -- ./x build --stage 3 library -j 1
      @end
 
+     Puisque l'on ne possède ici qu'une librairie stage3 avec le compilateur stage2,
+     cette commande va d'abord build le compilateur stage3 avant de build la librairie
+     stage4. On mesure ainsi bien la compilation de rustc + librairie
+
+** GCC
+*** Description
+
+    GCC est la collection de compilateur de GNU. C'est donc la toolchain
+    la plus utilisée par les distribution GNU/Linux. Nous nous intéressons
+    pour notre étude aux compilateurs C/C++ de GCC. Avec ces deux languages,
+    on peut considérer GCC comme une toolchain de type1
+
+*** Version
+    - GCC `11.4.0`
+
+*** Sources
+    - Download - {https://ftp.gnu.org/gnu/gcc/gcc-11.4.0/gcc-11.4.0.tar.gz}
+    - sha256 - af828619dd1970734dda3cfb792ea3f2cba61b5a00170ba8bce4910749d73c07
+    
+*** Commandes
+**** Télécharger dépendances
+     @code bash
+     contrib/download_prerequisites
+     @end
+**** Bootstrap
+     @code bash
+     ../gcc-11.4.0/configure \
+     --enable-multilib \
+     --prefix=/data/ewan/gcc/out \
+     --enable-bootstrap \
+     --build=x86_64-pc-linux-gnu \
+     --host=x86_64-pc-linux-gnu \
+     --target=x86_64-pc-linux-gnu \
+     --enable-ld=yes \
+     --enable-languages=c,c++
+
+     make -j && make install
+     @end
+**** Mesure
+     @code bash
+     export LD_LIBRARY_PATH=/data/ewan/gcc/out/lib:/data/ewan/gcc/out/lib64/lib
+
+     CC=/data/ewan/gcc/out/bin/gcc \
+     CXX=/data/ewan/gcc/out/bin/g++ \
+     LDFLAGS="-L/data/ewan/gcc/out/lib -L/data/ewan/gcc/out/lib64/lib" \
+     ../gcc-11.4.0/configure --disable-multilib \
+     --prefix=/data/ewan/gcc/out \
+     --enable-ld=yes \
+     --build=x86_64-pc-linux-gnu \
+     --host=x86_64-pc-linux-gnu \
+     --target=x86_64-pc-linux-gnu \
+     --disable-bootstrap \
+     --enable-languages=c,c++
+
+     proc_probe --method rss -o /data/ewan/results/gcc.json \
+     -s 100000  \
+     --title "Compilation de gcc" \
+     -- make -j 1 
+     @end
+
+*** Problemes
+
+    Cette expérience ne prennent pas en compte la compilation des binutils
+    (ld, as, objdump, ar.....) et se basent sur celle du système hôte
+** TCC
+*** Description
+    Tiny C Compiler (TCC) est compilateur C se voulant léger et
+    rapide. Il supporte ANSI et la plupart du standart ISO C99.
+    Il est capable de se compiler lui même, c'est donc un compilateur
+    de type1
+
+*** Version
+    - TCC `0.9.27`
+ 
+*** Sources
+    - Download - {https://download.savannah.gnu.org/releases/tinycc/tcc-0.9.27.tar.bz2}
+    - sha256 - de23af78fca90ce32dff2dd45b3432b2334740bb9bb7b05bf60fdbfc396ceb9c
+
+*** Commandes
+**** Bootstrap
+     @code bash
+     ../tcc-0.9.27/configure \
+     --prefix=/data/ewan/tcc/stage1 \
+
+     make -j && make install
+     rm -rf *
+
+     ../tcc-0.9.27/configure \
+     --prefix=/data/ewan/tcc/out \
+     --cc=/data/ewan/tcc/stage1/bin/tcc
+
+     make -j && make install
+     @end
+
+**** Mesure
+     @code bash 
+     ../tcc-0.9.27/configure \
+     --cc=/data/ewan/tcc/out/bin/tcc
+
+     # Plus de points que les autres car compilation bien plus courte  
+     proc_probe --method rss -o /data/ewan/results/tcc.json \
+     -s 1000  \
+     --title "Compilation de tcc" \
+     -- make -j 1 
+
+     @end

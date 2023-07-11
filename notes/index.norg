@@ -53,7 +53,7 @@
   -- (x) CPython
   -- ( ) JVM
 
-  - (!) Lire "Reflections on truting trust" de Ken THOMPSON
+  - (x) Lire "Reflections on truting trust" de Ken THOMPSON
 
   - (_) Pour bootsraper cpp regarder {https://bootstrappable.org/}[Site]
   - (_) Mesurer des bootstrap qui partent de TCC
@@ -70,9 +70,9 @@
 
   - (x) Mesurer la compilation de TCC par lui même
 
-  - Dorenavant GCC = C et CPP
+  - (x) Dorenavant GCC = C et CPP
 
-  - Mesurer LLVM
+  - (x) Mesurer LLVM
 
   - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round
@@ -89,7 +89,7 @@
   
 
 * Meetings
-  - {@ Thursday 13 July 2023} 13h30
+  - {@ Thursday 13 July 2023} 13h30 {:reunions/13-07:}
 
 * Autre conf
 

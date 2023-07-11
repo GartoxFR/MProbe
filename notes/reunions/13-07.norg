@@ -1,0 +1,12 @@
+* Points à aborder
+
+  ~ ( ) Présentation des manips effectués 
+  ~~ ( ) Présentation des deux types de toolchain
+  ~~ ( ) Présentation des toolchain étudiés 
+  ~~~ ( ) Clang + LLVM  {:../toolchains:** Clang + lld + LLVM}
+  ~~~ ( ) Rustc  {:../toolchains:** Rustc}
+  ~~~ ( ) GCC  {:../toolchains:** GCC}
+  ~~~ ( ) TCC  {:../toolchains:** TCC}
+  ~ ( ) Présentation des courbes
+  ~ ( ) Discussion des problemes rencontrés
+  ~ ( ) Discussion par rapport à la suite
