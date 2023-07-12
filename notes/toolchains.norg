@@ -304,7 +304,7 @@
 
 *** Sources
     - Download - {https://github.com/python/cpython/archive/refs/heads/3.8.tar.gz}
-    - sha256 -
+    - sha256 - 174e8c544c7decb32c5ff200281916808bb0277f98d1670f359de8d3cef33b62
 
 *** Commandes
 **** Mesure avec gcc

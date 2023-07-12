@@ -1,6 +1,10 @@
 * Points à aborder
 
-  ~ ( ) Présentation des manips effectués 
+  ~ ( ) Présentation des modification de l'outil
+  ~~ ( ) Renommage (mprobe et mplot)
+  ~~ ( ) Plus aucun détail sur les processus et leur nombre
+  ~~ ( ) Sous échantillonage à la volée
+  ~ ( ) Présentation des manips effectuées 
   ~~ ( ) Présentation des deux types de toolchain
   ~~ ( ) Présentation des toolchain étudiés 
   ~~~ ( ) Clang + LLVM  {:../toolchains:** Clang + lld + LLVM}
