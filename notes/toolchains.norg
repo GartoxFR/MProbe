@@ -112,7 +112,7 @@
      -DCMAKE_INSTALL_PREFIX=/data/ewan/clang/mesure_out \
      ../llvm-project-16.0.2/llvm
 
-     proc_probe --method rss -o /data/ewan/results/clang.json \
+     mprobe --method rss -o /data/ewan/results/clang.json \
      -s 100000  \
      --title "Compilation de clang" \
      -- ninja -j 1
@@ -160,7 +160,7 @@
      --set target.x86_64-unknown-linux-gnu.ar=/data/ewan/clang/out/bin/llvm-ar \
      --set build.full-bootstrap=true
 
-     proc_probe --method rss -o /data/ewan/results/llvm-rust.json \
+     mprobe --method rss -o /data/ewan/results/llvm-rust.json \
      -s 100000  \
      --title "Compilation de LLVM pour Rust" \
      -- ./x build llvm -j 1
@@ -180,7 +180,7 @@
      @code bash
      rm -rf build/x86_64-unknown-linux-gnu/stage3*
 
-     proc_probe --method rss -o /data/ewan/results/rustc.json \
+     mprobe --method rss -o /data/ewan/results/rustc.json \
      -s 100000  \
      --title "Compilation de rustc" \
      -- ./x build --stage 3 library -j 1
@@ -240,7 +240,7 @@
      --disable-bootstrap \
      --enable-languages=c,c++
 
-     proc_probe --method rss -o /data/ewan/results/gcc.json \
+     mprobe --method rss -o /data/ewan/results/gcc.json \
      -s 100000  \
      --title "Compilation de gcc" \
      -- make -j 1 
@@ -286,7 +286,7 @@
      --cc=/data/ewan/tcc/out/bin/tcc
 
      # Plus de points que les autres car compilation bien plus courte  
-     proc_probe --method rss -o /data/ewan/results/tcc.json \
+     mprobe --method rss -o /data/ewan/results/tcc.json \
      -s 1000  \
      --title "Compilation de tcc" \
      -- make -j 1 
