@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 
 use plotpy::{Curve, Plot};
 
-use crate::utils::{convert_time_micro, convert_kb};
+use crate::utils::{convert_kb, convert_time_micro};
 
 pub fn plot_memory(
     path: Option<&str>,
@@ -18,6 +18,8 @@ pub fn plot_memory(
     let max_memory = points.iter().map(|(_, y)| y).copied().max().unwrap_or(0);
     let (_, memory_unit, memory_divisor) = convert_kb(max_memory as f64);
 
+    let time_divisor = f64::min(time_divisor, 1_000_000.0);
+
     let mut curve = Curve::new();
     curve.points_begin();
     for (x, y) in points.iter().copied() {
@@ -28,10 +30,17 @@ pub fn plot_memory(
     curve.points_end();
 
     let mut plot = Plot::new();
+    if let "hh:mm:ss" = time_unit {
+        plot.extra("import time\nplt.axes().xaxis.set_major_formatter(tck.FuncFormatter(lambda x, pos: time.strftime('%H:%M:%S', time.gmtime(x))))\n");
+    }
     plot.add(&curve);
 
-    plot.grid_and_labels(&format!("Temps ({})", time_unit), &format!("Mémoire utilisée ({})", memory_unit));
+    plot.grid_and_labels(
+        &format!("Temps ({})", time_unit),
+        &format!("Mémoire utilisée ({})", memory_unit),
+    );
     plot.set_title(title);
+
 
     match show {
         false => plot.save(path)?,
@@ -100,7 +109,10 @@ pub fn _plot_process_duration(
     plot.add(&curve_percentile);
 
     plot.set_title(title);
-    plot.grid_labels_legend("Nombre de processus", &format!("Durée du round de mesure ({})", unit));
+    plot.grid_labels_legend(
+        "Nombre de processus",
+        &format!("Durée du round de mesure ({})", unit),
+    );
 
     match show {
         false => plot.save(path)?,
