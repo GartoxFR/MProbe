@@ -292,3 +292,41 @@
      -- make -j 1 
 
      @end
+** CPython
+*** Description
+    CPython est une implémentation de Python écrite en C. C'est une toolchain
+    de type 2. On propose donc de mesurer sa compilation à l'aide de gcc et clang
+    en prenant les version dont la compilation à été mesurée précédemment.
+
+*** Version
+    - CPython `3.8`
+
+
+*** Sources
+    - Download - {https://github.com/python/cpython/archive/refs/heads/3.8.tar.gz}
+    - sha256 -
+
+*** Commandes
+**** Mesure avec gcc
+
+     @code bash
+     CC=/data/ewan/gcc/out/bin/gcc \
+     ../cpython-3.8/configure
+
+     mprobe --method rss -o /data/ewan/results/cpython_gcc.json \
+     -s 10000  \
+     --title "Compilation de cpython avec gcc" \
+     -- make -j 1 
+     @end
+
+**** Mesure avec clang
+     @code bash
+     CC=/data/ewan/clang/out/bin/clang \
+     ../cpython-3.8/configure
+
+     mprobe --method rss -o /data/ewan/results/cpython_clang.json \
+     -s 10000  \
+     --title "Compilation de cpython avec clang" \
+     -- make -j 1 
+    
+     @end

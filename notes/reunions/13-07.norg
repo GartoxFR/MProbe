@@ -7,6 +7,7 @@
   ~~~ ( ) Rustc  {:../toolchains:** Rustc}
   ~~~ ( ) GCC  {:../toolchains:** GCC}
   ~~~ ( ) TCC  {:../toolchains:** TCC}
+  ~~~ ( ) CPython  {:../toolchains:** CPython}
   ~ ( ) Présentation des courbes
   ~ ( ) Discussion des problemes rencontrés
   ~ ( ) Discussion par rapport à la suite
