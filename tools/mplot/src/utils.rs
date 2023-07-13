@@ -1,5 +1,5 @@
 pub fn convert_time_micro(mut time: f64) -> (f64, &'static str, f64) {
-    static UNITS: [(&str, f64); 3] = [("ms", 1000.0), ("s", 1000.0), ("hh:mm:ss", 60.0)];
+    static UNITS: [(&str, f64); 4] = [("ms", 1000.0), ("s", 1000.0), ("min", 60.0), ("h", 60.0)];
     let mut unit = "μs";
     let mut global_divisor = 1.0;
 
