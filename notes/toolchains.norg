@@ -215,7 +215,7 @@
      ../gcc-11.4.0/configure \
      --enable-multilib \
      --prefix=/data/ewan/gcc/out \
-     --enable-bootstrap \
+     --disable-bootstrap \
      --build=x86_64-pc-linux-gnu \
      --host=x86_64-pc-linux-gnu \
      --target=x86_64-pc-linux-gnu \
@@ -248,7 +248,7 @@
 
 *** Problemes
 
-    Cette expérience ne prennent pas en compte la compilation des binutils
+    Cette expérience ne prend pas en compte la compilation des binutils
     (ld, as, objdump, ar.....) et se basent sur celle du système hôte
 ** TCC
 *** Description

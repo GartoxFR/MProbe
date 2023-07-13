@@ -14,10 +14,10 @@ pub fn add_curve_to_plot(
     let max_memory = points.iter().map(|(_, y)| y).copied().max().unwrap_or(0);
     let (_, memory_unit, memory_divisor) = convert_kb(max_memory as f64);
 
-    if format_date {
+    if format_date && time_divisor > 60_000_000.0 {
+        time_unit = "hh:mm:ss";
         time_divisor = 1_000_000.0;
-        time_unit  = "hh:mm:ss"
-    } 
+    }
 
     let mut curve = Curve::new();
     curve.points_begin();

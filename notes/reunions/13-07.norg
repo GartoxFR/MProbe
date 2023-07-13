@@ -1,19 +1,19 @@
 * Points à aborder
 
-  ~ ( ) Présentation des modification de l'outil
-  ~~ ( ) Renommage (mprobe et mplot)
-  ~~ ( ) Plus aucun détail sur les processus et leur nombre
-  ~~ ( ) Sous échantillonage à la volée
-  ~ ( ) Présentation des manips effectuées 
-  ~~ ( ) Présentation des deux types de toolchain
-  ~~ ( ) Présentation des toolchain étudiés 
-  ~~~ ( ) Clang + LLVM  {:../toolchains:** Clang + lld + LLVM}
-  ~~~ ( ) Rustc  {:../toolchains:** Rustc}
-  ~~~ ( ) GCC  {:../toolchains:** GCC}
-  ~~~ ( ) TCC  {:../toolchains:** TCC}
-  ~~~ ( ) CPython  {:../toolchains:** CPython}
-  ~ ( ) Présentation des courbes
-  ~ ( ) Discussion des problemes rencontrés
-  ~ ( ) Discussion par rapport à la suite
-  ~~ ( ) Potentiel programme de comparaison
+  ~ (x) Présentation des modification de l'outil
+  ~~ (x) Renommage (mprobe et mplot)
+  ~~ (x) Plus aucun détail sur les processus et leur nombre
+  ~~ (x) Sous échantillonage à la volée
+  ~ (x) Présentation des manips effectuées 
+  ~~ (x) Présentation des deux types de toolchain
+  ~~ (x) Présentation des toolchain étudiés 
+  ~~~ (x) Clang + LLVM  {:../toolchains:** Clang + lld + LLVM}
+  ~~~ (x) Rustc  {:../toolchains:** Rustc}
+  ~~~ (x) GCC  {:../toolchains:** GCC}
+  ~~~ (x) TCC  {:../toolchains:** TCC}
+  ~~~ (x) CPython  {:../toolchains:** CPython}
+  ~ (x) Présentation des courbes
+  ~ (x) Discussion des problemes rencontrés
+  ~ (x) Discussion par rapport à la suite
+  ~~ (x) Potentiel programme de comparaison
          {https://en.wikipedia.org/wiki/Tf%E2%80%93idf}[Principe d'un moteur de recherche]

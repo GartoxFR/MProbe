@@ -74,6 +74,10 @@
 
   - (x) Mesurer LLVM
 
+  - ( ) Essayer TCC par Python en creusant un peu
+  - ( ) Capture et horodatage des logs
+  - ( ) Programme tf idf pour chaque langage
+
   - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round
   -- (_) Durée du plus long round
@@ -89,9 +93,9 @@
   
 
 * Meetings
-  - {@ Thursday 13 July 2023} 13h30 {:reunions/13-07:}
-
-* Autre conf
+  - {@ Thursday 20 July 2023} 10h
+  - {@ Wednesday 26 July 2023} 14h
+  - {@ Monday 21 August 2023} 10h
 
 * Idées
 ** Aggrégation des donnés des différents process
