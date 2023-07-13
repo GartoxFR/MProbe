@@ -81,6 +81,10 @@ fn main() {
             let mut plot = Plot::new();
 
             for (i, (_, header, res)) in processed.into_iter().enumerate() {
+                if res.is_empty() {
+                    continue;
+                }
+
                 plot.set_subplot(grid_rows, grid_cols, i + 1);
                 add_curve_to_plot(
                     &res,
@@ -109,6 +113,9 @@ fn main() {
             });
             thread::scope(|s| {
                 for (input, header, res) in processed.into_iter() {
+                    if res.is_empty() {
+                        continue;
+                    }
                     let plot_file_name = match output {
                         Some(ref name) => Cow::from(name),
                         None => Cow::from(format!(

@@ -75,7 +75,7 @@ clean:
 	@$(NOOP)
 
 %/memory.svg: %/detail.json $(PROCESS_SAMPLES_FINAL_BIN)
-	$(PROCESS_SAMPLES_FINAL_BIN) -q -t memory -o $@ $<
+	$(PROCESS_SAMPLES_FINAL_BIN) -q -o $@ $<
 
 $(O_ABS)/%/build/detail.json: $(PROC_PROBE_FINAL_BIN) FORCE
 	mkdir -p $(@D)
