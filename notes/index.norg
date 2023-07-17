@@ -74,9 +74,15 @@
 
   - (x) Mesurer LLVM
 
-  - ( ) Essayer TCC par Python en creusant un peu
-  - ( ) Capture et horodatage des logs
-  - ( ) Programme tf idf pour chaque langage
+  - ( ) Essayer CPython par TCC en creusant un peu
+  - (-) Capture et horodatage des logs
+  -- (x) GCC with logs
+  -- (-) Clang with logs
+  -- (x) rust LLVM with logs
+  -- (-) rustc with logs
+  -- ( ) tcc with logs
+  -- (x) CPython with logs
+  - (-) Programme tf idf pour chaque langage
 
   - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round
