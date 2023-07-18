@@ -5,7 +5,7 @@ BIN := $(abspath target/release/tf_idf)
 -include target/release/tf_idf.d
 
 probe_exec: $(BIN) 
-	$(PROBE) -o $(PROBE_OUTPUT) --title "Execution de tf_idf Rust"  -- $(BIN) "opengl texture" ../../../corpus/opengl/*
+	$(PROBE) -o $(PROBE_OUTPUT) --title "Execution de tf_idf Rust"  -- $(BIN) "war" ../../../corpus/gutenberg/*
 
 probe_build: 
 	@cargo clean

@@ -1,9 +1,11 @@
 #include "IdMap.h"
 #include <algorithm>
 #include <cmath>
+#include <codecvt>
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <locale>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -12,14 +14,16 @@ using namespace std;
 
 const static string usage = "tf_idf <query> <FILES...>";
 
-static bool isSeparator(char c) { return !isalnum(c); }
+static bool isSeparator(char32_t c) { return !iswalnum(c); }
 
-static optional<unordered_map<uint32_t, uint32_t>> parseFile(const string& filename,
-                                                   IdMap& ids) {
+static optional<unordered_map<uint32_t, uint32_t>>
+parseFile(const string& filename, IdMap& ids) {
     unordered_map<uint32_t, uint32_t> termCount;
 
     string buffer;
     ifstream is(filename);
+
+    wstring_convert<codecvt_utf8<char32_t>, char32_t> cvt;
 
     if (!is) {
         return nullopt;
@@ -27,19 +31,20 @@ static optional<unordered_map<uint32_t, uint32_t>> parseFile(const string& filen
 
     while (getline(is, buffer)) {
 
-        string::const_iterator wordBegin = buffer.cbegin();
-        string::const_iterator wordEnd;
-        while (wordBegin < buffer.cend()) {
-            wordEnd = find_if(wordBegin, buffer.cend(), isSeparator);
+        u32string wBuffer = cvt.from_bytes(buffer);
+        u32string::const_iterator wordBegin = wBuffer.cbegin();
+        u32string::const_iterator wordEnd;
+        while (wordBegin < wBuffer.cend()) {
+            wordEnd = find_if(wordBegin, wBuffer.cend(), isSeparator);
 
             if (wordBegin == wordEnd) {
                 ++wordBegin;
                 continue;
             }
 
-            string word(wordBegin, wordEnd);
+            u32string word(wordBegin, wordEnd);
             transform(word.begin(), word.end(), word.begin(), ::tolower);
-            uint32_t id = ids.get_or_register(word);
+            uint32_t id = ids.get_or_register(cvt.to_bytes(word));
 
             termCount[id]++;
 
@@ -66,21 +71,23 @@ computeScore(const string& query,
         totalTermCount += value;
     }
 
-    string::const_iterator wordBegin = query.cbegin();
-    string::const_iterator wordEnd;
+    wstring_convert<codecvt_utf8<char32_t>, char32_t> cvt;
+    u32string wQuery = cvt.from_bytes(query);
+    u32string::const_iterator wordBegin = wQuery.cbegin();
+    u32string::const_iterator wordEnd;
 
-    while (wordBegin < query.cend()) {
-        wordEnd = find_if(wordBegin, query.cend(), isSeparator);
+    while (wordBegin < wQuery.cend()) {
+        wordEnd = find_if(wordBegin, wQuery.cend(), isSeparator);
         if (wordBegin == wordEnd) {
             ++wordBegin;
             continue;
         }
 
-        string word(wordBegin, wordEnd);
+        u32string word(wordBegin, wordEnd);
         transform(word.begin(), word.end(), word.begin(), ::tolower);
 
         uint32_t id;
-        if (optional<uint32_t> optionalId = ids.get(word)) {
+        if (optional<uint32_t> optionalId = ids.get(cvt.to_bytes(word))) {
             id = optionalId.value();
         }
 
@@ -110,6 +117,8 @@ bool scoreCmp(const pair<double, string>& a, const pair<double, string>& b) {
 }
 
 int main(int argc, char** argv) {
+
+    setlocale(LC_ALL, "");
 
     IdMap ids;
     unordered_map<string, unordered_map<uint32_t, uint32_t>> filesTermCount;
