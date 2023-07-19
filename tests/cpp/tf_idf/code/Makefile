@@ -26,5 +26,5 @@ $(BUILDDIR)/%.o : $(SOURCEDIR)/%.cpp
 	$(GCC) $(CCFLAGS) -MMD -c $< -o $@
 
 clean:
-	@rm $(DEP) $(OBJECTS) $(BINDIR)/$(EXE)
+	@rm -f $(DEP) $(OBJECTS) $(BINDIR)/$(EXE)
 

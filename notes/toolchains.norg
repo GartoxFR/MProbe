@@ -293,7 +293,8 @@
      mprobe --method rss -o /data/ewan/results/tcc.json \
      -s 1000  \
      --title "Compilation de tcc" \
-     -- make -j 1 
+     -- make -j 1 \
+     |& ts -s "%H:%M:%S %.s" | tee /data/ewan/results/tcc_log
 
      @end
 ** CPython
