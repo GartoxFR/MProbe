@@ -86,25 +86,19 @@ computeScore(const string& query,
         u32string word(wordBegin, wordEnd);
         transform(word.begin(), word.end(), word.begin(), ::tolower);
 
-        uint32_t id;
         if (optional<uint32_t> optionalId = ids.get(cvt.to_bytes(word))) {
-            id = optionalId.value();
+            uint32_t id = optionalId.value();
+            auto it = termCount.find(id);
+            if (it != termCount.end()) {
+                double tf = (double)it->second / totalTermCount;
+                double idf =
+                    log2((double)totalDocumentCount / documentsOccurences.at(id));
+
+                score += tf * idf;
+            }
+
         }
 
-        auto it = termCount.find(id);
-        if (it == termCount.end()) {
-            goto next_word;
-        }
-
-        {
-            double tf = (double)it->second / totalTermCount;
-            double idf =
-                log2((double)totalDocumentCount / documentsOccurences.at(id));
-
-            score += tf * idf;
-        }
-
-    next_word:
         wordBegin = wordEnd;
         ++wordBegin;
     }
