@@ -128,6 +128,7 @@ fn main() {
 
             // Round end
         }
+        println!("mprobe: Child commanded ended with: {}", handle.try_wait().unwrap().unwrap());
         if max_memory_sampled > 0 {
             rounds.push(max_memory_sampled);
         }
