@@ -75,14 +75,22 @@
   - (x) Mesurer LLVM
 
   - ( ) Essayer CPython par TCC en creusant un peu
-  - (-) Capture et horodatage des logs
+  - (x) Capture et horodatage des logs
   -- (x) GCC with logs
-  -- (-) Clang with logs
+  -- (x) Clang with logs
   -- (x) rust LLVM with logs
-  -- (-) rustc with logs
-  -- ( ) tcc with logs
+  -- (x) rustc with logs
+  -- (x) tcc with logs
   -- (x) CPython with logs
   - (-) Programme tf idf pour chaque langage
+  -- (x) Rust
+  -- (x) C++
+  -- ( ) C
+  -- (x) Python
+  -- (x) Java
+
+  - Découpler code de l'expe : pouvoir lancer plusieurs expé sur le même code
+
 
   - (_) Ajouter aux metadata :
   -- (_) Nombre max de process observé lors d'un round

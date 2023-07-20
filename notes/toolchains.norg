@@ -275,7 +275,7 @@
      --prefix=/data/ewan/tcc/stage1 \
 
      make -j && make install
-     rm -rf *
+     make distclean
 
      ../tcc-0.9.27/configure \
      --prefix=/data/ewan/tcc/out \
@@ -287,7 +287,8 @@
 **** Mesure
      @code bash 
      ../tcc-0.9.27/configure \
-     --cc=/data/ewan/tcc/out/bin/tcc
+     --cc=/data/ewan/tcc/out/bin/tcc \
+     --ar="/data/ewan/tcc/out/bin/tcc -ar"
 
      # Plus de points que les autres car compilation bien plus courte  
      mprobe --method rss -o /data/ewan/results/tcc.json \

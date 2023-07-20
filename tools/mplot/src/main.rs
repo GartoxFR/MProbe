@@ -33,14 +33,13 @@ fn process_input_file(input: &str) -> (&str, HeaderInfo, Vec<(usize, usize)>) {
         })
         .collect();
 
-    match missed_sample_count {
-        0 => eprintln!("{input}: No sample missed."),
-        missed_sample_count => eprintln!(
+    if missed_sample_count > 0 {
+        eprintln!(
             "{}: {} sample missed ({:.2} %)",
             input,
             missed_sample_count,
             missed_sample_count as f64 / save_file.data.len() as f64 * 100f64
-        ),
+        );
     }
 
     (input, save_file.header, res)
