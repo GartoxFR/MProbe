@@ -1,5 +1,5 @@
 ECHO = echo
-GCC = clang++
+GCC ?= clang++
 CCFLAGS = -O3 -Wall -Werror -std=c++20
 LDFLAGS = 
 EXE = tf_idf
