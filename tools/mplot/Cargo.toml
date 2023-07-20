@@ -8,5 +8,5 @@ edition = "2021"
 [dependencies]
 serde_json = "1.0.97"
 common = { path = "../common" }
-plotpy = "0.4.0"
+plotpy = { path = "../plotpy"}
 clap = { version = "4.3.8", features = ["derive"] }
