@@ -1,11 +1,12 @@
 import re
 import sys
 from math import log2
+from typing import Dict
 
 class IdMap:
     def __init__(self) -> None:
         self.next_id: int = 0
-        self.inner: dict[str, int] = {}
+        self.inner: Dict[str, int] = {}
 
     def get(self, word: str) -> int:
         return self.inner[word]
@@ -26,8 +27,8 @@ class IdMap:
         except KeyError:
             return self.register(word)
 
-def parse_file(filename: str, ids: IdMap) -> dict[int, int]:
-    termCount: dict[int, int] = {}
+def parse_file(filename: str, ids: IdMap) -> Dict[int, int]:
+    termCount: Dict[int, int] = {}
     with open(filename, "r") as file:
         for line in file.readlines():
             # Filtering empty strings because they are falsy
@@ -38,8 +39,8 @@ def parse_file(filename: str, ids: IdMap) -> dict[int, int]:
     return termCount
 
 def compute_score(query: str,
-                  term_count: dict[int, int], 
-                  documents_term_count: dict[int, int],
+                  term_count: Dict[int, int], 
+                  documents_term_count: Dict[int, int],
                   document_count: int,
                   ids: IdMap) -> float:
     score: float = 0.0
@@ -69,8 +70,8 @@ if __name__ == "__main__":
 
     query = sys.argv[1]
     ids = IdMap()
-    files_term_count: dict[str, dict[int, int]] = {}
-    documents_term_count: dict[int, int] = {}
+    files_term_count: Dict[str, Dict[int, int]] = {}
+    documents_term_count: Dict[int, int] = {}
 
     for filename in sys.argv[2:]: 
         term_count = parse_file(filename, ids)
