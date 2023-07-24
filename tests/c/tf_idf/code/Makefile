@@ -1,7 +1,7 @@
 # Code compiling variables
 ECHO = echo
-GCC = gcc
-CCFLAGS = -O3 -ansi -pedantic -Wall -std=c2x 
+GCC ?= gcc
+CCFLAGS = -O3 -pedantic -Wall -std=c99
 LDFLAGS = -O3 -lm
 EXE_NAME = tf_idf
 SOURCEDIR=src
@@ -11,6 +11,7 @@ EXE = $(BINDIR)/$(EXE_NAME)
 SOURCES = $(wildcard $(SOURCEDIR)/**/*.c) $(wildcard $(SOURCEDIR)/*.c)
 OBJECTS = $(SOURCES:$(SOURCEDIR)/%.c=$(BUILDDIR)/%.o)
 DEP=$(OBJECTS:%.o=%.d)
+DEPGENFLAGS ?=-MMD
 
 .PHONY = run code uml pdf clean
 
@@ -34,7 +35,7 @@ $(EXE) : $(OBJECTS)
 
 $(BUILDDIR)/%.o : $(SOURCEDIR)/%.c
 	@mkdir -p $(@D)
-	$(GCC) $(CCFLAGS) -MMD -c $< -o $@
+	$(GCC) $(CCFLAGS) $(DEPGENFLAGS) -c $< -o $@
 
 dir: 
 	@mkdir -p $(BUILDDIR)
