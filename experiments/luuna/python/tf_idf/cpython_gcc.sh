@@ -5,7 +5,7 @@ export EXEC_TITLE="Éxectution de tf_idf Python (CPython built by gcc)"
 
 export CLEAN=""
 export BUILD=""
-export EXEC="/data/ewan/cpython/gcc-out/bin/python3 tf_idf.py"
+export EXEC="/data/ewan/cpython/gcc-out/bin/python3 tf_idf.py 'war' /data/ewan/corpus/gutenberg/*"
 
 export BUILD_SAMPLE_PERIOD=100
 export EXEC_SAMPLE_PERIOD=100
