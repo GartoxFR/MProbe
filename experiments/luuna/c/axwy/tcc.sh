@@ -1,7 +1,7 @@
 export WD=$TEST_ROOT/c/axwy/
 
-export BUILD_TITLE="Compilation de axwy C (gcc)"
-export EXEC_TITLE="Éxectution de axwy C (gcc)"
+export BUILD_TITLE="Compilation de axwy C (tcc)"
+export EXEC_TITLE="Éxectution de axwy C (tcc)"
 
 export CLEAN="rm -f axwy"
 export BUILD="/data/ewan/tcc/out/bin/tcc -O3 -o axwy axwy.c"

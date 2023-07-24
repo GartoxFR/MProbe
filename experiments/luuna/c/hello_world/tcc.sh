@@ -1,7 +1,7 @@
 export WD=$TEST_ROOT/c/hello_world/
 
-export BUILD_TITLE="Compilation de hello_world C (gcc)"
-export EXEC_TITLE="Éxectution de hello_world C (gcc)"
+export BUILD_TITLE="Compilation de hello_world C (tcc)"
+export EXEC_TITLE="Éxectution de hello_world C (tcc)"
 
 export CLEAN="rm -f hello_world"
 export BUILD="/data/ewan/tcc/out/bin/tcc -O3 -o hello_world hello_world.c"
