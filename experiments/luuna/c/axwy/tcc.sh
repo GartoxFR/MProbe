@@ -5,7 +5,7 @@ export EXEC_TITLE="Éxectution de axwy C (gcc)"
 
 export CLEAN="rm -f axwy"
 export BUILD="/data/ewan/tcc/out/bin/tcc -O3 -o axwy axwy.c"
-export EXEC="./axwy"
+export EXEC="./axwy 2048 1024"
 
 export BUILD_SAMPLE_PERIOD=100
 export EXEC_SAMPLE_PERIOD=100
