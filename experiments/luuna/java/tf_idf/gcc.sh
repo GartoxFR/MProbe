@@ -1,10 +1,10 @@
 export WD=$TEST_ROOT/java/tf_idf/
 
-export BUILD_TITLE="Compilation de tf_idf Java"
-export EXEC_TITLE="Éxectution de tf_idf Java"
+export BUILD_TITLE="Compilation de tf_idf Java (OpenJDK built with gcc)"
+export EXEC_TITLE="Éxectution de tf_idf Java (OpenJDK built with gcc)"
 
 export CLEAN=""
-JAVA_HOME=/data/ewan/java/build_stage2/images/jdk
+JAVA_HOME=/data/ewan/java/build_gcc/images/jdk
 export BUILD="$JAVA_HOME/bin/javac Main.java IdMap.java"
 export EXEC="$JAVA_HOME/bin/java Main 'war' /data/ewan/corpus/gutenberg/*"
 
