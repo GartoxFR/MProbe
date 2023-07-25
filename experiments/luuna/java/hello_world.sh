@@ -1,7 +1,7 @@
-export WD=$TEST_ROOT/java/hello_word/
+export WD=$TEST_ROOT/java/hello_world/
 
-export BUILD_TITLE="Compilation de hello_word Java"
-export EXEC_TITLE="Éxectution de hello_word Java"
+export BUILD_TITLE="Compilation de hello_world Java"
+export EXEC_TITLE="Éxectution de hello_world Java"
 
 export CLEAN=""
 JAVA_HOME=/data/ewan/java/build_stage2/images/jdk
