@@ -1,0 +1,237 @@
+'\" t
+.\"     Title: glGetGraphicsResetStatus
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETGRAPHICSRESETST" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetGraphicsResetStatus \- check if the rendering context has not been lost due to software or hardware issues
+.SH "C SPECIFICATION"
+.HP \w'GLenum\ glGetGraphicsResetStatus('u
+.BI "GLenum glGetGraphicsResetStatus(" "void" ");"
+.SH "DESCRIPTION"
+.PP
+Certain events can result in a reset of the GL context\&. Such a reset causes all context state to be lost and requires the application to recreate all objects in the affected context\&.
+.PP
+\fBglGetGraphicsResetStatus\fR
+can return one of the following constants:
+.PP
+\fBGL_NO_ERROR\fR
+.RS 4
+Indicates that the GL context has not been in a reset state since the last call\&.
+.RE
+.PP
+\fBGL_GUILTY_CONTEXT_RESET\fR
+.RS 4
+Indicates that a reset has been detected that is attributable to the current GL context\&.
+.RE
+.PP
+\fBGL_INNOCENT_CONTEXT_RESET\fR
+.RS 4
+Indicates a reset has been detected that is not attributable to the current GL context\&.
+.RE
+.PP
+\fBGL_UNKNOWN_CONTEXT_RESET\fR
+.RS 4
+Indicates a detected graphics reset whose cause is unknown\&.
+.RE
+.PP
+If a reset status other than
+\fBGL_NO_ERROR\fR
+is returned and subsequent calls return
+\fBGL_NO_ERROR\fR, the context reset was encountered and completed\&. If a reset status is repeatedly returned, the context may be in the process of resetting\&.
+.PP
+Reset notification behavior is determined at context creation time, and may be queried by calling
+\fBGetIntegerv\fR
+with the symbolic constant
+\fBGL_RESET_NOTIFICATION_STRATEGY\fR\&.
+.PP
+If the reset notification behavior is
+\fBGL_NO_RESET_NOTIFICATION\fR, then the implementation will never deliver notification of reset events, and
+\fBglGetGraphicsResetStatus\fR
+will always return
+\fBGL_NO_ERROR\fR\&.
+.PP
+If the behavior is
+\fBGL_LOSE_CONTEXT_ON_RESET\fR, a graphics reset will result in the loss of all context state, requiring the recreation of all associated objects\&. In this case
+\fBglGetGraphicsResetStatus\fR
+may return any of the values described above\&.
+.PP
+If a graphics reset notification occurs in a context, a notification must also occur in all other contexts which share objects with that context\&.
+.PP
+After a graphics reset has occurred on a context, subsequent GL commands on that context (or any context which shares with that context) will generate a
+\fBGL_CONTEXT_LOST\fR
+error\&. Such commands will not have side effects (in particular, they will not modify memory passed by pointer for query results), and will not block indefinitely or cause termination of the application\&. There are two important exceptions to this behavior:
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBglGetError\fR
+and
+\fBglGetGraphicsResetStatus\fR
+behave normally following a graphics reset, so that the application can determine a reset has occurred, and when it is safe to destroy and re\-create the context\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Any commands which might cause a polling application to block indefinitely will generate a
+\fBGL_CONTEXT_LOST\fR
+error, but will also return a value indicating completion to the application\&. Such commands include:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBglGetSynciv\fR
+with pname
+\fBGL_SYNC_STATUS\fR
+ignores the other parameters and returns
+\fBGL_SIGNALED\fR
+in
+\fIvalues\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBglGetQueryObjectuiv\fR
+with pname
+\fBGL_QUERY_RESULT_AVAILABLE\fR
+ignores the other parameters and returns
+\fBTRUE\fR
+in
+\fIparams\fR\&.
+.RE
+.sp
+.RE
+.sp
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetGraphicsResetStatus\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetError\fR()
+
+\fBglGetIntegerv\fR,
+
+\fBglGetQueryObjectuiv\fR
+
+\fBglGetSynciv\fR
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

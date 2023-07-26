@@ -1,0 +1,912 @@
+'\" t
+.\"     Title: glTexBufferRange
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLTEXBUFFERRANGE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glTexBufferRange, glTextureBufferRange \- attach a range of a buffer object\*(Aqs data store to a buffer texture object
+.SH "C SPECIFICATION"
+.HP \w'void\ glTexBufferRange('u
+.BI "void glTexBufferRange(GLenum\ " "target" ", GLenum\ " "internalformat" ", GLuint\ " "buffer" ", GLintptr\ " "offset" ", GLsizeiptr\ " "size" ");"
+.HP \w'void\ glTextureBufferRange('u
+.BI "void glTextureBufferRange(GLuint\ " "texture" ", GLenum\ " "internalformat" ", GLuint\ " "buffer" ", GLintptr\ " "offset" ", GLsizei\ " "size" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the texture object is bound for
+\fBglTexBufferRange\fR\&. Must be
+\fBGL_TEXTURE_BUFFER\fR\&.
+.RE
+.PP
+\fItexture\fR
+.RS 4
+Specifies the texture object name for
+\fBglTextureBufferRange\fR\&.
+.RE
+.PP
+\fIinternalformat\fR
+.RS 4
+Specifies the internal format of the data in the store belonging to
+\fIbuffer\fR\&.
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object whose storage to attach to the active buffer texture\&.
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+Specifies the offset of the start of the range of the buffer\*(Aqs data store to attach\&.
+.RE
+.PP
+\fIsize\fR
+.RS 4
+Specifies the size of the range of the buffer\*(Aqs data store to attach\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglTexBufferRange\fR
+and
+\fBglTextureBufferRange\fR
+attach a range of the data store of a specified buffer object to a specified texture object, and specify the storage format for the texture image found in the buffer object\&. The texture object must be a buffer texture\&.
+.PP
+If
+\fIbuffer\fR
+is zero, any buffer object attached to the buffer texture is detached and no new buffer object is attached\&. If
+\fIbuffer\fR
+is non\-zero, it must be the name of an existing buffer object\&.
+.PP
+The start and size of the range are specified by
+\fIoffset\fR
+and
+\fIsize\fR
+respectively, both measured in basic machine units\&.
+\fIoffset\fR
+must be greater than or equal to zero,
+\fIsize\fR
+must be greater than zero, and the sum of
+\fIoffset\fR
+and
+\fIsize\fR
+must not exceed the value of
+\fBGL_BUFFER_SIZE\fR
+for
+\fIbuffer\fR\&. Furthermore,
+\fIoffset\fR
+must be an integer multiple of the value of
+\fBGL_TEXTURE_BUFFER_OFFSET_ALIGNMENT\fR\&.
+.PP
+\fIinternalformat\fR
+specifies the storage format, and must be one of the following sized internal formats:
+.TS
+allbox tab(:);
+lB lB lB lB cB s s s
+lB lB lB lB cB cB cB cB.
+T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\fB Component \fR
+T}
+T{
+\fBSized Internal Format\fR
+T}:T{
+\fBBase Type\fR
+T}:T{
+\fBComponents\fR
+T}:T{
+\fBNorm\fR
+T}:T{
+0
+T}:T{
+1
+T}:T{
+2
+T}:T{
+3
+T}
+.T&
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c.
+T{
+\fBGL_R8\fR
+T}:T{
+ubyte
+T}:T{
+1
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16\fR
+T}:T{
+ushort
+T}:T{
+1
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16F\fR
+T}:T{
+half
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R32F\fR
+T}:T{
+float
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R8I\fR
+T}:T{
+byte
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16I\fR
+T}:T{
+short
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R32I\fR
+T}:T{
+int
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R8UI\fR
+T}:T{
+ubyte
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16UI\fR
+T}:T{
+ushort
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R32UI\fR
+T}:T{
+uint
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG8\fR
+T}:T{
+ubyte
+T}:T{
+2
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16\fR
+T}:T{
+ushort
+T}:T{
+2
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16F\fR
+T}:T{
+half
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG32F\fR
+T}:T{
+float
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG8I\fR
+T}:T{
+byte
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16I\fR
+T}:T{
+short
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG32I\fR
+T}:T{
+int
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG8UI\fR
+T}:T{
+ubyte
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16UI\fR
+T}:T{
+ushort
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG32UI\fR
+T}:T{
+uint
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RGB32F\fR
+T}:T{
+float
+T}:T{
+3
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+1
+T}
+T{
+\fBGL_RGB32I\fR
+T}:T{
+int
+T}:T{
+3
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+1
+T}
+T{
+\fBGL_RGB32UI\fR
+T}:T{
+uint
+T}:T{
+3
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+1
+T}
+T{
+\fBGL_RGBA8\fR
+T}:T{
+uint
+T}:T{
+4
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16\fR
+T}:T{
+short
+T}:T{
+4
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16F\fR
+T}:T{
+half
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA32F\fR
+T}:T{
+float
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA8I\fR
+T}:T{
+byte
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16I\fR
+T}:T{
+short
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA32I\fR
+T}:T{
+int
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA8UI\fR
+T}:T{
+ubyte
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16UI\fR
+T}:T{
+ushort
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA32UI\fR
+T}:T{
+uint
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+.TE
+.sp 1
+.PP
+When a range of a buffer object is attached to a buffer texture, the specified range of the buffer object\*(Aqs data store is taken as the texture\*(Aqs texel array\&. The number of texels in the buffer texture\*(Aqs texel array is given by $$ \eleft\elfloor { size \eover { components \etimes sizeof(base\e_type) } } \eright\erfloor $$ where $components$ and $base\e_type$ are the element count and base data type for elements, as specified in the table above\&. The number of texels in the texel array is then clamped to the value of the implementation\-dependent limit
+\fBGL_MAX_TEXTURE_BUFFER_SIZE\fR\&. When a buffer texture is accessed in a shader, the results of a texel fetch are undefined if the specified texel coordinate is negative, or greater than or equal to the clamped number of texels in the texel array\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglTexBufferRange\fR
+if
+\fItarget\fR
+is not
+\fBGL_TEXTURE_BUFFER\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglTextureBufferRange\fR
+if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglTextureBufferRange\fR
+if the effective target of
+\fItexture\fR
+is not
+\fBGL_TEXTURE_BUFFER\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIinternalformat\fR
+is not one of the sized internal formats described above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIbuffer\fR
+is not zero and is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIoffset\fR
+is negative, if
+\fIsize\fR
+is less than or equal to zero, or if
+\fIoffset\fR
++
+\fIsize\fR
+is greater than the value of
+\fBGL_BUFFER_SIZE\fR
+for
+\fIbuffer\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIoffset\fR
+is not an integer multiple of the value of
+\fBGL_TEXTURE_BUFFER_OFFSET_ALIGNMENT\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_TEXTURE_BUFFER_OFFSET_ALIGNMENT\fR
+.PP
+\fBglGetTexLevelParameter\fR()
+with arguments
+\fBGL_TEXTURE_BUFFER_OFFSET\fR
+or
+\fBGL_TEXTURE_BUFFER_SIZE\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglTexBufferRange\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglTextureBufferRange\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglTexBuffer\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2012\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2012-2014 Khronos Group
+.br

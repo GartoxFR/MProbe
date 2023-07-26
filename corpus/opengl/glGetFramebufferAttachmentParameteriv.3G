@@ -1,0 +1,522 @@
+'\" t
+.\"     Title: glGetFramebufferAttachmentParameteriv
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETFRAMEBUFFERATTA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetFramebufferAttachmentParameteriv, glGetNamedFramebufferAttachmentParameteriv \- retrieve information about attachments of a framebuffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetFramebufferAttachmentParameteriv('u
+.BI "void glGetFramebufferAttachmentParameteriv(GLenum\ " "target" ", GLenum\ " "attachment" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.HP \w'void\ glGetNamedFramebufferAttachmentParameteriv('u
+.BI "void glGetNamedFramebufferAttachmentParameteriv(GLuint\ " "framebuffer" ", GLenum\ " "attachment" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the framebuffer object is bound for
+\fBglGetFramebufferAttachmentParameteriv\fR\&.
+.RE
+.PP
+\fIframebuffer\fR
+.RS 4
+Specifies the name of the framebuffer object for
+\fBglGetNamedFramebufferAttachmentParameteriv\fR\&.
+.RE
+.PP
+\fIattachment\fR
+.RS 4
+Specifies the attachment of the framebuffer object to query\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the parameter of
+\fIattachment\fR
+to query\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+Returns the value of parameter
+\fIpname\fR
+for
+\fIattachment\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetFramebufferAttachmentParameteriv\fR
+and
+\fBglGetNamedFramebufferAttachmentParameteriv\fR
+return parameters of attachments of a specified framebuffer object\&.
+.PP
+For
+\fBglGetFramebufferAttachmentParameteriv\fR, the framebuffer object is that bound to
+\fItarget\fR, which must be one of
+\fBGL_DRAW_FRAMEBUFFER\fR,
+\fBGL_READ_FRAMEBUFFER\fR
+or
+\fBGL_FRAMEBUFFER\fR\&.
+\fBGL_FRAMEBUFFER\fR
+is equivalent to
+\fBGL_DRAW_FRAMEBUFFER\fR\&. Buffers of default framebuffers may also be queried if bound to
+\fItarget\fR\&.
+.PP
+For
+\fBglGetNamedFramebufferAttachmentParameteriv\fR,
+\fIframebuffer\fR
+is the name of the framebuffer object\&. If
+\fIframebuffer\fR
+is zero, the default draw framebuffer is queried\&.
+.PP
+If the specified framebuffer is a framebuffer object,
+\fIattachment\fR
+must be one of
+\fBGL_DEPTH_ATTACHMENT\fR,
+\fBGL_STENCIL_ATTACHMENT\fR
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR, or
+\fBGL_COLOR_ATTACHMENT\fR\fIi\fR, where
+\fIi\fR
+is between zero and the value of
+\fBGL_MAX_COLOR_ATTACHMENTS\fR
+minus one\&.
+.PP
+If the specified framebuffer is a default framebuffer,
+\fItarget\fR,
+\fIattachment\fR
+must be one of
+\fBGL_FRONT_LEFT\fR,
+\fBGL_FRONT_RIGHT\fR,
+\fBGL_BACK_LEFT\fR,
+\fBGL_BACK_RIGHT\fR,
+\fBGL_DEPTH\fR
+or
+\fBGL_STENCIL\fR, identifying the corresponding buffer\&.
+.PP
+If
+\fIattachment\fR
+is
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR, the same object must be bound to both the depth and stencil attachment points of the framebuffer object, and information about that object is returned\&.
+.PP
+Upon successful return, if
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR, then
+\fIparams\fR
+will contain one of
+\fBGL_NONE\fR,
+\fBGL_FRAMEBUFFER_DEFAULT\fR,
+\fBGL_TEXTURE\fR, or
+\fBGL_RENDERBUFFER\fR, identifying the type of object which contains the attached image\&. Other values accepted for
+\fIpname\fR
+depend on the type of object, as described below\&.
+.PP
+If the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR
+is
+\fBGL_NONE\fR, then either no framebuffer is bound to
+\fItarget\fR; or a default framebuffer is queried,
+\fIattachment\fR
+is
+\fBGL_DEPTH\fR
+or
+\fBGL_STENCIL\fR, and the number of depth or stencil bits, respectively, is zero\&. In this case querying
+\fIpname\fR
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME\fR
+will return zero, and all other queries will generate an error\&.
+.PP
+If the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR
+is not
+\fBGL_NONE\fR, these queries apply to all other framebuffer types:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_RED_SIZE\fR,
+\fBGL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE\fR,
+\fBGL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE\fR,
+\fBGL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE\fR,
+\fBGL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE\fR
+or
+\fBGL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE\fR, then
+\fIparams\fR
+will contain the number of bits in the corresponding red, green, blue, alpha, depth, or stencil component of the specified attachment\&. If the requested component is not present in the attachment, or if no data storage or texture image has been specified for the attachment, then
+\fIparams\fR
+will contain zero\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE\fR, then
+\fIparams\fR
+will contain the format of components of the specified attachment, one of
+\fBGL_FLOAT\fR,
+\fBGL_INT\fR,
+\fBGL_UNSIGNED_INT\fR,
+\fBGL_SIGNED_NORMALIZED\fR, or
+\fBGL_UNSIGNED_NORMALIZED\fR
+for floating\-point, signed integer, unsigned integer, signed normalized fixed\-point, or unsigned normalized fixed\-point components respectively\&. Only color buffers may have integer components\&. If no data storage or texture image has been specified for the attachment, then
+\fIparams\fR
+will contain
+\fBGL_NONE\fR\&. This query cannot be performed for a combined depth+stencil attachment, since it does not have a single format\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING\fR, then
+\fIparams\fR
+will contain the encoding of components of the specified attachment, one of
+\fBGL_LINEAR\fR
+or
+\fBGL_SRGB\fR
+for linear or sRGB\-encoded components, respectively\&. Only color buffer components may be sRGB\-encoded; such components are treated as described in the OpenGL Specification\&. For a default framebuffer, color encoding is determined by the implementation\&. For framebuffer objects, components are sRGB\-encoded if the internal format of a color attachment is one of the color\-renderable SRGB formats\&. If the attachment is not a color attachment, or if no data storage or texture image has been specified for the attachment, then
+\fIparams\fR
+will contain
+\fBGL_LINEAR\fR\&.
+.RE
+.PP
+If the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR
+is
+\fBGL_RENDERBUFFER\fR, then
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME\fR,
+\fIparams\fR
+will contain the name of the renderbuffer object which contains the attached image\&.
+.RE
+.PP
+If the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR
+is
+\fBGL_TEXTURE\fR, then
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME\fR, then
+\fIparams\fR
+will contain the name of the texture object which contains the attached image\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL\fR, then
+\fIparams\fR
+will contain the mipmap level of the texture object which contains the attached image\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE\fR
+and the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME\fR
+is the name of a cube map texture object, then
+\fIparams\fR
+will contain the cube map face of the cubemap texture object which contains the attached image\&. Otherwise
+\fIparams\fR
+will contain zero\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_LAYERED\fR, then
+\fIparams\fR
+will contain
+\fBGL_TRUE\fR
+if an entire level of a three\-dimensional texture, cube map texture, or one\-or two\-dimensional array texture is attached\&. Otherwise,
+\fIparams\fR
+will contain
+\fBGL_FALSE\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER\fR; the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME\fR
+is the name of a three\-dimensional, or a one\- or two\-dimensional array texture; and the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_LAYERED\fR
+is
+\fBGL_FALSE\fR, then
+\fIparams\fR
+will contain the texture layer which contains the attached image\&. Otherwise
+\fIparams\fR
+will contain zero\&.
+.RE
+.SH "NOTES"
+.PP
+The
+\fBGL_FRAMEBUFFER_ATTACHMENT_LAYERED\fR
+query is supported only if the GL version is 3\&.2 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglGetFramebufferAttachmentParameteriv\fR
+if
+\fItarget\fR
+is not one of the accepted framebuffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetNamedFramebufferAttachmentParameteriv\fR
+if
+\fIframebuffer\fR
+is not zero or the name of an existing framebuffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not valid for the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR, as described above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIattachment\fR
+is not one of the accepted framebuffer attachment points, as described above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the value of
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR
+is
+\fBGL_NONE\fR
+and
+\fIpname\fR
+is not
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME\fR
+or
+\fBGL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIattachment\fR
+is
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR
+and different objects are bound to the depth and stencil attachment points of
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIattachment\fR
+is
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR
+and
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetFramebufferAttachmentParameteriv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetNamedFramebufferAttachmentParameteriv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenFramebuffers\fR(),
+\fBglBindFramebuffer\fR()
+\fBglGetFramebufferParameter\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

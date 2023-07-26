@@ -1,0 +1,412 @@
+'\" t
+.\"     Title: glMapBuffer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLMAPBUFFER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glMapBuffer, glMapNamedBuffer \- map all of a buffer object\*(Aqs data store into the client\*(Aqs address space
+.SH "C SPECIFICATION"
+.HP \w'void\ *glMapBuffer('u
+.BI "void *glMapBuffer(GLenum\ " "target" ", GLenum\ " "access" ");"
+.HP \w'void\ *glMapNamedBuffer('u
+.BI "void *glMapNamedBuffer(GLuint\ " "buffer" ", GLenum\ " "access" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound for
+\fBglMapBuffer\fR, which must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object for
+\fBglMapNamedBuffer\fR\&.
+.RE
+.PP
+\fIaccess\fR
+.RS 4
+Specifies the access policy for
+\fBglMapBuffer\fR
+and
+\fBglMapNamedBuffer\fR, indicating whether it will be possible to read from, write to, or both read from and write to the buffer object\*(Aqs mapped data store\&. The symbolic constant must be
+\fBGL_READ_ONLY\fR,
+\fBGL_WRITE_ONLY\fR, or
+\fBGL_READ_WRITE\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglMapBuffer\fR
+and
+\fBglMapNamedBuffer\fR
+map the entire data store of a specified buffer object into the client\*(Aqs address space\&. The data can then be directly read and/or written relative to the returned pointer, depending on the specified
+\fIaccess\fR
+policy\&.
+.PP
+A pointer to the beginning of the mapped range is returned once all pending operations on that buffer object have completed, and may be used to modify and/or query the corresponding range of the data store according to the value of
+\fIaccess\fR:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_READ_ONLY\fR
+indicates that the returned pointer may be used to read buffer object data\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_WRITE_ONLY\fR
+indicates that the returned pointer may be used to modify buffer object data\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_READ_WRITE\fR
+indicates that the returned pointer may be used to read and to modify buffer object data\&.
+.RE
+.PP
+If an error is generated, a
+NULL
+pointer is returned\&.
+.PP
+If no error occurs, the returned pointer will reflect an allocation aligned to the value of
+\fBGL_MIN_MAP_BUFFER_ALIGNMENT\fR
+basic machine units\&.
+.PP
+The returned pointer values may not be passed as parameter values to GL commands\&. For example, they may not be used to specify array pointers, or to specify or query pixel or texture image data; such actions produce undefined results, although implementations may not check for such behavior for performance reasons\&.
+.PP
+No GL error is generated if the returned pointer is accessed in a way inconsistent with
+\fIaccess\fR
+(e\&.g\&. used to read from a mapping made with
+\fIaccess\fR
+\fBGL_WRITE_ONLY\fR
+or write to a mapping made with
+\fIaccess\fR
+\fBGL_READ_ONLY\fR), but the result is undefined and system errors (possibly including program termination) may occur\&.
+.PP
+Mappings to the data stores of buffer objects may have nonstandard performance characteristics\&. For example, such mappings may be marked as uncacheable regions of memory, and in such cases reading from them may be very slow\&. To ensure optimal performance, the client should use the mapping in a fashion consistent with the values of
+\fBGL_BUFFER_USAGE\fR
+for the buffer object and of
+\fIaccess\fR\&. Using a mapping in a fashion inconsistent with these values is liable to be multiple orders of magnitude slower than using normal memory\&.
+.SH "NOTES"
+.PP
+Alignment of the returned pointer is guaranteed only if the version of the GL version is 4\&.2 or greater\&. Also, the
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+target is accepted only if the GL version is 4\&.2 or greater\&.
+.PP
+The
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+targets are available only if the GL version is 4\&.3 or greater\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+target is available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglMapBuffer\fR
+if
+\fItarget\fR
+is not one of the buffer binding targets listed above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglMapBuffer\fR
+if zero is bound to
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglMapNamedBuffer\fR
+if
+\fIbuffer\fR
+is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIaccess\fR
+is not
+\fBGL_READ_ONLY\fR,
+\fBGL_WRITE_ONLY\fR, or
+\fBGL_READ_WRITE\fR\&.
+.PP
+\fBGL_OUT_OF_MEMORY\fR
+is generated if the GL is unable to map the buffer object\*(Aqs data store\&. This may occur for a variety of system\-specific reasons, such as the absence of sufficient remaining virtual memory\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the buffer object is in a mapped state\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetBufferPointerv\fR()
+with argument
+\fBGL_BUFFER_MAP_POINTER\fR
+.PP
+\fBglGetBufferParameter\fR()
+with argument
+\fBGL_BUFFER_MAPPED\fR,
+\fBGL_BUFFER_ACCESS\fR, or
+\fBGL_BUFFER_USAGE\fR
+.PP
+\fBglGet\fR()
+with
+\fIpname\fR
+\fBGL_MIN_MAP_BUFFER_ALIGNMENT\fR\&. The value must be a power of two that is at least 64\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglMapBuffer\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglMapNamedBuffer\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBuffer\fR(),
+\fBglBindBufferBase\fR(),
+\fBglBindBufferRange\fR(),
+\fBglBufferData\fR(),
+\fBglBufferSubData\fR(),
+\fBglDeleteBuffers\fR(),
+\fBglMapBufferRange\fR(),
+\fBglUnmapBuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2005 Addison\-Wesley\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2005 Addison-Wesley Group
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

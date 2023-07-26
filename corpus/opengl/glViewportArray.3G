@@ -1,0 +1,226 @@
+'\" t
+.\"     Title: glViewportArray
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLVIEWPORTARRAY" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glViewportArray \- set multiple viewports
+.SH "C SPECIFICATION"
+.HP \w'void\ glViewportArrayv('u
+.BI "void glViewportArrayv(GLuint\ " "first" ", GLsizei\ " "count" ", const\ GLfloat\ *" "v" ");"
+.SH "PARAMETERS"
+.PP
+\fIfirst\fR
+.RS 4
+Specify the first viewport to set\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+Specify the number of viewports to set\&.
+.RE
+.PP
+\fIv\fR
+.RS 4
+Specify the address of an array containing the viewport parameters\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglViewportArrayv\fR
+specifies the parameters for multiple viewports simulataneously\&.
+\fIfirst\fR
+specifies the index of the first viewport to modify and
+\fIcount\fR
+specifies the number of viewports to modify\&.
+\fIfirst\fR
+must be less than the value of
+\fBGL_MAX_VIEWPORTS\fR, and
+\fIfirst\fR
++
+\fIcount\fR
+must be less than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&. Viewports whose indices lie outside the range [\fIfirst\fR,
+\fIfirst\fR
++
+\fIcount\fR) are not modified\&.
+\fIv\fR
+contains the address of an array of floating point values specifying the left (x), bottom (y), width (w), and height (h) of each viewport, in that order\&.
+x
+and
+y
+give the location of the viewport\*(Aqs lower left corner, and
+w
+and
+h
+give the width and height of the viewport, respectively\&. The viewport specifies the affine transformation of
+x
+and
+y
+from normalized device coordinates to window coordinates\&. Let
+x nd y nd
+be normalized device coordinates\&. Then the window coordinates
+x w y w
+are computed as follows:
+.PP
+x w = x nd + 1 ⁢ width 2 + x
+.PP
+y w = y nd + 1 ⁢ height 2 + y
+.PP
+The location of the viewport\*(Aqs bottom left corner, given by (x,
+y) is clamped to be within the implementaiton\-dependent viewport bounds range\&. The viewport bounds range [min,
+max] can be determined by calling
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT_BOUNDS_RANGE\fR\&. Viewport width and height are silently clamped to a range that depends on the implementation\&. To query this range, call
+\fBglGet\fR()
+with argument
+\fBGL_MAX_VIEWPORT_DIMS\fR\&.
+.PP
+The precision with which the GL interprets the floating point viewport bounds is implementation\-dependent and may be determined by querying the impementation\-defined constant
+\fBGL_VIEWPORT_SUBPIXEL_BITS\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIfirst\fR
+is greater than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIfirst\fR
++
+\fIcount\fR
+is greater than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if either
+\fIwidth\fR
+or
+\fIheight\fR
+is negative\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_VIEWPORT_DIMS\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT_BOUNDS_RANGE\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT_SUBPIXEL_BITS\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglViewportArrayv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDepthRange\fR(),
+\fBglViewport\fR(),
+\fBglViewportIndexed\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

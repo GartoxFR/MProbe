@@ -1,0 +1,132 @@
+'\" t
+.\"     Title: gl_SampleMask
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GL_SAMPLEMASK" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gl_SampleMask \- specifies the sample coverage mask for the current fragment
+.SH "DECLARATION"
+out\ \&int\ \&gl_SampleMask[]\ \&;.SH "DESCRIPTION"
+.PP
+\fIgl_SampleMask\fR
+is a fragment language output array that may be used to set the sample mask for the fragment being processed\&. Coverage for the current fragment will become the logical AND of the coverage mask and the output
+\fIgl_SampleMask\fR\&. That is, setting a bit in
+\fIgl_SampleMask\fR
+to zero will cause the corresponding sample to be considered uncovered for the purposes of multisample fragment operations\&. However, setting sample mask bits back to one will never enable samples not covered by the original primitive\&. Bit
+\fIB\fR
+of mask
+\fIgl_SampleMask[M]\fR
+corresponds to sample 32 *
+\fIM\fR
++
+\fIB\fR\&. This array must be sized in the fragment shader either implicitly or explicitly to be the same size as the implementation\-dependent maximum sample\-mask (as an array of 32\-bit elements), determined by the maximum number of samples\&. If the fragment shader statically assigns a value to
+\fIgl_SampleMask\fR, the sample mask will be undefined for any array elements of any fragment shader invocation that fails to assign a value\&. If a shader does not statically assign a value to
+\fIgl_SampleMask\fR, the sample mask has no effect on the processing of a fragment\&. If the fragment shader is being evaluated at any frequency other than per\-fragment, bits within the sample mask not corresponding to the current fragment shader invocation are ignored\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Shading Language Version\fR
+T}
+T{
+\fBVariable Name\fR
+T}:T{
+\fB1\&.10\fR
+T}:T{
+\fB1\&.20\fR
+T}:T{
+\fB1\&.30\fR
+T}:T{
+\fB1\&.40\fR
+T}:T{
+\fB1\&.50\fR
+T}:T{
+\fB3\&.30\fR
+T}:T{
+\fB4\&.00\fR
+T}:T{
+\fB4\&.10\fR
+T}:T{
+\fB4\&.20\fR
+T}:T{
+\fB4\&.30\fR
+T}:T{
+\fB4\&.40\fR
+T}:T{
+\fB4\&.50\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+gl_SampleMask
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBgl_SampleMaskIn\fR(),
+\fBgl_SampleID\fR(),
+\fBgl_SamplePosition\fR(),
+\fBgl_FragCoord\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group
+.br

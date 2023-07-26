@@ -1,0 +1,178 @@
+'\" t
+.\"     Title: glCreateTextures
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCREATETEXTURES" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glCreateTextures \- create texture objects
+.SH "C SPECIFICATION"
+.HP \w'void\ glCreateTextures('u
+.BI "void glCreateTextures(GLenum\ " "target" ", GLsizei\ " "n" ", GLuint\ *" "textures" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the effective texture target of each created texture\&.
+.RE
+.PP
+\fIn\fR
+.RS 4
+Number of texture objects to create\&.
+.RE
+.PP
+\fItextures\fR
+.RS 4
+Specifies an array in which names of the new texture objects are stored\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglCreateTextures\fR
+returns
+\fIn\fR
+previously unused texture names in
+\fItextures\fR, each representing a new texture object of the dimensionality and type specified by
+\fItarget\fR
+and initialized to the default values for that texture type\&.
+.PP
+\fItarget\fR
+must be one of
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_CUBE_MAP\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR,
+\fBGL_TEXTURE_BUFFER\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR
+or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+is not one of the allowable values\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIn\fR
+is negative\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglCreateTextures\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindTexture\fR(),
+\fBglDeleteTextures\fR(),
+\fBglGenTextures\fR(),
+\fBglGet\fR(),
+\fBglGetTexParameter\fR(),
+\fBglIsTexture\fR(),
+\fBglTexBuffer\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage2DMultisample\fR(),
+\fBglTexImage3D\fR(),
+\fBglTexImage3DMultisample\fR(),
+\fBglTexParameter\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

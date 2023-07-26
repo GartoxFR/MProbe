@@ -1,0 +1,164 @@
+'\" t
+.\"     Title: glGenTextures
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGENTEXTURES" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGenTextures \- generate texture names
+.SH "C SPECIFICATION"
+.HP \w'void\ glGenTextures('u
+.BI "void glGenTextures(GLsizei\ " "n" ", GLuint\ *\ " "textures" ");"
+.SH "PARAMETERS"
+.PP
+\fIn\fR
+.RS 4
+Specifies the number of texture names to be generated\&.
+.RE
+.PP
+\fItextures\fR
+.RS 4
+Specifies an array in which the generated texture names are stored\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGenTextures\fR
+returns
+\fIn\fR
+texture names in
+\fItextures\fR\&. There is no guarantee that the names form a contiguous set of integers; however, it is guaranteed that none of the returned names was in use immediately before the call to
+\fBglGenTextures\fR\&.
+.PP
+The generated textures have no dimensionality; they assume the dimensionality of the texture target to which they are first bound (see
+\fBglBindTexture\fR())\&.
+.PP
+Texture names returned by a call to
+\fBglGenTextures\fR
+are not returned by subsequent calls, unless they are first deleted with
+\fBglDeleteTextures\fR()\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIn\fR
+is negative\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglIsTexture\fR()
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGenTextures\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindTexture\fR(),
+\fBglCopyTexImage1D\fR(),
+\fBglCopyTexImage2D\fR(),
+\fBglDeleteTextures\fR(),
+\fBglGet\fR(),
+\fBglGetTexParameter\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage3D\fR(),
+\fBglTexParameter\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This document is licensed under the SGI Free Software B License\&. For details, see
+\m[blue]\fBhttp://oss\&.sgi\&.com/projects/FreeB/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

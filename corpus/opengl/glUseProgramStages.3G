@@ -1,0 +1,205 @@
+'\" t
+.\"     Title: glUseProgramStages
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLUSEPROGRAMSTAGES" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glUseProgramStages \- bind stages of a program object to a program pipeline
+.SH "C SPECIFICATION"
+.HP \w'void\ glUseProgramStages('u
+.BI "void glUseProgramStages(GLuint\ " "pipeline" ", GLbitfield\ " "stages" ", GLuint\ " "program" ");"
+.SH "PARAMETERS"
+.PP
+\fIpipeline\fR
+.RS 4
+Specifies the program pipeline object to which to bind stages from
+\fIprogram\fR\&.
+.RE
+.PP
+\fIstages\fR
+.RS 4
+Specifies a set of program stages to bind to the program pipeline object\&.
+.RE
+.PP
+\fIprogram\fR
+.RS 4
+Specifies the program object containing the shader executables to use in
+\fIpipeline\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglUseProgramStages\fR
+binds executables from a program object associated with a specified set of shader stages to the program pipeline object given by
+\fIpipeline\fR\&.
+\fIpipeline\fR
+specifies the program pipeline object to which to bind the executables\&.
+\fIstages\fR
+contains a logical combination of bits indicating the shader stages to use within
+\fIprogram\fR
+with the program pipeline object
+\fIpipeline\fR\&.
+\fIstages\fR
+must be a logical combination of
+\fBGL_VERTEX_SHADER_BIT\fR,
+\fBGL_TESS_CONTROL_SHADER_BIT\fR,
+\fBGL_TESS_EVALUATION_SHADER_BIT\fR,
+\fBGL_GEOMETRY_SHADER_BIT\fR,
+\fBGL_FRAGMENT_SHADER_BIT\fR
+and
+\fBGL_COMPUTE_SHADER_BIT\fR\&. Additionally, the special value
+\fBGL_ALL_SHADER_BITS\fR
+may be specified to indicate that all executables contained in
+\fIprogram\fR
+should be installed in
+\fIpipeline\fR\&.
+.PP
+If
+\fIprogram\fR
+refers to a program object with a valid shader attached for an indicated shader stage,
+\fBglUseProgramStages\fR
+installs the executable code for that stage in the indicated program pipeline object
+\fIpipeline\fR\&. If
+\fIprogram\fR
+is zero, or refers to a program object with no valid shader executable for a given stage, it is as if the pipeline object has no programmable stage configured for the indicated shader stages\&. If
+\fIstages\fR
+contains bits other than those listed above, and is not equal to
+\fBGL_ALL_SHADER_BITS\fR, an error is generated\&.
+.SH "NOTES"
+.PP
+The
+\fBGL_COMPUTE_SHADER_BIT\fR
+bit is available only if the GL version is 4\&.3 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIshaders\fR
+contains set bits that are not recognized, and is not the reserved value
+\fBGL_ALL_SHADER_BITS\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIprogram\fR
+refers to a program object that was not linked with its
+\fBGL_PROGRAM_SEPARABLE\fR
+status set\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIprogram\fR
+refers to a program object that has not been successfully linked\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIpipeline\fR
+is not a name previously returned from a call to
+\fBglGenProgramPipelines\fR()
+or if such a name has been deleted by a call to
+\fBglDeleteProgramPipelines\fR()\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglUseProgramStages\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenProgramPipelines\fR(),
+\fBglDeleteProgramPipelines\fR(),
+\fBglIsProgramPipeline\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

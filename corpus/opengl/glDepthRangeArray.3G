@@ -1,0 +1,198 @@
+'\" t
+.\"     Title: glDepthRangeArray
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLDEPTHRANGEARRAY" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glDepthRangeArray \- specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports
+.SH "C SPECIFICATION"
+.HP \w'void\ glDepthRangeArrayv('u
+.BI "void glDepthRangeArrayv(GLuint\ " "first" ", GLsizei\ " "count" ", const\ GLdouble\ *" "v" ");"
+.SH "PARAMETERS"
+.PP
+\fIfirst\fR
+.RS 4
+Specifies the index of the first viewport whose depth range to update\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+Specifies the number of viewports whose depth range to update\&.
+.RE
+.PP
+\fIv\fR
+.RS 4
+Specifies the address of an array containing the near and far values for the depth range of each modified viewport\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+After clipping and division by
+\fIw\fR, depth coordinates range from
+\-1
+to 1, corresponding to the near and far clipping planes\&. Each viewport has an independent depth range specified as a linear mapping of the normalized depth coordinates in this range to window depth coordinates\&. Regardless of the actual depth buffer implementation, window coordinate depth values are treated as though they range from 0 through 1 (like color components)\&.
+\fBglDepthRangeArray\fR
+specifies a linear mapping of the normalized depth coordinates in this range to window depth coordinates for each viewport in the range [\fIfirst\fR,
+\fIfirst\fR
++
+\fIcount\fR)\&. Thus, the values accepted by
+\fBglDepthRangeArray\fR
+are both clamped to this range before they are accepted\&.
+.PP
+The
+\fIfirst\fR
+parameter specifies the index of the first viewport whose depth range to modify and must be less than the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+\fIcount\fR
+specifies the number of viewports whose depth range to modify\&.
+\fIfirst\fR
++
+\fIcount\fR
+must be less than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+\fIv\fR
+specifies the address of an array of pairs of double precision floating point values representing the near and far values of the depth range for each viewport, in that order\&.
+.PP
+The setting of (0,1) maps the near plane to 0 and the far plane to 1\&. With this mapping, the depth buffer range is fully utilized\&.
+.SH "NOTES"
+.PP
+It is not necessary that the near plane distance be less than the far plane distance\&. Reverse mappings such as
+near = 1, and
+far = 0
+are acceptable\&.
+.PP
+The type of the
+\fIv\fR
+parameter was changed from GLclampd to GLdouble\&. This change is transparent to user code and is described in detail on the
+\fBremovedTypes\fR()
+page\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIfirst\fR
+is greater than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIfirst\fR
++
+\fIcount\fR
+is greater than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_DEPTH_RANGE\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglDepthRangeArrayv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDepthFunc\fR(),
+\fBglDepthRange\fR(),
+\fBglDepthRangeIndexed\fR(),
+\fBglPolygonOffset\fR(),
+\fBglViewportArray\fR(),
+\fBglViewport\fR(),
+\fBremovedTypes\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

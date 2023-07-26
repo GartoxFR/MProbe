@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: gl_FragCoord
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GL_FRAGCOORD" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gl_FragCoord \- contains the window\-relative coordinates of the current fragment
+.SH "DECLARATION"
+in\ \&vec4\ \&gl_FragCoord\ \&;.SH "DESCRIPTION"
+.PP
+Available only in the fragment language,
+\fIgl_FragCoord\fR
+is an input variable that contains the window relative coordinate (x, y, z, 1/w) values for the fragment\&. If multi\-sampling, this value can be for any location within the pixel, or one of the fragment samples\&. This value is the result of fixed functionality that interpolates primitives after vertex processing to generate fragments\&. The z component is the depth value that would be used for the fragment\*(Aqs depth if no shader contained any writes to
+\fBgl_FragDepth\fR()\&.
+.PP
+\fIgl_FragCoord\fR
+may be redeclared with the additional layout qualifier identifiers
+\fBorigin_upper_left\fR
+or
+\fBpixel_center_integer\fR\&. By default,
+\fIgl_FragCoord\fR
+assumes a lower\-left origin for window coordinates and assumes pixel centers are located at half\-pixel centers\&. For example, the (x, y) location (0\&.5, 0\&.5) is returned for the lower\-left\-most pixel in a window\&. The origin of
+\fIgl_FragCoord\fR
+may be changed by redeclaring
+\fIgl_FragCoord\fR
+with the
+\fBorigin_upper_left\fR
+identifier\&. The values returned can also be shifted by half a pixel in both x and y by
+\fBpixel_center_integer\fR
+so it appears the pixels are centered at whole number pixel offsets\&. This moves the (x, y) value returned by
+\fIgl_FragCoord\fR
+of (0\&.5, 0\&.5) by default to (0\&.0, 0\&.0) with
+\fBpixel_center_integer\fR\&.
+.PP
+If
+\fIgl_FragCoord\fR
+is redeclared in any fragment shader in a program, it must be redeclared in all fragment shaders in that program that have static use of
+\fIgl_FragCoord\fR\&. Redeclaring
+\fIgl_FragCoord\fR
+with any accepted qualifier affects only
+\fIgl_FragCoord\&.x\fR
+and
+\fIgl_FragCoord\&.y\fR\&. It has no affect on rasterization, transformation or any other part of the OpenGL pipeline or language features\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Shading Language Version\fR
+T}
+T{
+\fBVariable Name\fR
+T}:T{
+\fB1\&.10\fR
+T}:T{
+\fB1\&.20\fR
+T}:T{
+\fB1\&.30\fR
+T}:T{
+\fB1\&.40\fR
+T}:T{
+\fB1\&.50\fR
+T}:T{
+\fB3\&.30\fR
+T}:T{
+\fB4\&.00\fR
+T}:T{
+\fB4\&.10\fR
+T}:T{
+\fB4\&.20\fR
+T}:T{
+\fB4\&.30\fR
+T}:T{
+\fB4\&.40\fR
+T}:T{
+\fB4\&.50\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+gl_FragCoord
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBgl_FragDepth\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group
+.br

@@ -1,0 +1,943 @@
+'\" t
+.\"     Title: glGetInternalformat
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETINTERNALFORMAT" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetInternalformat \- retrieve information about implementation\-dependent support for internal formats
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetInternalformativ('u
+.BI "void glGetInternalformativ(GLenum\ " "target" ", GLenum\ " "internalformat" ", GLenum\ " "pname" ", GLsizei\ " "bufSize" ", GLint\ *" "params" ");"
+.HP \w'void\ glGetInternalformati64v('u
+.BI "void glGetInternalformati64v(GLenum\ " "target" ", GLenum\ " "internalformat" ", GLenum\ " "pname" ", GLsizei\ " "bufSize" ", GLint64\ *" "params" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Indicates the usage of the internal format\&.
+\fItarget\fR
+must be
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_CUBE_MAP\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR,
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_BUFFER\fR,
+\fBGL_RENDERBUFFER\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR
+or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR\&.
+.RE
+.PP
+\fIinternalformat\fR
+.RS 4
+Specifies the internal format about which to retrieve information\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the type of information to query\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+Specifies the maximum number of integers of the specified width that may be written to
+\fIparams\fR
+by the function\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+Specifies the address of a variable into which to write the retrieved information\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetInternalformativ\fR
+and
+\fBglGetInternalformati64v\fR
+retrieve information about implementation\-dependent support for internal formats\&.
+\fItarget\fR
+indicates the target with which the internal format will be used and must be one of
+\fBGL_RENDERBUFFER\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR, or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR, corresponding to usage as a renderbuffer, two\-dimensional multisample texture or two\-dimensional multisample array texture, respectively\&.
+.PP
+\fIinternalformat\fR
+specifies the internal format about which to retrieve information and must be a color\-renderable, depth\-renderable or stencil\-renderable format\&.
+.PP
+The information retrieved will be written to memory addressed by the pointer specified in
+\fIparams\fR\&. No more than
+\fIbufSize\fR
+integers will be written to this memory\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_NUM_SAMPLE_COUNTS\fR, the number of sample counts that would be returned by querying
+\fBGL_SAMPLES\fR
+will be returned in
+\fIparams\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_SAMPLES\fR, the sample counts supported for
+\fIinternalformat\fR
+and
+\fItarget\fR
+are written into
+\fIparams\fR
+in descending numeric order\&. Only positive values are returned\&. Querying
+\fBGL_SAMPLES\fR
+with
+\fIbufSize\fR
+of one will return just the maximum supported number of samples for this format\&. The maximum value in
+\fBGL_SAMPLES\fR
+is guaranteed to be at least the lowest of the following:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The value of
+\fBGL_MAX_INTEGER_SAMPLES\fR
+if
+\fIinternalformat\fR
+is a signed or unsigned integer format\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The value of
+\fBGL_MAX_DEPTH_TEXTURE_SAMPLES\fR
+if
+\fIinternalformat\fR
+is a depth\- or stencil\-renderable format and
+\fItarget\fR
+is
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The value of
+\fBGL_MAX_COLOR_TEXTURE_SAMPLES\fR
+if
+\fIinternalformat\fR
+is a color\-renderable format and
+\fItarget\fR
+is
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR
+or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The value of
+\fBGL_MAX_SAMPLES\fR\&.
+.RE
+.PP
+If
+\fIpname\fR
+is
+\fBGL_INTERNALFORMAT_SUPPORTED\fR,
+\fIparams\fR
+is set to
+\fBGL_TRUE\fR
+if
+\fIinternalformat\fR
+is a supported internal format for
+\fItarget\fR
+and to
+\fBGL_FALSE\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_INTERNALFORMAT_PREFERRED\fR,
+\fIparams\fR
+is set to
+\fBGL_TRUE\fR
+if
+\fIinternalformat\fR
+is an format for
+\fItarget\fR
+that is preferred by the implementation and to
+\fBGL_FALSE\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_INTERNALFORMAT_RED_SIZE\fR,
+\fBGL_INTERNALFORMAT_GREEN_SIZE\fR,
+\fBGL_INTERNALFORMAT_BLUE_SIZE\fR,
+\fBGL_INTERNALFORMAT_ALPHA_SIZE\fR,
+\fBGL_INTERNALFORMAT_DEPTH_SIZE\fR,
+\fBGL_INTERNALFORMAT_STENCIL_SIZE\fR, or
+\fBGL_INTERNALFORMAT_SHARED_SIZE\fR
+then
+\fIparams\fR
+is set to the actual resolutions that would be used for storing image array components for the resource for the red, green, blue, alpha, depth, stencil and shared channels respectively\&. If
+\fIinternalformat\fR
+is a compressed internal format, then
+\fIparams\fR
+is set to the component resolution of an uncompressed internal format that produces an image of roughly the same quality as the compressed algorithm\&. If the internal format is unsupported, or if a particular component is not present in the format, 0 is written to
+\fIparams\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_INTERNALFORMAT_RED_TYPE\fR,
+\fBGL_INTERNALFORMAT_GREEN_TYPE\fR,
+\fBGL_INTERNALFORMAT_BLUE_TYPE\fR,
+\fBGL_INTERNALFORMAT_ALPHA_TYPE\fR,
+\fBGL_INTERNALFORMAT_DEPTH_TYPE\fR, or
+\fBGL_INTERNALFORMAT_STENCIL_TYPE\fR
+then
+\fIparams\fR
+is set to a token identifying the data type used to store the respective component\&. If the
+\fIinternalformat\fR
+represents a compressed internal format then the types returned specify how components are interpreted after decompression\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_MAX_WIDTH\fR,
+\fBGL_MAX_HEIGHT\fR,
+\fBGL_MAX_DEPTH\fR, or
+\fBGL_MAX_LAYERS\fR
+then
+\fIpname\fR
+is filled with the maximum width, height, depth or layer count for textures with internal format
+\fIinternalformat\fR, respectively\&. If
+\fIpname\fR
+is
+\fBGL_MAX_COMBINED_DIMENSIONS\fR
+then
+\fIpname\fR
+is filled with the maximum combined dimensions of a texture of the specified internal format\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_COLOR_COMPONENTS\fR
+then
+\fIparams\fR
+is set to the value
+\fBGL_TRUE\fR
+if the internal format contains any color component (i\&.e\&., red, green, blue or alpha) and to
+\fBGL_FALSE\fR
+otherwise\&. If
+\fIpname\fR
+is
+\fBGL_DEPTH_COMPONENTS\fR
+or
+\fBGL_STENCIL_COMPONENTS\fR
+then
+\fIparams\fR
+is set to
+\fBGL_TRUE\fR
+if the internal format contains a depth or stencil component, respectively, and to
+\fBGL_FALSE\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_COLOR_RENDERABLE\fR,
+\fBGL_DEPTH_RENDERABLE\fR
+or
+\fBGL_STENCIL_RENDERABLE\fR
+then
+\fIparams\fR
+is set to
+\fBGL_TRUE\fR
+if the specified internal format is color, depth or stencil renderable, respectively, and to
+\fBGL_FALSE\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_RENDERABLE\fR
+or
+\fBGL_FRAMEBUFFER_RENDERABLE_LAYERED\fR
+then
+\fIparams\fR
+is set to one of
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR
+or
+\fBGL_NONE\fR
+to indicate that framebuffer attachments (layered attachments in the case of
+\fBGL_FRAMEBUFFER_RENDERABLE_LAYERED\fR) with that internal format are either renderable with no restrictions, renderable with some restrictions or not renderable at all\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_FRAMEBUFFER_BLEND\fR,
+\fIparams\fR
+is set to
+\fBGL_TRUE\fR
+to indicate that the internal format is supported for blending operations when attached to a framebuffer, and to
+\fBGL_FALSE\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_READ_PIXELS\fR
+then
+\fIparams\fR
+is set to
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR
+or
+\fBGL_NONE\fR
+to that either full support, limited support or no support at all is supplied for reading pixels from framebuffer attachments in the specified internal format\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_READ_PIXELS_FORMAT\fR
+or
+\fBGL_READ_PIXELS_TYPE\fR
+then
+\fIparams\fR
+is filled with the format or type, respectively, most recommended to obtain the highest image quality and performance\&. For
+\fBGL_READ_PIXELS_FORMAT\fR, the value returned in
+\fIparams\fR
+is a token that is accepted for the
+\fIformat\fR
+argument to
+\fBglReadPixels\fR()\&. For
+\fBGL_READ_PIXELS_TYPE\fR, the value returned in
+\fIparams\fR
+is a token that is accepted for the
+\fItype\fR
+argument to
+\fBglReadPixels\fR()\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_TEXTURE_IMAGE_FORMAT\fR
+or
+\fBGL_TEXTURE_IMAGE_TYPE\fR
+then
+\fIparams\fR
+is filled with the implementation\-recommended format or type to be used in calls to
+\fBglTexImage2D\fR()
+and other similar functions\&. For
+\fBGL_TEXTURE_IMAGE_FORMAT\fR,
+\fIparams\fR
+is filled with a token suitable for use as the
+\fIformat\fR
+argument to
+\fBglTexImage2D\fR()\&. For
+\fBGL_TEXTURE_IMAGE_TYPE\fR,
+\fIparams\fR
+is filled with a token suitable for use as the
+\fItype\fR
+argument to
+\fBglTexImage2D\fR()\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_GET_TEXTURE_IMAGE_FORMAT\fR
+or
+\fBGL_GET_TEXTURE_IMAGE_TYPE\fR
+then
+\fIparams\fR
+is filled with the implementation\-recommended format or type to be used in calls to
+\fBglGetTexImage\fR()
+and other similar functions\&. For
+\fBGL_GET_TEXTURE_IMAGE_FORMAT\fR,
+\fIparams\fR
+is filled with a token suitable for use as the
+\fIformat\fR
+argument to
+\fBglGetTexImage\fR()\&. For
+\fBGL_GET_TEXTURE_IMAGE_TYPE\fR,
+\fIparams\fR
+is filled with a token suitable for use as the
+\fItype\fR
+argument to
+\fBglGetTexImage\fR()\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_MIPMAP\fR
+then
+\fIpname\fR
+is set to
+\fBGL_TRUE\fR
+to indicate that the specified internal format supports mipmaps and to
+\fBGL_FALSE\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_GENERATE_MIPMAP\fR
+or
+\fBGL_AUTO_GENERATE_MIPMAP\fR
+then
+\fIparams\fR
+is indicates the level of support for manual or automatic mipmap generation for the specified internal format, respectively\&. Returned values may be one of
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR
+and
+\fBGL_NONE\fR
+to indicate either full support, limited support or no support at all\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_COLOR_ENCODING\fR
+then the color encoding for the resource is returned in
+\fIparams\fR\&. Possible values for color buffers are
+\fBGL_LINEAR\fR
+or
+\fBGL_SRGB\fR, for linear or sRGB\-encoded color components, respectively\&. For non\-color formats (such as depth or stencil), or for unsupported resources, the value
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_SRGB_READ\fR, or
+\fBGL_SRGB_WRITE\fR
+then
+\fIparams\fR
+indicates the level of support for reading and writing to sRGB encoded images, respectively\&. For
+\fBGL_SRGB_READ\fR, support for converting from sRGB colorspace on read operations is returned in
+\fIparams\fR
+and for
+\fBGL_SRGB_WRITE\fR, support for converting to sRGB colorspace on write operations to the resource is returned in
+\fIparams\fR\&.
+\fIparams\fR
+may be set to
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR, or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respecitively\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_FILTER\fR
+the
+\fIparams\fR
+is set to either
+\fBGL_TRUE\fR
+or
+\fBGL_FALSE\fR
+to indicate support or lack thereof for filter modes other than
+\fBGL_NEAREST\fR
+or
+\fBGL_NEAREST_MIPMAP\fR
+for the specified internal format\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_VERTEX_TEXTURE\fR,
+\fBGL_TESS_CONTROL_TEXTURE\fR,
+\fBGL_TESS_EVALUATION_TEXTURE\fR,
+\fBGL_GEOMETRY_TEXTURE\fR,
+\fBGL_FRAGMENT_TEXTURE\fR, or
+\fBGL_COMPUTE_TEXTURE\fR, then the value written to
+\fIparams\fR
+indicates support for use of the resource as a source of texturing in the vertex, tessellation control, tessellation evaluation, geometry, fragment and compute shader stages, respectively\&.
+\fIparams\fR
+may be set to
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR
+or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respectively\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_TEXTURE_SHADOW\fR,
+\fBGL_TEXTURE_GATHER\fR
+or
+\fBGL_TEXTURE_GATHER_SHADOW\fR
+then the value written to
+\fIparams\fR
+indicates the level of support for using the resource with a shadow sampler, in gather operations or as a shadow sampler in gather operations, respectively\&. Returned values may be
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR
+or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respectively\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_SHADER_IMAGE_LOAD\fR,
+\fBGL_SHADER_IMAGE_STORE\fR
+or
+\fBGL_SHADER_IMAGE_ATOMIC\fR
+then the value returned in
+\fIparams\fR
+indicates the level of support for image loads, stores and atomics for resources of the specified internal format\&. Returned values may be
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR
+or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respectively\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_IMAGE_TEXEL_SIZE\fR
+then the size of a texel when the resource when used as an image texture is returned in
+\fIparams\fR\&. If the resource is not supported for image textures zero is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_IMAGE_COMPATIBILITY_CLASS\fR
+then the compatibility class of the resource when used as an image texture is returned in
+\fIparams\fR\&. The possible values returned are
+\fBGL_IMAGE_CLASS_4_X_32\fR,
+\fBGL_IMAGE_CLASS_2_X_32\fR,
+\fBGL_IMAGE_CLASS_1_X_32\fR,
+\fBGL_IMAGE_CLASS_4_X_16\fR,
+\fBGL_IMAGE_CLASS_2_X_16\fR,
+\fBGL_IMAGE_CLASS_1_X_16\fR,
+\fBGL_IMAGE_CLASS_4_X_8\fR,
+\fBGL_IMAGE_CLASS_2_X_8\fR,
+\fBGL_IMAGE_CLASS_1_X_8\fR,
+\fBGL_IMAGE_CLASS_11_11_10\fR, and
+\fBGL_IMAGE_CLASS_10_10_10_2\fR, which correspond to the 4x32, 2x32, 1x32, 4x16, 2x16, 1x16, 4x8, 2x8, 1x8, the class (a) 11/11/10 packed floating\-point format, and the class (b) 10/10/10/2 packed formats, respectively\&. If the resource is not supported for image textures,
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_IMAGE_PIXEL_FORMAT\fR
+or
+\fBGL_IMAGE_PIXEL_TYPE\fR
+then the pixel format or type of the resource when used as an image texture is returned in
+\fIparams\fR, respectively\&. In either case, the resource is not supported for image textures
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_TYPE\fR, the matching criteria use for the resource when used as an image textures is returned in
+\fIparams\fR\&. Possible values returned in
+\fIparams\fR
+are
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE\fR
+or
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS\fR\&. If the resource is not supported for image textures,
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST\fR
+or
+\fBGL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST\fR, support for using the resource both as a source for texture sampling while it is bound as a buffer for depth or stencil test, respectively, is written to
+\fIparams\fR\&. Possible values returned are
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR, or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all\&. If the resource or operation is not supported,
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_SIMULTANEOUS_TEXTURE_AND_DEPTH_WRITE\fR
+or
+\fBGL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE\fR, support for using the resource both as a source for texture sampling while performing depth or stencil writes to the resources, respectively, is written to
+\fIparams\fR\&. Possible values returned are
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR, or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all\&. If the resource or operation is not supported,
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_TEXTURE_COMPRESSED\fR
+then
+\fBGL_TRUE\fR
+is returned in
+\fIparams\fR
+if
+\fIinternalformat\fR
+is a compressed internal format\&.
+\fBGL_FALSE\fR
+is returned in
+\fIparams\fR
+otherwise\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_TEXTURE_COMPRESSED_BLOCK_WIDTH\fR,
+\fBGL_TEXTURE_COMPRESSED_BLOCK_HEIGHT\fR
+or
+\fBGL_TEXTURE_COMPRESSED_BLOCK_SIZE\fR
+then the width, height or total size, respectively of a block (in basic machine units) is returned in
+\fIparams\fR\&. If the internal format is not compressed, or the resource is not supported, 0 is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_CLEAR_BUFFER\fR, the level of support for using the resource with
+\fBglClearBufferData\fR()
+and
+\fBglClearBufferSubData\fR()
+is returned in
+\fIparams\fR\&. Possible values returned are
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR, or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respectively\&. If the resource or operation is not supported,
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_TEXTURE_VIEW\fR, the level of support for using the resource with the
+\fBglTextureView\fR()
+command is returned in
+\fIparams\fR\&. Possible values returned are
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR, or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respectively\&. If the resource or operation is not supported,
+\fBGL_NONE\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_VIEW_COMPATIBILITY_CLASS\fR
+then the compatibility class of the resource when used as a texture view is returned in
+\fIparams\fR\&. The possible values returned are
+\fBGL_VIEW_CLASS_128_BITS\fR,
+\fBGL_VIEW_CLASS_96_BITS\fR,
+\fBGL_VIEW_CLASS_64_BITS\fR,
+\fBGL_VIEW_CLASS_48_BITS\fR,
+\fBGL_VIEW_CLASS_32_BITS\fR,
+\fBGL_VIEW_CLASS_24_BITS\fR,
+\fBGL_VIEW_CLASS_16_BITS\fR,
+\fBGL_VIEW_CLASS_8_BITS\fR,
+\fBGL_VIEW_CLASS_S3TC_DXT1_RGB\fR,
+\fBGL_VIEW_CLASS_S3TC_DXT1_RGBA\fR,
+\fBGL_VIEW_CLASS_S3TC_DXT3_RGBA\fR,
+\fBGL_VIEW_CLASS_S3TC_DXT5_RGBA\fR,
+\fBGL_VIEW_CLASS_RGTC1_RED\fR,
+\fBGL_VIEW_CLASS_RGTC2_RG\fR,
+\fBGL_VIEW_CLASS_BPTC_UNORM\fR, and
+\fBGL_VIEW_CLASS_BPTC_FLOAT\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_CLEAR_TEXTURE\fR
+then the presence of support for using the
+\fBglClearTexImage\fR()
+and
+\fBglClearTexSubImage\fR()
+commands with the resource is written to
+\fIparams\fR\&. Possible values written are
+\fBGL_FULL_SUPPORT\fR,
+\fBGL_CAVEAT_SUPPORT\fR, or
+\fBGL_NONE\fR
+to indicate full support, limited support or no support at all, respectively\&. If the resource or operation is not supported,
+\fBGL_NONE\fR
+is returned\&.
+.SH "NOTES"
+.PP
+\fBglGetInternalformativ\fR
+is available only if the GL version is 4\&.2 or higher\&.
+.PP
+The tokens
+\fBGL_INTERNALFORMAT_SUPPORTED\fR,
+\fBGL_INTERNALFORMAT_PREFERRED\fR,
+\fBGL_INTERNALFORMAT_RED_SIZE\fR,
+\fBGL_INTERNALFORMAT_GREEN_SIZE\fR,
+\fBGL_INTERNALFORMAT_BLUE_SIZE\fR,
+\fBGL_INTERNALFORMAT_ALPHA_SIZE\fR,
+\fBGL_INTERNALFORMAT_DEPTH_SIZE\fR,
+\fBGL_INTERNALFORMAT_STENCIL_SIZE\fR,
+\fBGL_INTERNALFORMAT_SHARED_SIZE\fR,
+\fBGL_INTERNALFORMAT_RED_TYPE\fR,
+\fBGL_INTERNALFORMAT_GREEN_TYPE\fR,
+\fBGL_INTERNALFORMAT_BLUE_TYPE\fR,
+\fBGL_INTERNALFORMAT_ALPHA_TYPE\fR,
+\fBGL_INTERNALFORMAT_DEPTH_TYPE\fR,
+\fBGL_INTERNALFORMAT_STENCIL_TYPE\fR,
+\fBGL_MAX_WIDTH\fR,
+\fBGL_MAX_HEIGHT\fR,
+\fBGL_MAX_DEPTH\fR,
+\fBGL_MAX_LAYERS\fR,
+\fBGL_MAX_COMBINED_DIMENSIONS\fR,
+\fBGL_COLOR_COMPONENTS\fR,
+\fBGL_DEPTH_COMPONENTS\fR,
+\fBGL_STENCIL_COMPONENTS\fR,
+\fBGL_COLOR_RENDERABLE\fR,
+\fBGL_DEPTH_RENDERABLE\fR,
+\fBGL_STENCIL_RENDERABLE\fR,
+\fBGL_FRAMEBUFFER_RENDERABLE\fR,
+\fBGL_FRAMEBUFFER_RENDERABLE_LAYERED\fR,
+\fBGL_FRAMEBUFFER_BLEND\fR,
+\fBGL_READ_PIXELS\fR,
+\fBGL_READ_PIXELS_FORMAT\fR,
+\fBGL_READ_PIXELS_TYPE\fR,
+\fBGL_TEXTURE_IMAGE_FORMAT\fR,
+\fBGL_TEXTURE_IMAGE_TYPE\fR,
+\fBGL_GET_TEXTURE_IMAGE_FORMAT\fR,
+\fBGL_GET_TEXTURE_IMAGE_TYPE\fR,
+\fBGL_MIPMAP\fR,
+\fBGL_GENERATE_MIPMAP\fR,
+\fBGL_AUTO_GENERATE_MIPMAP\fR,
+\fBGL_COLOR_ENCODING\fR,
+\fBGL_SRGB_READ\fR,
+\fBGL_SRGB_WRITE\fR,
+\fBGL_SRGB_DECODE_ARB\fR,
+\fBGL_FILTER\fR,
+\fBGL_VERTEX_TEXTURE\fR,
+\fBGL_TESS_CONTROL_TEXTURE\fR,
+\fBGL_TESS_EVALUATION_TEXTURE\fR,
+\fBGL_GEOMETRY_TEXTURE\fR,
+\fBGL_FRAGMENT_TEXTURE\fR,
+\fBGL_COMPUTE_TEXTURE\fR,
+\fBGL_TEXTURE_SHADOW\fR,
+\fBGL_TEXTURE_GATHER\fR,
+\fBGL_TEXTURE_GATHER_SHADOW\fR,
+\fBGL_SHADER_IMAGE_LOAD\fR,
+\fBGL_SHADER_IMAGE_STORE\fR,
+\fBGL_SHADER_IMAGE_ATOMIC\fR,
+\fBGL_IMAGE_TEXEL_SIZE\fR,
+\fBGL_IMAGE_COMPATIBILITY_CLASS\fR,
+\fBGL_IMAGE_PIXEL_FORMAT\fR,
+\fBGL_IMAGE_PIXEL_TYPE\fR,
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_TYPE\fR,
+\fBGL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST\fR,
+\fBGL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST\fR,
+\fBGL_SIMULTANEOUS_TEXTURE_AND_DEPTH_WRITE\fR,
+\fBGL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE\fR,
+\fBGL_TEXTURE_COMPRESSED\fR,
+\fBGL_TEXTURE_COMPRESSED_BLOCK_WIDTH\fR,
+\fBGL_TEXTURE_COMPRESSED_BLOCK_HEIGHT\fR,
+\fBGL_TEXTURE_COMPRESSED_BLOCK_SIZE\fR,
+\fBGL_CLEAR_BUFFER\fR,
+\fBGL_TEXTURE_VIEW\fR, and
+\fBGL_VIEW_COMPATIBILITY_CLASS\fR
+are supported only if the GL version is 4\&.3 or higher\&.
+.PP
+The
+\fBGL_CLEAR_TEXTURE\fR
+token is accepted for
+\fIpname\fR
+only if the GL version is 4\&.4 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbufSize\fR
+is negative\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not
+\fBGL_SAMPLES\fR
+or
+\fBGL_NUM_SAMPLE_COUNTS\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIinternalformat\fR
+is not color\-, depth\-, or stencil\-renderable\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+is not one of
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR
+or
+\fBGL_RENDERBUFFER\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetInternalformati64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetInternalformativ\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGet\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2018 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group.
+.br

@@ -1,0 +1,243 @@
+'\" t
+.\"     Title: glGetActiveAtomicCounterBufferiv
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETACTIVEATOMICCOU" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetActiveAtomicCounterBufferiv \- retrieve information about the set of active atomic counter buffers for a program
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetActiveAtomicCounterBufferiv('u
+.BI "void glGetActiveAtomicCounterBufferiv(GLuint\ " "program" ", GLuint\ " "bufferIndex" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+The name of a program object from which to retrieve information\&.
+.RE
+.PP
+\fIbufferIndex\fR
+.RS 4
+Specifies index of an active atomic counter buffer\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies which parameter of the atomic counter buffer to retrieve\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+Specifies the address of a variable into which to write the retrieved information\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetActiveAtomicCounterBufferiv\fR
+retrieves information about the set of active atomic counter buffers for a program object\&.
+\fIprogram\fR
+is the name of a program object for which the command
+\fBglLinkProgram\fR()
+has been issued in the past\&. It is not necessary for
+\fIprogram\fR
+to have been linked successfully\&. The link may have failed because the number of active atomic counters exceeded the limits\&.
+.PP
+\fIbufferIndex\fR
+specifies the index of an active atomic counter buffer and must be in the range zero to the value of
+\fBGL_ACTIVE_ATOMIC_COUNTER_BUFFERS\fR
+minus one\&. The value of
+\fBGL_ACTIVE_ATOMIC_COUNTER_BUFFERS\fR
+for
+\fIprogram\fR
+indicates the number of active atomic counter buffer and can be queried with
+\fBglGetProgram\fR()\&.
+.PP
+If no error occurs, the parameter(s) specified by
+\fIpname\fR
+are returned in
+\fIparams\fR\&. If an error is generated, the contents of
+\fIparams\fR
+are not modified\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER_BINDING\fR, then the index of the counter buffer binding point associated with the active atomic counter buffer
+\fIbufferIndex\fR
+for
+\fIprogram\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER_DATA_SIZE\fR, then the implementation\-dependent minimum total buffer object size, in baseic machine units, required to hold all active atomic counters in the atomic counter binding point identified by
+\fIbufferIndex\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS\fR, then the number of active atomic counters for the atomic counter buffer identified by
+\fIbufferIndex\fR
+is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES\fR, then a list of the active atomic counter indices for the atomic counter buffer identified by
+\fIbufferIndex\fR
+is returned\&. The number of elements that will be written into
+\fIparams\fR
+is the value of
+\fBGL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS\fR
+for
+\fIbufferIndex\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER\fR
+then a boolean value indicating whether the atomic counter buffer identified by
+\fIbufferIndex\fR
+is referenced by the vertex, tessellation control, tessellation evaluation, geometry, fragment or compute processing stages of
+\fIprogram\fR, respectively, is returned\&.
+.SH "NOTES"
+.PP
+\fBglGetActiveAtomicCounterBufferiv\fR
+is available only if the GL version is 4\&.2 or higher\&.
+.PP
+\fBGL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER\fR
+is available only of the GL version is 4\&.3 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIprogram\fR
+is not the name of a program object for which
+\fBglLinkProgram\fR()
+has been called in the past\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbufferIndex\fR
+is greater than or equal to the value of
+\fBGL_ACTIVE_ATOMIC_COUNTER_BUFFERS\fR
+for
+\fIprogram\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not one of the accepted tokens\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetActiveAtomicCounterBufferiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetProgram\fR(),
+\fBglGetActiveSubroutineUniform\fR(),
+\fBglGetActiveSubroutineUniformName\fR(),
+\fBglGetUniformLocation\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group.
+.br

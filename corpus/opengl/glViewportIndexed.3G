@@ -1,0 +1,287 @@
+'\" t
+.\"     Title: glViewportIndexed
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLVIEWPORTINDEXED" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glViewportIndexed \- set a specified viewport
+.SH "C SPECIFICATION"
+.HP \w'void\ glViewportIndexedf('u
+.BI "void glViewportIndexedf(GLuint\ " "index" ", GLfloat\ " "x" ", GLfloat\ " "y" ", GLfloat\ " "w" ", GLfloat\ " "h" ");"
+.HP \w'void\ glViewportIndexedfv('u
+.BI "void glViewportIndexedfv(GLuint\ " "index" ", const\ GLfloat\ *" "v" ");"
+.SH "PARAMETERS"
+.PP
+\fIindex\fR
+.RS 4
+Specify the first viewport to set\&.
+.RE
+.PP
+\fIx\fR, \fIy\fR
+.RS 4
+For
+\fBglViewportIndexedf\fR, specifies the lower left corner of the viewport rectangle, in pixels\&. The initial value is (0,0)\&.
+.RE
+.PP
+\fIw\fR, \fIh\fR
+.RS 4
+For
+\fBglViewportIndexedf\fR, specifies the width and height of the viewport\&. When a GL context is first attached to a window,
+\fIw\fR
+and
+\fIh\fR
+are set to the dimensions of that window\&.
+.RE
+.PP
+\fIv\fR
+.RS 4
+For
+\fBglViewportIndexedfv\fR, specifies the address of an array containing the viewport parameters\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglViewportIndexedf\fR
+and
+\fBglViewportIndexedfv\fR
+specify the parameters for a single viewport\&.
+\fIindex\fR
+specifies the index of the viewport to modify\&.
+\fIindex\fR
+must be less than the value of
+\fBGL_MAX_VIEWPORTS\fR\&. For
+\fBglViewportIndexedf\fR,
+\fIx\fR,
+\fIy\fR,
+\fIw\fR, and
+\fIh\fR
+specify the left, bottom, width and height of the viewport in pixels, respectively\&. For
+\fBglViewportIndexedfv\fR,
+\fIv\fR
+contains the address of an array of floating point values specifying the left (x), bottom (y), width (w), and height (h) of each viewport, in that order\&.
+x
+and
+y
+give the location of the viewport\*(Aqs lower left corner, and
+w
+and
+h
+give the width and height of the viewport, respectively\&. The viewport specifies the affine transformation of
+x
+and
+y
+from normalized device coordinates to window coordinates\&. Let
+x nd y nd
+be normalized device coordinates\&. Then the window coordinates
+x w y w
+are computed as follows:
+.PP
+x w = x nd + 1 ⁢ width 2 + x
+.PP
+y w = y nd + 1 ⁢ height 2 + y
+.PP
+The location of the viewport\*(Aqs bottom left corner, given by (x,
+y) is clamped to be within the implementaiton\-dependent viewport bounds range\&. The viewport bounds range [min,
+max] can be determined by calling
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT_BOUNDS_RANGE\fR\&. Viewport width and height are silently clamped to a range that depends on the implementation\&. To query this range, call
+\fBglGet\fR()
+with argument
+\fBGL_MAX_VIEWPORT_DIMS\fR\&.
+.PP
+The precision with which the GL interprets the floating point viewport bounds is implementation\-dependent and may be determined by querying the impementation\-defined constant
+\fBGL_VIEWPORT_SUBPIXEL_BITS\fR\&.
+.PP
+Calling
+\fBglViewportIndexedfv\fR
+is equivalent to calling
+\fBglViewportArray\fR()
+with
+\fIfirst\fR
+set to
+\fIindex\fR,
+\fIcount\fR
+set to 1 and
+\fIv\fR
+passsed directly\&.
+\fBglViewportIndexedf\fR
+is equivalent to:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    void glViewportIndexedf(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h) {
+        const float v[4]  = { x, y, w, h };
+        glViewportArrayv(index, 1, v);
+    }
+.fi
+.if n \{\
+.RE
+.\}
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIindex\fR
+is greater than or equal to the value of
+\fBGL_MAX_VIEWPORTS\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if either
+\fIw\fR
+or
+\fIh\fR
+is negative\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_VIEWPORT_DIMS\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT_BOUNDS_RANGE\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_VIEWPORT_SUBPIXEL_BITS\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglViewportIndexedf\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglViewportIndexedfv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDepthRange\fR(),
+\fBglViewport\fR(),
+\fBglViewportArray\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

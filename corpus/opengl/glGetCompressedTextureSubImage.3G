@@ -1,0 +1,393 @@
+'\" t
+.\"     Title: glGetCompressedTextureSubImage
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETCOMPRESSEDTEXTU" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetCompressedTextureSubImage \- retrieve a sub\-region of a compressed texture image from a compressed texture object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetCompressedTextureSubImage('u
+.BI "void glGetCompressedTextureSubImage(GLuint\ " "texture" ", GLint\ " "level" ", GLint\ " "xoffset" ", GLint\ " "yoffset" ", GLint\ " "zoffset" ", GLsizei\ " "width" ", GLsizei\ " "height" ", GLsizei\ " "depth" ", GLsizei\ " "bufSize" ", void\ *" "pixels" ");"
+.SH "PARAMETERS"
+.PP
+\fItexture\fR
+.RS 4
+Specifies the name of the source texture object\&. Must be
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_CUBE_MAP\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR
+or
+\fBGL_TEXTURE_RECTANGLE\fR\&. In specific, buffer and multisample textures are not permitted\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+Specifies the level\-of\-detail number\&. Level 0 is the base image level\&. Level $n$ is the $n$th mipmap reduction image\&.
+.RE
+.PP
+\fIxoffset\fR
+.RS 4
+Specifies a texel offset in the x direction within the texture array\&.
+.RE
+.PP
+\fIyoffset\fR
+.RS 4
+Specifies a texel offset in the y direction within the texture array\&.
+.RE
+.PP
+\fIzoffset\fR
+.RS 4
+Specifies a texel offset in the z direction within the texture array\&.
+.RE
+.PP
+\fIwidth\fR
+.RS 4
+Specifies the width of the texture subimage\&. Must be a multiple of the compressed block\*(Aqs width, unless the
+\fIoffset\fR
+is zero and the size equals the texture image size\&.
+.RE
+.PP
+\fIheight\fR
+.RS 4
+Specifies the height of the texture subimage\&. Must be a multiple of the compressed block\*(Aqs height, unless the
+\fIoffset\fR
+is zero and the size equals the texture image size\&.
+.RE
+.PP
+\fIdepth\fR
+.RS 4
+Specifies the depth of the texture subimage\&. Must be a multiple of the compressed block\*(Aqs depth, unless the
+\fIoffset\fR
+is zero and the size equals the texture image size\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+Specifies the size of the buffer to receive the retrieved pixel data\&.
+.RE
+.PP
+\fIpixels\fR
+.RS 4
+Returns the texture subimage\&. Should be a pointer to an array of the type specified by type\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetCompressedTextureSubImage\fR
+can be used to obtain a sub\-region of a compressed texture image instead of the whole image, as long as the compressed data are arranged into fixed\-size blocks of texels\&.
+\fItexture\fR
+is the name of the texture object, and must not be a buffer or multisample texture\&. The effective
+\fItarget\fR
+is the value of
+\fBGL_TEXTURE_TARGET\fR
+for texture\&.
+\fIlevel\fR
+and
+\fIpixels\fR
+have the same meaning as the corresponding arguments of
+\fBglCompressedTexSubImage3D\fR\&.
+\fIbufSize\fR
+indicates the size of the buffer to receive the retrieved pixel data\&.
+.PP
+For cube map textures, the behavior is as though
+\fBglGetCompressedTexImage\fR
+were called once for each requested face (selected by
+\fIzoffset\fR
+and
+\fIdepth\fR, as described below) with target corresponding to the requested texture cube map face as indicated by the table presented below\&.
+\fIpixels\fR
+is offset appropriately for each successive image\&.
+.TS
+allbox tab(:);
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+Layer number
+T}:T{
+Cube Map Face
+T}
+T{
+0
+T}:T{
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR
+T}
+T{
+1
+T}:T{
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_X\fR
+T}
+T{
+2
+T}:T{
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Y\fR
+T}
+T{
+3
+T}:T{
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Y\fR
+T}
+T{
+4
+T}:T{
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Z\fR
+T}
+T{
+5
+T}:T{
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Z\fR
+T}
+.TE
+.sp 1
+.PP
+\fIxoffset\fR,
+\fIyoffset\fR
+and
+\fIzoffset\fR
+indicate the position of the subregion to return\&.
+\fIwidth\fR,
+\fIheight\fR
+and
+\fIdepth\fR
+indicate the size of the region to return\&. These arguments have the same meaning as for
+\fBglCompressedTexSubImage3D\fR, though there are extra restrictions, described in the errors section below\&.
+.PP
+The mapping between the
+\fIxoffset\fR,
+\fIyoffset\fR,
+\fIzoffset\fR,
+\fIwidth\fR,
+\fIheight\fR
+and
+\fIdepth\fR
+parameters and the faces, layers, and layer\-faces for cube map, array, and cube map array textures is the same as for glGetTextureSubImage\&.
+.PP
+The
+\fIxoffset\fR,
+\fIyoffset\fR,
+\fIzoffset\fR
+offsets and
+\fIwidth\fR,
+\fIheight\fR
+and
+\fIdepth\fR
+sizes must be multiples of the values of
+\fBGL_PACK_COMPRESSED_BLOCK_WIDTH\fR,
+\fBGL_PACK_COMPRESSED_BLOCK_HEIGHT\fR, and
+\fBGL_PACK_COMPRESSED_BLOCK_DEPTH\fR
+respectively, unless
+\fIoffset\fR
+is zero and the corresponding
+\fIsize\fR
+is the same as the texture size in that dimension\&.
+.PP
+Pixel storage modes are treated as for
+\fBglGetCompressedTexSubImage\fR\&. The texel at (\fIxoffset\fR,
+\fIyoffset\fR,
+\fIzoffset\fR) will be stored at the location indicated by
+\fIpixels\fR
+and the current pixel packing parameters\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if
+\fItexture\fR
+is the name of a buffer or multisample texture\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if the buffer size required to store the requested data is greater than
+\fIbufSize\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if the texture compression format is not based on fixed\-size blocks\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIxoffset\fR,
+\fIyoffset\fR
+or
+\fIzoffset\fR
+are negative\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIxoffset\fR
++
+\fIwidth\fR
+is greater than the texture\*(Aqs width,
+\fIyoffset\fR
++
+\fIheight\fR
+is greater than the texture\*(Aqs height, or
+\fIzoffset\fR
++
+\fIdepth\fR
+is greater than the texture\*(Aqs depth\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if the effective target is
+\fBGL_TEXTURE_1D\fR
+and either
+\fIyoffset\fR
+is not zero, or
+\fIheight\fR
+is not one\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if the effective target is
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR
+or
+\fBGL_TEXTURE_RECTANGLE\fR
+and either
+\fIzoffset\fR
+is not zero, or
+\fIdepth\fR
+is not one\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if
+\fIxoffset\fR,
+\fIyoffset\fR
+or
+\fIzoffset\fR
+is not a multiple of the compressed block width, height or depth respectively\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if
+\fIwidth\fR,
+\fIheight\fR
+or
+\fIdepth\fR
+is not a multiple of the compressed block width, height or depth respectively, unless the
+\fIoffset\fR
+is zero and the
+\fIsize\fR
+equals the texture image size\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetCompressedTextureSubImage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglCompressedTexImage1D\fR(),
+\fBglCompressedTexImage2D\fR(),
+\fBglCompressedTexImage3D\fR(),
+\fBglCompressedTexSubImage1D\fR(),
+\fBglCompressedTexSubImage2D\fR(),
+\fBglCompressedTexSubImage3D\fR(),
+\fBglGetCompressedTexImage\fR(),
+
+\fBglGetCompressedTextureImage\fR,
+\fBglReadPixels\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

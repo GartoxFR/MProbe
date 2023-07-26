@@ -1,0 +1,207 @@
+'\" t
+.\"     Title: glDebugMessageInsert
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLDEBUGMESSAGEINSERT" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glDebugMessageInsert \- inject an application\-supplied message into the debug message queue
+.SH "C SPECIFICATION"
+.HP \w'void\ glDebugMessageInsert('u
+.BI "void glDebugMessageInsert(GLenum\ " "source" ", GLenum\ " "type" ", GLuint\ " "id" ", GLenum\ " "severity" ", GLsizei\ " "length" ", const\ char\ *" "message" ");"
+.SH "PARAMETERS"
+.PP
+\fIsource\fR
+.RS 4
+The source of the debug message to insert\&.
+.RE
+.PP
+\fItype\fR
+.RS 4
+The type of the debug message insert\&.
+.RE
+.PP
+\fIid\fR
+.RS 4
+The user\-supplied identifier of the message to insert\&.
+.RE
+.PP
+\fIseverity\fR
+.RS 4
+The severity of the debug messages to insert\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+The length string contained in the character array whose address is given by
+\fImessage\fR\&.
+.RE
+.PP
+\fImessage\fR
+.RS 4
+The address of a character array containing the message to insert\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglDebugMessageInsert\fR
+inserts a user\-supplied message into the debug output queue\&.
+\fIsource\fR
+specifies the source that will be used to classify the message and must be
+\fBGL_DEBUG_SOURCE_APPLICATION\fR
+or
+\fBGL_DEBUG_SOURCE_THIRD_PARTY\fR\&. All other sources are reserved for use by the GL implementation\&.
+\fItype\fR
+indicates the type of the message to be inserted and may be one of
+\fBGL_DEBUG_TYPE_ERROR\fR,
+\fBGL_DEBUG_TYPE_DEPRECATED_BEHAVIOR\fR,
+\fBGL_DEBUG_TYPE_UNDEFINED_BEHAVIOR\fR,
+\fBGL_DEBUG_TYPE_PORTABILITY\fR,
+\fBGL_DEBUG_TYPE_PERFORMANCE\fR,
+\fBGL_DEBUG_TYPE_MARKER\fR,
+\fBGL_DEBUG_TYPE_PUSH_GROUP\fR,
+\fBGL_DEBUG_TYPE_POP_GROUP\fR, or
+\fBGL_DEBUG_TYPE_OTHER\fR\&.
+\fIseverity\fR
+indicates the severity of the message and may be
+\fBGL_DEBUG_SEVERITY_LOW\fR,
+\fBGL_DEBUG_SEVERITY_MEDIUM\fR,
+\fBGL_DEBUG_SEVERITY_HIGH\fR
+or
+\fBGL_DEBUG_SEVERITY_NOTIFICATION\fR\&.
+\fIid\fR
+is available for application defined use and may be any value\&. This value will be recorded and used to identify the message\&.
+.PP
+\fIlength\fR
+contains a count of the characters in the character array whose address is given in
+\fImessage\fR\&. If
+\fIlength\fR
+is negative then
+\fImessage\fR
+is treated as a null\-terminated string\&. The length of the message, whether specified explicitly or implicitly, must be less than or equal to the implementation defined constant
+\fBGL_MAX_DEBUG_MESSAGE_LENGTH\fR\&.
+.SH "NOTES"
+.PP
+\fBGL_DEBUG_TYPE_MARKER\fR,
+\fBGL_DEBUG_TYPE_PUSH_GROUP\fR,
+\fBGL_DEBUG_TYPE_POP_GROUP\fR, and
+\fBGL_DEBUG_SEVERITY_NOTIFICATION\fR
+are available only if the GL version is 4\&.3 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if any of
+\fIsource\fR,
+\fItype\fR
+or
+\fIseverity\fR
+is not one of the accepted interface types\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the length of the message is greater than the value of
+\fBGL_MAX_DEBUG_MESSAGE_LENGTH\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglDebugMessageInsert\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDebugMessageControl\fR(),
+\fBglDebugMessageCallback\fR(),
+\fBglGetDebugMessageLog\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

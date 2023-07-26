@@ -1,0 +1,292 @@
+'\" t
+.\"     Title: glMultiDrawElementsIndirect
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLMULTIDRAWELEMENTSI" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glMultiDrawElementsIndirect \- render indexed primitives from array data, taking parameters from memory
+.SH "C SPECIFICATION"
+.HP \w'void\ glMultiDrawElementsIndirect('u
+.BI "void glMultiDrawElementsIndirect(GLenum\ " "mode" ", GLenum\ " "type" ", const\ void\ *" "indirect" ", GLsizei\ " "drawcount" ", GLsizei\ " "stride" ");"
+.SH "PARAMETERS"
+.PP
+\fImode\fR
+.RS 4
+Specifies what kind of primitives to render\&. Symbolic constants
+\fBGL_POINTS\fR,
+\fBGL_LINE_STRIP\fR,
+\fBGL_LINE_LOOP\fR,
+\fBGL_LINES\fR,
+\fBGL_LINE_STRIP_ADJACENCY\fR,
+\fBGL_LINES_ADJACENCY\fR,
+\fBGL_TRIANGLE_STRIP\fR,
+\fBGL_TRIANGLE_FAN\fR,
+\fBGL_TRIANGLES\fR,
+\fBGL_TRIANGLE_STRIP_ADJACENCY\fR,
+\fBGL_TRIANGLES_ADJACENCY\fR, and
+\fBGL_PATCHES\fR
+are accepted\&.
+.RE
+.PP
+\fItype\fR
+.RS 4
+Specifies the type of data in the buffer bound to the
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+binding\&.
+.RE
+.PP
+\fIindirect\fR
+.RS 4
+Specifies the address of a structure containing an array of draw parameters\&.
+.RE
+.PP
+\fIdrawcount\fR
+.RS 4
+Specifies the number of elements in the array addressed by
+\fIindirect\fR\&.
+.RE
+.PP
+\fIstride\fR
+.RS 4
+Specifies the distance in basic machine units between elements of the draw parameter array\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglMultiDrawElementsIndirect\fR
+specifies multiple indexed geometric primitives with very few subroutine calls\&.
+\fBglMultiDrawElementsIndirect\fR
+behaves similarly to a multitude of calls to
+\fBglDrawElementsInstancedBaseVertexBaseInstance\fR(), execpt that the parameters to
+\fBglDrawElementsInstancedBaseVertexBaseInstance\fR()
+are stored in an array in memory at the address given by
+\fIindirect\fR, separated by the stride, in basic machine units, specified by
+\fIstride\fR\&. If
+\fIstride\fR
+is zero, then the array is assumed to be tightly packed in memory\&.
+.PP
+The parameters addressed by
+\fIindirect\fR
+are packed into a structure that takes the form (in C):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    typedef  struct {
+        uint  count;
+        uint  instanceCount;
+        uint  firstIndex;
+        uint  baseVertex;
+        uint  baseInstance;
+    } DrawElementsIndirectCommand;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+A single call to
+\fBglMultiDrawElementsIndirect\fR
+is equivalent, assuming no errors are generated to:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    GLsizei n;
+    for (n = 0; n < drawcount; n++) {
+        const DrawElementsIndirectCommand *cmd;
+        if (stride != 0) {
+            cmd = (const DrawElementsIndirectCommand  *)((uintptr)indirect + n * stride);
+        } else {
+            cmd = (const DrawElementsIndirectCommand  *)indirect + n;
+        }
+
+        glDrawElementsInstancedBaseVertexBaseInstance(mode,
+                                                      cmd\->count,
+                                                      type,
+                                                      cmd\->firstIndex * size\-of\-type,
+                                                      cmd\->instanceCount,
+                                                      cmd\->baseVertex,
+                                                      cmd\->baseInstance);
+    }
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+If a buffer is bound to the
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+binding at the time of a call to
+\fBglDrawElementsIndirect\fR,
+\fIindirect\fR
+is interpreted as an offset, in basic machine units, into that buffer and the parameter data is read from the buffer rather than from client memory\&.
+.PP
+Note that indices stored in client memory are not supported\&. If no buffer is bound to the
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+binding, an error will be generated\&.
+.PP
+The results of the operation are undefined if the
+reservedMustBeZero
+member of the parameter structure is non\-zero\&. However, no error is generated in this case\&.
+.PP
+Vertex attributes that are modified by
+\fBglDrawElementsIndirect\fR
+have an unspecified value after
+\fBglDrawElementsIndirect\fR
+returns\&. Attributes that aren\*(Aqt modified remain well defined\&.
+.SH "NOTES"
+.PP
+The
+\fIbaseInstance\fR
+member of the
+\fIDrawElementsIndirectCommand\fR
+structure is defined only if the GL version is 4\&.2 or greater\&. For versions of the GL less than 4\&.2, this parameter is present but is reserved and should be set to zero\&. On earlier versions of the GL, behavior is undefined if it is non\-zero\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fImode\fR
+is not an accepted value\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIstride\fR
+is not a multiple of four\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIdrawcount\fR
+is negative\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if no buffer is bound to the
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+binding, or if such a buffer\*(Aqs data store is currently mapped\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if a non\-zero buffer object name is bound to an enabled array or to the
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+binding and the buffer object\*(Aqs data store is currently mapped\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if a geometry shader is active and
+\fImode\fR
+is incompatible with the input primitive type of the geometry shader in the currently installed program object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fImode\fR
+is
+\fBGL_PATCHES\fR
+and no tessellation control shader is active\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglMultiDrawElementsIndirect\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDrawArrays\fR(),
+\fBglDrawArraysInstanced\fR(),
+\fBglDrawArraysIndirect\fR(),
+\fBglDrawElements\fR(),
+\fBglDrawRangeElements\fR(),
+\fBglDrawElementsIndirect\fR(),
+\fBglMultiDrawArraysIndirect\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group.
+.br

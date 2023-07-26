@@ -1,0 +1,398 @@
+'\" t
+.\"     Title: glGetTextureSubImage
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETTEXTURESUBIMAGE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetTextureSubImage \- retrieve a sub\-region of a texture image from a texture object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetTextureSubImage('u
+.BI "void glGetTextureSubImage(GLuint\ " "texture" ", GLint\ " "level" ", GLint\ " "xoffset" ", GLint\ " "yoffset" ", GLint\ " "zoffset" ", GLsizei\ " "width" ", GLsizei\ " "height" ", GLsizei\ " "depth" ", GLenum\ " "format" ", GLenum\ " "type" ", GLsizei\ " "bufSize" ", void\ *" "pixels" ");"
+.SH "PARAMETERS"
+.PP
+\fItexture\fR
+.RS 4
+Specifies the name of the source texture object\&. Must be
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_CUBE_MAP\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR
+or
+\fBGL_TEXTURE_RECTANGLE\fR\&. In specific, buffer and multisample textures are not permitted\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+Specifies the level\-of\-detail number\&. Level 0 is the base image level\&. Level $n$ is the $n$th mipmap reduction image\&.
+.RE
+.PP
+\fIxoffset\fR
+.RS 4
+Specifies a texel offset in the x direction within the texture array\&.
+.RE
+.PP
+\fIyoffset\fR
+.RS 4
+Specifies a texel offset in the y direction within the texture array\&.
+.RE
+.PP
+\fIzoffset\fR
+.RS 4
+Specifies a texel offset in the z direction within the texture array\&.
+.RE
+.PP
+\fIwidth\fR
+.RS 4
+Specifies the width of the texture subimage\&.
+.RE
+.PP
+\fIheight\fR
+.RS 4
+Specifies the height of the texture subimage\&.
+.RE
+.PP
+\fIdepth\fR
+.RS 4
+Specifies the depth of the texture subimage\&.
+.RE
+.PP
+\fIformat\fR
+.RS 4
+Specifies the format of the pixel data\&. The following symbolic values are accepted:
+\fBGL_RED\fR,
+\fBGL_RG\fR,
+\fBGL_RGB\fR,
+\fBGL_BGR\fR,
+\fBGL_RGBA\fR,
+\fBGL_BGRA\fR,
+\fBGL_DEPTH_COMPONENT\fR
+and
+\fBGL_STENCIL_INDEX\fR\&.
+.RE
+.PP
+\fItype\fR
+.RS 4
+Specifies the data type of the pixel data\&. The following symbolic values are accepted:
+\fBGL_UNSIGNED_BYTE\fR,
+\fBGL_BYTE\fR,
+\fBGL_UNSIGNED_SHORT\fR,
+\fBGL_SHORT\fR,
+\fBGL_UNSIGNED_INT\fR,
+\fBGL_INT\fR,
+\fBGL_FLOAT\fR,
+\fBGL_UNSIGNED_BYTE_3_3_2\fR,
+\fBGL_UNSIGNED_BYTE_2_3_3_REV\fR,
+\fBGL_UNSIGNED_SHORT_5_6_5\fR,
+\fBGL_UNSIGNED_SHORT_5_6_5_REV\fR,
+\fBGL_UNSIGNED_SHORT_4_4_4_4\fR,
+\fBGL_UNSIGNED_SHORT_4_4_4_4_REV\fR,
+\fBGL_UNSIGNED_SHORT_5_5_5_1\fR,
+\fBGL_UNSIGNED_SHORT_1_5_5_5_REV\fR,
+\fBGL_UNSIGNED_INT_8_8_8_8\fR,
+\fBGL_UNSIGNED_INT_8_8_8_8_REV\fR,
+\fBGL_UNSIGNED_INT_10_10_10_2\fR, and
+\fBGL_UNSIGNED_INT_2_10_10_10_REV\fR\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+Specifies the size of the buffer to receive the retrieved pixel data\&.
+.RE
+.PP
+\fIpixels\fR
+.RS 4
+Returns the texture subimage\&. Should be a pointer to an array of the type specified by
+\fItype\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetTextureSubImage\fR
+returns a texture subimage into pixels\&.
+.PP
+\fItexture\fR
+is the name of the source texture object and must not be a buffer or multisample texture\&. The effective
+\fItarget\fR
+parameter is the value of
+\fBGL_TEXTURE_TARGET\fR
+for texture\&.
+\fILevel\fR,
+\fIformat\fR,
+\fItype\fR
+and
+\fIpixels\fR
+have the same meaning as for
+\fBglGetTexImage\fR\&.
+\fIbufSize\fR
+is the size of the buffer to receive the retrieved pixel data\&.
+.PP
+For cube map textures, the behavior is as though
+\fBGetTextureImage\fR
+were called, but only texels from the requested cube map faces (selected by
+\fIzoffset\fR
+and
+\fIdepth\fR, as described below) were returned\&.
+.PP
+\fIxoffset\fR,
+\fIyoffset\fR
+and
+\fIzoffset\fR
+values indicate the position of the subregion to return\&.
+\fIwidth\fR,
+\fIheight\fR
+and
+\fIdepth\fR
+indicate the size of the region to return\&. These parameters have the same meaning as for
+\fBglTexSubImage3D\fR, though for one\- and two\-dimensional textures there are extra restrictions, described in the errors section below\&.
+.PP
+For one\-dimensional array textures,
+\fIyoffset\fR
+is interpreted as the first layer to access and
+\fIheight\fR
+is the number of layers to access\&.
+.PP
+For two\-dimensional array textures,
+\fIzoffset\fR
+is interpreted as the first layer to access and
+\fIdepth\fR
+is the number of layers to access\&.
+.PP
+Cube map textures are treated as an array of six slices in the z\-dimension, where the value of
+\fIzoffset\fR
+is interpreted as specifying the cube map face for the corresponding layer (as presented in the table below) and
+\fIdepth\fR
+is the number of faces to access:
+.PP
+.TS
+allbox tab(:);
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+Layer number
+T}:T{
+Cube Map Face
+T}
+T{
+0
+T}:T{
+GL_TEXTURE_CUBE_MAP_POSITIVE_X
+T}
+T{
+1
+T}:T{
+GL_TEXTURE_CUBE_MAP_NEGATIVE_X
+T}
+T{
+2
+T}:T{
+GL_TEXTURE_CUBE_MAP_POSITIVE_Y
+T}
+T{
+3
+T}:T{
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Y
+T}
+T{
+4
+T}:T{
+GL_TEXTURE_CUBE_MAP_POSITIVE_Z
+T}
+T{
+5
+T}:T{
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
+T}
+.TE
+.sp 1
+.PP
+For cube map array textures,
+\fIzoffset\fR
+is the first layer\-face to access, and
+\fIdepth\fR
+is the number of layer\-faces to access\&. A layer\-face described by $k$ is translated into an array layer and face according to $$ layer = \eleft\elfloor { layer \eover 6 } \eright\erfloor$$ and $$ face = k \ebmod 6\&. $$
+.PP
+Component groups from the specified sub\-region are packed and placed into memory as described for
+\fBglGetTextureImage\fR, starting with the texel at (\fIxoffset\fR,
+\fIyoffset\fR,
+\fIzoffset\fR)\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if
+\fItexture\fR
+is the name of a buffer or multisample texture\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIxoffset\fR,
+\fIyoffset\fR
+or
+\fIzoffset\fR
+are negative\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIxoffset\fR
++
+\fIwidth\fR
+is greater than the texture\*(Aqs width,
+\fIyoffset\fR
++
+\fIheight\fR
+is greater than the texture\*(Aqs height, or
+\fIzoffset\fR
++
+\fIdepth\fR
+is greater than the texture\*(Aqs depth\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if the effective target is
+\fBGL_TEXTURE_1D\fR
+and either
+\fIyoffset\fR
+is not zero, or
+\fIheight\fR
+is not one\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if the effective target is
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR
+or
+\fBGL_TEXTURE_RECTANGLE\fR
+and either
+\fIzoffset\fR
+is not zero, or
+\fIdepth\fR
+is not one\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if the buffer size required to store the requested data is greater than
+\fIbufSize\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetTextureSubImage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetTexImage\fR(),
+
+\fBglGetTextureImage\fR,
+\fBglReadPixels\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage3D\fR(),
+\fBglTexSubImage1D\fR(),
+\fBglTexSubImage2D\fR(),
+\fBglTexSubImage3D\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

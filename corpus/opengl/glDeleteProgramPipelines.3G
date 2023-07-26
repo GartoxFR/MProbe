@@ -1,0 +1,144 @@
+'\" t
+.\"     Title: glDeleteProgramPipelines
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLDELETEPROGRAMPIPEL" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glDeleteProgramPipelines \- delete program pipeline objects
+.SH "C SPECIFICATION"
+.HP \w'void\ glDeleteProgramPipelines('u
+.BI "void glDeleteProgramPipelines(GLsizei\ " "n" ", const\ GLuint\ *" "pipelines" ");"
+.SH "PARAMETERS"
+.PP
+\fIn\fR
+.RS 4
+Specifies the number of program pipeline objects to delete\&.
+.RE
+.PP
+\fIpipelines\fR
+.RS 4
+Specifies an array of names of program pipeline objects to delete\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglDeleteProgramPipelines\fR
+deletes the
+\fIn\fR
+program pipeline objects whose names are stored in the array
+\fIpipelines\fR\&. Unused names in
+\fIpipelines\fR
+are ignored, as is the name zero\&. After a program pipeline object is deleted, its name is again unused and it has no contents\&. If program pipeline object that is currently bound is deleted, the binding for that object reverts to zero and no program pipeline object becomes current\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_PROGRAM_PIPELINE_BINDING\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglDeleteProgramPipelines\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenProgramPipelines\fR(),
+\fBglBindProgramPipeline\fR(),
+\fBglIsProgramPipeline\fR(),
+\fBglUseProgramStages\fR(),
+\fBglUseProgram\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group.
+.br

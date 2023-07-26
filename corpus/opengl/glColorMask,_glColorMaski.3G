@@ -1,0 +1,184 @@
+'\" t
+.\"     Title: glColorMask
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCOLORMASK" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glColorMask,_glColorMaski \- enable and disable writing of frame buffer color components
+.SH "C SPECIFICATION"
+.HP \w'void\ glColorMask('u
+.BI "void glColorMask(GLboolean\ " "red" ", GLboolean\ " "green" ", GLboolean\ " "blue" ", GLboolean\ " "alpha" ");"
+.HP \w'void\ glColorMaski('u
+.BI "void glColorMaski(GLuint\ " "buf" ", GLboolean\ " "red" ", GLboolean\ " "green" ", GLboolean\ " "blue" ", GLboolean\ " "alpha" ");"
+.SH "PARAMETERS"
+.PP
+\fIbuf\fR
+.RS 4
+For
+\fBglColorMaski\fR, specifies the index of the draw buffer whose color mask to set\&.
+.RE
+.PP
+\fIred\fR, \fIgreen\fR, \fIblue\fR, \fIalpha\fR
+.RS 4
+Specify whether red, green, blue, and alpha are to be written into the frame buffer\&. The initial values are all
+\fBGL_TRUE\fR, indicating that the color components are written\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglColorMask\fR
+and
+\fBglColorMaski\fR
+specify whether the individual color components in the frame buffer can or cannot be written\&.
+\fBglColorMaski\fR
+sets the mask for a specific draw buffer, whereas
+\fBglColorMask\fR
+sets the mask for all draw buffers\&. If
+\fIred\fR
+is
+\fBGL_FALSE\fR, for example, no change is made to the red component of any pixel in any of the color buffers, regardless of the drawing operation attempted\&.
+.PP
+Changes to individual bits of components cannot be controlled\&. Rather, changes are either enabled or disabled for entire color components\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_COLOR_WRITEMASK\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglColorMask\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglColorMaski\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglClear\fR(),
+\fBglDepthMask\fR(),
+\fBglStencilMask\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This document is licensed under the SGI Free Software B License\&. For details, see
+\m[blue]\fBhttp://oss\&.sgi\&.com/projects/FreeB/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

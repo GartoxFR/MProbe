@@ -1,0 +1,482 @@
+'\" t
+.\"     Title: glMemoryBarrier
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLMEMORYBARRIER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glMemoryBarrier \- defines a barrier ordering memory transactions
+.SH "C SPECIFICATION"
+.HP \w'void\ glMemoryBarrier('u
+.BI "void glMemoryBarrier(GLbitfield\ " "barriers" ");"
+.HP \w'void\ glMemoryBarrierByRegion('u
+.BI "void glMemoryBarrierByRegion(GLbitfield\ " "barriers" ");"
+.SH "PARAMETERS"
+.PP
+\fIbarriers\fR
+.RS 4
+Specifies the barriers to insert\&.
+.sp
+For
+\fBglMemoryBarrier\fR, must be a bitwise combination of any of
+\fBGL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT\fR,
+\fBGL_ELEMENT_ARRAY_BARRIER_BIT\fR,
+\fBGL_UNIFORM_BARRIER_BIT\fR,
+\fBGL_TEXTURE_FETCH_BARRIER_BIT\fR,
+\fBGL_SHADER_IMAGE_ACCESS_BARRIER_BIT\fR,
+\fBGL_COMMAND_BARRIER_BIT\fR,
+\fBGL_PIXEL_BUFFER_BARRIER_BIT\fR,
+\fBGL_TEXTURE_UPDATE_BARRIER_BIT\fR,
+\fBGL_BUFFER_UPDATE_BARRIER_BIT\fR,
+\fBGL_FRAMEBUFFER_BARRIER_BIT\fR,
+\fBGL_TRANSFORM_FEEDBACK_BARRIER_BIT\fR,
+\fBGL_ATOMIC_COUNTER_BARRIER_BIT\fR, or
+\fBGL_SHADER_STORAGE_BARRIER_BIT\fR\&.
+.sp
+For
+\fBglMemoryBarrier\fR, must be a bitwise combination of any of
+\fBGL_ATOMIC_COUNTER_BARRIER_BIT\fR, or
+\fBGL_FRAMEBUFFER_BARRIER_BIT\fR,
+\fBGL_SHADER_IMAGE_ACCESS_BARRIER_BIT\fR,
+\fBGL_SHADER_STORAGE_BARRIER_BIT\fR\&.
+\fBGL_TEXTURE_FETCH_BARRIER_BIT\fR, or
+\fBGL_UNIFORM_BARRIER_BIT\fR\&.
+.sp
+If the special value
+\fBGL_ALL_BARRIER_BITS\fR
+is specified, all supported barriers for the corresponding command will be inserted\&.
+.RE
+.SH "DESCRIPTION FOR GLMEMORYBARRIER"
+.PP
+\fBglMemoryBarrier\fR
+defines a barrier ordering the memory transactions issued prior to the command relative to those issued after the barrier\&. For the purposes of this ordering, memory transactions performed by shaders are considered to be issued by the rendering command that triggered the execution of the shader\&.
+\fIbarriers\fR
+is a bitfield indicating the set of operations that are synchronized with shader stores; the bits used in
+\fIbarriers\fR
+are as follows:
+.PP
+.PP
+\fBGL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT\fR
+.RS 4
+If set, vertex data sourced from buffer objects after the barrier will reflect data written by shaders prior to the barrier\&. The set of buffer objects affected by this bit is derived from the buffer object bindings used for generic vertex attributes derived from the
+\fBGL_VERTEX_ATTRIB_ARRAY_BUFFER\fR
+bindings\&.
+.RE
+.PP
+\fBGL_ELEMENT_ARRAY_BARRIER_BIT\fR
+.RS 4
+If set, vertex array indices sourced from buffer objects after the barrier will reflect data written by shaders prior to the barrier\&. The buffer objects affected by this bit are derived from the
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+binding\&.
+.RE
+.PP
+\fBGL_UNIFORM_BARRIER_BIT\fR
+.RS 4
+Shader uniforms sourced from buffer objects after the barrier will reflect data written by shaders prior to the barrier\&.
+.RE
+.PP
+\fBGL_TEXTURE_FETCH_BARRIER_BIT\fR
+.RS 4
+Texture fetches from shaders, including fetches from buffer object memory via buffer textures, after the barrier will reflect data written by shaders prior to the barrier\&.
+.RE
+.PP
+\fBGL_SHADER_IMAGE_ACCESS_BARRIER_BIT\fR
+.RS 4
+Memory accesses using shader image load, store, and atomic built\-in functions issued after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, image stores and atomics issued after the barrier will not execute until all memory accesses (e\&.g\&., loads, stores, texture fetches, vertex fetches) initiated prior to the barrier complete\&.
+.RE
+.PP
+\fBGL_COMMAND_BARRIER_BIT\fR
+.RS 4
+Command data sourced from buffer objects by Draw*Indirect commands after the barrier will reflect data written by shaders prior to the barrier\&. The buffer objects affected by this bit are derived from the
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+binding\&.
+.RE
+.PP
+\fBGL_PIXEL_BUFFER_BARRIER_BIT\fR
+.RS 4
+Reads and writes of buffer objects via the
+\fBGL_PIXEL_PACK_BUFFER\fR
+and
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+bindings (via
+\fBglReadPixels\fR(),
+\fBglTexSubImage1D\fR(), etc\&.) after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, buffer object writes issued after the barrier will wait on the completion of all shader writes initiated prior to the barrier\&.
+.RE
+.PP
+\fBGL_TEXTURE_UPDATE_BARRIER_BIT\fR
+.RS 4
+Writes to a texture via
+\fBglTex(Sub)Image*\fR,
+\fBglCopyTex(Sub)Image*\fR,
+\fBglCompressedTex(Sub)Image*\fR, and reads via
+\fBglGetTexImage\fR()
+after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, texture writes from these commands issued after the barrier will not execute until all shader writes initiated prior to the barrier complete\&.
+.RE
+.PP
+\fBGL_BUFFER_UPDATE_BARRIER_BIT\fR
+.RS 4
+Reads or writes via
+\fBglBufferSubData\fR(),
+\fBglCopyBufferSubData\fR(), or
+\fBglGetBufferSubData\fR(), or to buffer object memory mapped by
+\fBglMapBuffer\fR()
+or
+\fBglMapBufferRange\fR()
+after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, writes via these commands issued after the barrier will wait on the completion of any shader writes to the same memory initiated prior to the barrier\&.
+.RE
+.PP
+\fBGL_FRAMEBUFFER_BARRIER_BIT\fR
+.RS 4
+Reads and writes via framebuffer object attachments after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, framebuffer writes issued after the barrier will wait on the completion of all shader writes issued prior to the barrier\&.
+.RE
+.PP
+\fBGL_TRANSFORM_FEEDBACK_BARRIER_BIT\fR
+.RS 4
+Writes via transform feedback bindings after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, transform feedback writes issued after the barrier will wait on the completion of all shader writes issued prior to the barrier\&.
+.RE
+.PP
+\fBGL_ATOMIC_COUNTER_BARRIER_BIT\fR
+.RS 4
+Accesses to atomic counters after the barrier will reflect writes prior to the barrier\&.
+.RE
+.PP
+\fBGL_SHADER_STORAGE_BARRIER_BIT\fR
+.RS 4
+Accesses to shader storage blocks after the barrier will reflect writes prior to the barrier\&.
+.RE
+.PP
+\fBGL_QUERY_BUFFER_BARRIER_BIT\fR
+.RS 4
+Writes of buffer objects via the
+\fBGL_QUERY_BUFFER\fR
+binding after the barrier will reflect data written by shaders prior to the barrier\&. Additionally, buffer object writes issued after the barrier will wait on the completion of all shader writes initiated prior to the barrier\&.
+.RE
+.PP
+If
+\fIbarriers\fR
+is
+\fBGL_ALL_BARRIER_BITS\fR, shader memory accesses will be synchronized relative to all the operations described above\&.
+.PP
+Implementations may cache buffer object and texture image memory that could be written by shaders in multiple caches; for example, there may be separate caches for texture, vertex fetching, and one or more caches for shader memory accesses\&. Implementations are not required to keep these caches coherent with shader memory writes\&. Stores issued by one invocation may not be immediately observable by other pipeline stages or other shader invocations because the value stored may remain in a cache local to the processor executing the store, or because data overwritten by the store is still in a cache elsewhere in the system\&. When
+\fBglMemoryBarrier\fR
+is called, the GL flushes and/or invalidates any caches relevant to the operations specified by the
+\fIbarriers\fR
+parameter to ensure consistent ordering of operations across the barrier\&.
+.PP
+To allow for independent shader invocations to communicate by reads and writes to a common memory address, image variables in the OpenGL Shading Language may be declared as "coherent"\&. Buffer object or texture image memory accessed through such variables may be cached only if caches are automatically updated due to stores issued by any other shader invocation\&. If the same address is accessed using both coherent and non\-coherent variables, the accesses using variables declared as coherent will observe the results stored using coherent variables in other invocations\&. Using variables declared as "coherent" guarantees only that the results of stores will be immediately visible to shader invocations using similarly\-declared variables; calling
+\fBglMemoryBarrier\fR
+is required to ensure that the stores are visible to other operations\&.
+.PP
+The following guidelines may be helpful in choosing when to use coherent memory accesses and when to use barriers\&.
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Data that are read\-only or constant may be accessed without using coherent variables or calling
+\fBMemoryBarrier\fR()\&. Updates to the read\-only data via API calls such as
+\fBglBufferSubData\fR
+will invalidate shader caches implicitly as required\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Data that are shared between shader invocations at a fine granularity (e\&.g\&., written by one invocation, consumed by another invocation) should use coherent variables to read and write the shared data\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Data written by one shader invocation and consumed by other shader invocations launched as a result of its execution ("dependent invocations") should use coherent variables in the producing shader invocation and call
+\fBmemoryBarrier\fR() after the last write\&. The consuming shader invocation should also use coherent variables\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Data written to image variables in one rendering pass and read by the shader in a later pass need not use coherent variables or memoryBarrier()\&. Calling
+\fBglMemoryBarrier\fR
+with the SHADER_IMAGE_ACCESS_BARRIER_BIT set in
+\fIbarriers\fR
+between passes is necessary\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Data written by the shader in one rendering pass and read by another mechanism (e\&.g\&., vertex or index buffer pulling) in a later pass need not use coherent variables or
+\fBmemoryBarrier\fR()\&. Calling
+\fBglMemoryBarrier\fR
+with the appropriate bits set in
+\fIbarriers\fR
+between passes is necessary\&.
+.RE
+.sp
+.SH "DESCRIPTION FOR GLMEMORYBARRIERBYREGION"
+.PP
+\fBglMemoryBarrierByRegion\fR
+behaves as described above for
+\fBglMemoryBarrier\fR, with two differences:
+.PP
+First, it narrows the region under consideration so that only reads and writes of prior fragment shaders that are invoked for a smaller region of the framebuffer will be completed/reflected prior to subsequent reads and writes of following fragment shaders\&. The size of the region is implementation\-dependent and may be as small as one framebuffer pixel\&.
+.PP
+Second, it only applies to memory transactions that may be read by or written by a fragment shader\&. Therefore, only the barrier bits
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_ATOMIC_COUNTER_BARRIER_BIT\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_FRAMEBUFFER_BARRIER_BIT\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_SHADER_IMAGE_ACCESS_BARRIER_BIT\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_SHADER_STORAGE_BARRIER_BIT\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_TEXTURE_FETCH_BARRIER_BIT\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_UNIFORM_BARRIER_BIT\fR
+.RE
+.sp
+are supported\&.
+.PP
+When
+\fIbarriers\fR
+is
+\fBGL_ALL_BARRIER_BITS\fR, shader memory accesses will be synchronized relative to all these barrier bits, but not to other barrier bits specific to
+\fBglMemoryBarrier\fR\&. This implies that reads and writes for scatter/gather\-like algorithms may or may not be completed/reflected after a
+\fBglMemoryBarrierByRegion\fR
+command\&. However, for uses such as deferred shading, where a linked list of visible surfaces with the head at a framebuffer address may be constructed, and the entirety of the list is only dependent on previous executions at that framebuffer address,
+\fBglMemoryBarrierByRegion\fR
+may be significantly more efficient than
+\fBglMemoryBarrier\fR\&.
+.SH "NOTES"
+.PP
+\fBGL_SHADER_STORAGE_BARRIER_BIT\fR
+is available only if the GL version is 4\&.3 or higher\&.
+.PP
+\fBGL_QUERY_BUFFER_BARRIER_BIT\fR
+is available only if the GL version is 4\&.4 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbarriers\fR
+is not the special value
+\fBGL_ALL_BARRIER_BITS\fR, and has any bits set other than those described above for
+\fBglMemoryBarrier\fR
+or
+\fBglMemoryBarrierByRegion\fR
+respectively\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglMemoryBarrier\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglMemoryBarrierByRegion\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindImageTexture\fR(),
+\fBglBufferData\fR(),
+\fBglMapBuffer\fR(),
+\fBglMapBufferRange\fR(),
+\fBglFlushMappedBufferRange\fR(),
+\fBmemoryBarrier\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group
+.br

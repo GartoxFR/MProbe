@@ -1,0 +1,126 @@
+'\" t
+.\"     Title: gl_WorkGroupID
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GL_WORKGROUPID" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gl_WorkGroupID \- contains the index of the workgroup currently being operated on by a compute shader
+.SH "DECLARATION"
+in\ \&uvec3\ \&gl_WorkGroupID\ \&;.SH "DESCRIPTION"
+.PP
+In the compute language,
+\fIgl_WorkGroupID\fR
+contains the 3\-dimensional index of the global work group that the current compute shader invocation is executing within\&. The possible values range across the parameters passed into
+\fIglDispatchCompute\fR, i\&.e\&., from (0, 0, 0) to (\fIgl_NumWorkGroups\&.x\fR
+\- 1,
+\fIgl_NumWorkGroups\&.y\fR
+\- 1,
+\fIgl_NumWorkGroups\&.z\fR
+\- 1)\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Shading Language Version\fR
+T}
+T{
+\fBVariable Name\fR
+T}:T{
+\fB1\&.10\fR
+T}:T{
+\fB1\&.20\fR
+T}:T{
+\fB1\&.30\fR
+T}:T{
+\fB1\&.40\fR
+T}:T{
+\fB1\&.50\fR
+T}:T{
+\fB3\&.30\fR
+T}:T{
+\fB4\&.00\fR
+T}:T{
+\fB4\&.10\fR
+T}:T{
+\fB4\&.20\fR
+T}:T{
+\fB4\&.30\fR
+T}:T{
+\fB4\&.40\fR
+T}:T{
+\fB4\&.50\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+gl_WorkGroupID
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBgl_NumWorkGroups\fR(),
+\fBgl_WorkGroupID\fR(),
+\fBgl_LocalInvocationID\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2012-2014 Khronos Group
+.br

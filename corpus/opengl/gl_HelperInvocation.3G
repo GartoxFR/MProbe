@@ -1,0 +1,163 @@
+'\" t
+.\"     Title: gl_HelperInvocation
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GL_HELPERINVOCATION" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gl_HelperInvocation \- indicates whether a fragment shader invocation is a helper invocation
+.SH "DECLARATION"
+in\ \&bool\ \&gl_HelperInvocation\ \&;.SH "DESCRIPTION"
+.PP
+The value
+\fIgl_HelperInvocation\fR
+is true if the fragment shader invocation is considered a helper invocation and is false otherwise\&. A helper invocation is a fragment\-shader invocation that is created solely for the purposes of evaluating derivatives for use in non\-helper fragment\-shader invocations\&. Such derivatives are computed implicitly in the built\-in function
+\fBtexture\fR()(), and explicitly in the derivative functions
+\fBdFdx\fR()() and
+\fBdFdy\fR\&.
+.PP
+Fragment shader helper invocations execute the same shader code as non\-helper invocations, but will not have side effects that modify the framebuffer or other shader\-accessible memory\&. In particular:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Fragments corresponding to helper invocations are discarded when shader execution is complete, without updating the framebuffer\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Stores to image and buffer variables performed by helper invocations have no effect on the underlying image or buffer memory\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Atomic operations to image, buffer, or atomic counter variables performed by helper invocations have no effect on the underlying image or buffer memory\&. The values returned by such atomic operations are undefined\&.
+.RE
+.PP
+Helper invocations may be generated for pixels not covered by a primitive being rendered\&. While fragment shader inputs qualified with centroid are normally required to be sampled in the intersection of the pixel and the primitive, the requirement is ignored for such pixels since there is no intersection between the pixel and primitive\&.
+.PP
+Helper invocations may also be generated for fragments that are covered by a primitive being rendered when the fragment is killed by early fragment tests (using the early_fragment_tests qualifier) or where the implementation is able to determine that executing the fragment shader would have no effect other than assisting in computing derivatives for other fragment shader invocations\&.
+.PP
+The set of helper invocations generated when processing any set of primitives is implementation dependent\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Shading Language Version\fR
+T}
+T{
+\fBVariable Name\fR
+T}:T{
+\fB1\&.10\fR
+T}:T{
+\fB1\&.20\fR
+T}:T{
+\fB1\&.30\fR
+T}:T{
+\fB1\&.40\fR
+T}:T{
+\fB1\&.50\fR
+T}:T{
+\fB3\&.30\fR
+T}:T{
+\fB4\&.00\fR
+T}:T{
+\fB4\&.10\fR
+T}:T{
+\fB4\&.20\fR
+T}:T{
+\fB4\&.30\fR
+T}:T{
+\fB4\&.40\fR
+T}:T{
+\fB4\&.50\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+gl_HelperInvocation
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBdFdx\fR(),
+\fBtexture\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

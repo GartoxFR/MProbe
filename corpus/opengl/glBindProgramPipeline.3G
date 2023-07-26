@@ -1,0 +1,152 @@
+'\" t
+.\"     Title: glBindProgramPipeline
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBINDPROGRAMPIPELIN" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBindProgramPipeline \- bind a program pipeline to the current context
+.SH "C SPECIFICATION"
+.HP \w'void\ glBindProgramPipeline('u
+.BI "void glBindProgramPipeline(GLuint\ " "pipeline" ");"
+.SH "PARAMETERS"
+.PP
+\fIpipeline\fR
+.RS 4
+Specifies the name of the pipeline object to bind to the context\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBindProgramPipeline\fR
+binds a program pipeline object to the current context\&.
+\fIpipeline\fR
+must be a name previously returned from a call to
+\fBglGenProgramPipelines\fR()\&. If no program pipeline exists with name
+\fIpipeline\fR
+then a new pipeline object is created with that name and initialized to the default state vector\&.
+.PP
+When a program pipeline object is bound using
+\fBglBindProgramPipeline\fR, any previous binding is broken and is replaced with a binding to the specified pipeline object\&. If
+\fIpipeline\fR
+is zero, the previous binding is broken and is not replaced, leaving no pipeline object bound\&. If no current program object has been established by
+\fBglUseProgram\fR(), the program objects used for each stage and for uniform updates are taken from the bound program pipeline object, if any\&. If there is a current program object established by
+\fBglUseProgram\fR(), the bound program pipeline object has no effect on rendering or uniform updates\&. When a bound program pipeline object is used for rendering, individual shader executables are taken from its program objects\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIpipeline\fR
+is not zero or a name previously returned from a call to
+\fBglGenProgramPipelines\fR()
+or if such a name has been deleted by a call to
+\fBglDeleteProgramPipelines\fR()\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglBindProgramPipeline\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglCreateShader\fR(),
+\fBglCreateProgram\fR(),
+\fBglCompileShader\fR(),
+\fBglLinkProgram\fR(),
+\fBglGenProgramPipelines\fR(),
+\fBglDeleteProgramPipelines\fR(),
+\fBglIsProgramPipeline\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

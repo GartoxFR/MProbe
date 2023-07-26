@@ -1,0 +1,175 @@
+'\" t
+.\"     Title: glGetShaderPrecisionFormat
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETSHADERPRECISION" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetShaderPrecisionFormat \- retrieve the range and precision for numeric formats supported by the shader compiler
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetShaderPrecisionFormat('u
+.BI "void glGetShaderPrecisionFormat(GLenum\ " "shaderType" ", GLenum\ " "precisionType" ", GLint\ *" "range" ", GLint\ *" "precision" ");"
+.SH "PARAMETERS"
+.PP
+\fIshaderType\fR
+.RS 4
+Specifies the type of shader whose precision to query\&.
+\fIshaderType\fR
+must be
+\fBGL_VERTEX_SHADER\fR
+or
+\fBGL_FRAGMENT_SHADER\fR\&.
+.RE
+.PP
+\fIprecisionType\fR
+.RS 4
+Specifies the numeric format whose precision and range to query\&.
+.RE
+.PP
+\fIrange\fR
+.RS 4
+Specifies the address of array of two integers into which encodings of the implementation\*(Aqs numeric range are returned\&.
+.RE
+.PP
+\fIprecision\fR
+.RS 4
+Specifies the address of an integer into which the numeric precision of the implementation is written\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetShaderPrecisionFormat\fR
+retrieves the numeric range and precision for the implementation\*(Aqs representation of quantities in different numeric formats in specified shader type\&.
+\fIshaderType\fR
+specifies the type of shader for which the numeric precision and range is to be retrieved and must be one of
+\fBGL_VERTEX_SHADER\fR
+or
+\fBGL_FRAGMENT_SHADER\fR\&.
+\fIprecisionType\fR
+specifies the numeric format to query and must be one of
+\fBGL_LOW_FLOAT\fR,
+\fBGL_MEDIUM_FLOAT\fR
+\fBGL_HIGH_FLOAT\fR,
+\fBGL_LOW_INT\fR,
+\fBGL_MEDIUM_INT\fR, or
+\fBGL_HIGH_INT\fR\&.
+.PP
+\fIrange\fR
+points to an array of two integers into which the format\*(Aqs numeric range will be returned\&. If min and max are the smallest values representable in the format, then the values returned are defined to be:
+\fIrange\fR[0] = floor(log2(|min|)) and
+\fIrange\fR[1] = floor(log2(|max|))\&.
+.PP
+\fIprecision\fR
+specifies the address of an integer into which will be written the log2 value of the number of bits of precision of the format\&. If the smallest representable value greater than 1 is 1 +
+\fIeps\fR, then the integer addressed by
+\fIprecision\fR
+will contain floor(\-log2(eps))\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIshaderType\fR
+or
+\fIprecisionType\fR
+is not an accepted value\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetShaderPrecisionFormat\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

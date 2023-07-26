@@ -1,0 +1,145 @@
+'\" t
+.\"     Title: glIsBuffer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLISBUFFER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glIsBuffer \- determine if a name corresponds to a buffer object
+.SH "C SPECIFICATION"
+.HP \w'GLboolean\ glIsBuffer('u
+.BI "GLboolean glIsBuffer(GLuint\ " "buffer" ");"
+.SH "PARAMETERS"
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies a value that may be the name of a buffer object\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglIsBuffer\fR
+returns
+\fBGL_TRUE\fR
+if
+\fIbuffer\fR
+is currently the name of a buffer object\&. If
+\fIbuffer\fR
+is zero, or is a non\-zero value that is not currently the name of a buffer object, or if an error occurs,
+\fBglIsBuffer\fR
+returns
+\fBGL_FALSE\fR\&.
+.PP
+A name returned by
+\fBglGenBuffers\fR(), but not yet associated with a buffer object by calling
+\fBglBindBuffer\fR(), is not the name of a buffer object\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglIsBuffer\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBuffer\fR(),
+\fBglDeleteBuffers\fR(),
+\fBglGenBuffers\fR(),
+\fBglGet\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2005 Addison\-Wesley\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2005 Sams Publishing
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

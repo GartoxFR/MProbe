@@ -1,0 +1,181 @@
+'\" t
+.\"     Title: glPushDebugGroup
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLPUSHDEBUGGROUP" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glPushDebugGroup \- push a named debug group into the command stream
+.SH "C SPECIFICATION"
+.HP \w'void\ glPushDebugGroup('u
+.BI "void glPushDebugGroup(GLenum\ " "source" ", GLuint\ " "id" ", GLsizei\ " "length" ", const\ char\ *\ " "message" ");"
+.SH "PARAMETERS"
+.PP
+\fIsource\fR
+.RS 4
+The source of the debug message\&.
+.RE
+.PP
+\fIid\fR
+.RS 4
+The identifier of the message\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+The length of the message to be sent to the debug output stream\&.
+.RE
+.PP
+\fImessage\fR
+.RS 4
+The a string containing the message to be sent to the debug output stream\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglPushDebugGroup\fR
+pushes a debug group described by the string
+\fImessage\fR
+into the command stream\&. The value of
+\fIid\fR
+specifies the ID of messages generated\&. The parameter
+\fIlength\fR
+contains the number of characters in
+\fImessage\fR\&. If
+\fIlength\fR
+is negative, it is implied that
+\fImessage\fR
+contains a null terminated string\&. The message has the specified
+\fIsource\fR
+and
+\fIid\fR, the
+\fItype\fR
+\fBGL_DEBUG_TYPE_PUSH_GROUP\fR, and
+\fIseverity\fR
+\fBGL_DEBUG_SEVERITY_NOTIFICATION\fR\&. The GL will put a new debug group on top of the debug group stack which inherits the control of the volume of debug output of the debug group previously residing on the top of the debug group stack\&. Because debug groups are strictly hierarchical, any additional control of the debug output volume will only apply within the active debug group and the debug groups pushed on top of the active debug group\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if the value of
+\fIsource\fR
+is neither
+\fBGL_DEBUG_SOURCE_APPLICATION\fR
+nor
+\fBGL_DEBUG_SOURCE_THIRD_PARTY\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIlength\fR
+is negative and the number of characters in
+\fImessage\fR, excluding the null\-terminator, is not less than the value of
+\fBGL_MAX_DEBUG_MESSAGE_LENGTH\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_DEBUG_MESSAGE_LENGTH\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglPushDebugGroup\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglPopDebugGroup\fR(),
+\fBglObjectLabel\fR(),
+\fBglObjectPtrLabel\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

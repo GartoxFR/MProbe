@@ -1,0 +1,283 @@
+'\" t
+.\"     Title: glPointParameter
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLPOINTPARAMETER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glPointParameter \- specify point parameters
+.SH "C SPECIFICATION"
+.HP \w'void\ glPointParameterf('u
+.BI "void glPointParameterf(GLenum\ " "pname" ", GLfloat\ " "param" ");"
+.HP \w'void\ glPointParameteri('u
+.BI "void glPointParameteri(GLenum\ " "pname" ", GLint\ " "param" ");"
+.HP \w'void\ glPointParameterfv('u
+.BI "void glPointParameterfv(GLenum\ " "pname" ", const\ GLfloat\ *\ " "params" ");"
+.HP \w'void\ glPointParameteriv('u
+.BI "void glPointParameteriv(GLenum\ " "pname" ", const\ GLint\ *\ " "params" ");"
+.SH "PARAMETERS"
+.PP
+\fIpname\fR
+.RS 4
+Specifies a single\-valued point parameter\&.
+\fBGL_POINT_FADE_THRESHOLD_SIZE\fR, and
+\fBGL_POINT_SPRITE_COORD_ORIGIN\fR
+are accepted\&.
+.RE
+.PP
+\fIparam\fR
+.RS 4
+For
+\fBglPointParameterf\fR
+and
+\fBglPointParameteri\fR, specifies the value that
+\fIpname\fR
+will be set to\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+For
+\fBglPointParameterfv\fR
+and
+\fBglPointParameteriv\fR, specifies a pointer to an array where the value or values to be assigned to
+\fIpname\fR
+are stored\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+The following values are accepted for
+\fIpname\fR:
+.PP
+\fBGL_POINT_FADE_THRESHOLD_SIZE\fR
+.RS 4
+.sp
+\fIparams\fR
+is a single floating\-point value that specifies the threshold value to which point sizes are clamped if they exceed the specified value\&. The default value is 1\&.0\&.
+.RE
+.PP
+\fBGL_POINT_SPRITE_COORD_ORIGIN\fR
+.RS 4
+.sp
+\fIparams\fR
+is a single enum specifying the point sprite texture coordinate origin, either
+\fBGL_LOWER_LEFT\fR
+or
+\fBGL_UPPER_LEFT\fR\&. The default value is
+\fBGL_UPPER_LEFT\fR\&.
+.RE
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the value specified for
+\fBGL_POINT_FADE_THRESHOLD_SIZE\fR
+is less than zero\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated If the value specified for
+\fBGL_POINT_SPRITE_COORD_ORIGIN\fR
+is not
+\fBGL_LOWER_LEFT\fR
+or
+\fBGL_UPPER_LEFT\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_POINT_FADE_THRESHOLD_SIZE\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_POINT_SPRITE_COORD_ORIGIN\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglPointParameterf\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglPointParameterfv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglPointParameteri\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglPointParameteriv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglPointSize\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This document is licensed under the SGI Free Software B License\&. For details, see
+\m[blue]\fBhttp://oss\&.sgi\&.com/projects/FreeB/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

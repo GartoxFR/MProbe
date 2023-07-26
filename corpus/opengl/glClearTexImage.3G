@@ -1,0 +1,256 @@
+'\" t
+.\"     Title: glClearTexImage
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCLEARTEXIMAGE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glClearTexImage \- fills all a texture image with a constant value
+.SH "C SPECIFICATION"
+.HP \w'void\ glClearTexImage('u
+.BI "void glClearTexImage(GLuint\ " "texture" ", GLint\ " "level" ", GLenum\ " "format" ", GLenum\ " "type" ", const\ void\ *\ " "data" ");"
+.SH "PARAMETERS"
+.PP
+\fItexture\fR
+.RS 4
+The name of an existing texture object containing the image to be cleared\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+The level of
+\fItexture\fR
+containing the region to be cleared\&.
+.RE
+.PP
+\fIformat\fR
+.RS 4
+The format of the data whose address in memory is given by
+\fIdata\fR\&.
+.RE
+.PP
+\fItype\fR
+.RS 4
+The type of the data whose address in memory is given by
+\fIdata\fR\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+The address in memory of the data to be used to clear the specified region\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglClearTexImage\fR
+fills all an image contained in a texture with an application supplied value\&.
+\fItexture\fR
+must be the name of an existing texture\&. Further,
+\fItexture\fR
+may not be the name of a buffer texture, nor may its internal format be compressed\&.
+.PP
+\fIformat\fR
+and
+\fItype\fR
+specify the format and type of the source data and are interpreted as they are for
+\fBglTexImage3D\fR()\&. Textures with a base internal format of
+\fBGL_DEPTH_COMPONENT\fR,
+\fBGL_STENCIL_INDEX\fR, or
+\fBGL_DEPTH_STENCIL\fR
+require depth component, stencil, or depth\-stencil component data respectively\&. Textures with other base internal formats require RGBA formats\&. Textures with integer internal formats require integer data\&.
+.PP
+\fIdata\fR
+is a pointer to an array of between one and four components of texel data that will be used as the source for the constant fill value\&. The elements of data are converted by the GL into the internal format of the texture image (that was specified when the level was defined by any of the
+\fBglTexImage*\fR,
+\fBglTexStorage*\fR
+or
+\fBglCopyTexImage*\fR
+commands), and then used to fill the specified range of the destination texture level\&. If
+\fIdata\fR
+is
+\fBNULL\fR, then the pointer is ignored and the sub\-range of the texture image is filled with zeros\&. If texture is a multisample texture, all the samples in a texel are cleared to the value specified by data\&.
+.SH "NOTES"
+.PP
+\fBglClearTexImage\fR
+is available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fItexture\fR
+is zero or not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fItexture\fR
+is a buffer texture\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fItexture\fR
+has a compressed internal format\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the base internal format is
+\fBGL_DEPTH_COMPONENT\fR
+and
+\fIformat\fR
+is not
+\fBGL_DEPTH_COMPONENT\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the base internal format is
+\fBGL_DEPTH_STENCIL\fR
+and
+\fIformat\fR
+is not
+\fBGL_DEPTH_STENCIL\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the base internal format is
+\fBGL_STENCIL_INDEX\fR
+and
+\fIformat\fR
+is not
+\fBGL_STENCIL_INDEX\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the base internal format is
+\fBGL_RGBA\fR
+and
+\fIformat\fR
+is
+\fBGL_DEPTH_COMPONENT\fR,
+\fBGL_STENCIL_INDEX\fR, or
+\fBGL_DEPTH_STENCIL\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the internal format is integer and
+\fIformat\fR
+does not specify integer data\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the internal format is not integer and
+\fIformat\fR
+specifies integer data\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the image array identified by
+\fIlevel\fR
+has not previously been defined by a call to
+\fBglTexImage*\fR
+or
+\fBglTexStorage*\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetTexImage\fR(),
+\fBglGetInternalformat\fR()
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglClearTexImage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglClearTexSubImage\fR(),
+\fBglTexStorage1D\fR(),
+\fBglTexStorage2D\fR(),
+\fBglTexStorage3D\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage3D\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

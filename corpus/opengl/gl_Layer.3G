@@ -1,0 +1,244 @@
+'\" t
+.\"     Title: gl_Layer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GL_LAYER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gl_Layer \- contains the selected layer of a multi\-layer framebuffer attachment
+.SH "DECLARATION"
+.PP
+.nf
+// Geometry stage
+.fi
+.sp
+
+out\ \&int\ \&gl_Layer\ \&;
+.PP
+.nf
+// Fragment stage
+.fi
+.sp
+
+in\ \&int\ \&gl_Layer\ \&;
+.SH "DESCRIPTION"
+.PP
+In the geometry language,
+\fIgl_Layer\fR
+is used to select a specific layer (or face and layer of cube map) in a multi\-layer framebuffer attachment\&. The actual layer used will come from one of the vertices in the primitive being shaded\&. Which vertex the layer comes from is undefined and as such it is recommended to write the same value to
+\fIgl_Layer\fR
+for all vertices in the primitive\&. If a shader statically assigns a value to
+\fIgl_Layer\fR, layered rendering mode is enabled\&. If a shader statically assigns a value to
+\fIgl_Layer\fR, and there is an execution path through the shader that does not set
+\fIgl_Layer\fR, then the value of
+\fIgl_Layer\fR
+is undefined for invocations of the shader that take that path\&.
+.PP
+When used with an array of cube map textures, the
+\fIgl_Layer\fR
+output variable takes on a special value\&. Instead of referring to only the layer, it is used to select a cube map face and a layer\&. Setting
+\fIgl_Layer\fR
+to the value
+layer*6+face
+will render to
+face
+of the cube defined in
+layer\&. The face values are as follows:
+.TS
+allbox tab(:);
+lB cB.
+T{
+\fB Face Value \fR
+T}:T{
+\fB Resulting Target \fR
+T}
+.T&
+l c
+l c
+l c
+l c
+l c
+l c.
+T{
+0
+T}:T{
+\fBGL_TEXTURE_CUBEMAP_POSITIVE_X\fR
+T}
+T{
+1
+T}:T{
+\fBGL_TEXTURE_CUBEMAP_NEGATIVE_X\fR
+T}
+T{
+2
+T}:T{
+\fBGL_TEXTURE_CUBEMAP_POSITIVE_Y\fR
+T}
+T{
+3
+T}:T{
+\fBGL_TEXTURE_CUBEMAP_NEGATIVE_Y\fR
+T}
+T{
+4
+T}:T{
+\fBGL_TEXTURE_CUBEMAP_POSITIVE_Z\fR
+T}
+T{
+5
+T}:T{
+\fBGL_TEXTURE_CUBEMAP_NEGATIVE_Z\fR
+T}
+.TE
+.sp 1
+.PP
+For example, to render to the positive y cube map face located in the 5th
+layer of the cube map array,
+\fIgl_Layer\fR
+should be set to
+5*6+2\&.
+.PP
+The input variable
+\fIgl_Layer\fR
+in the fragment language will have the same value that was written to the output variable
+\fIgl_Layer\fR
+in the geometry language\&. If the geometry stage does not dynamically assign a value to
+\fIgl_Layer\fR, the value of
+\fIgl_Layer\fR
+in the fragment stage will be undefined\&. If the geometry stage makes no static assignment to
+\fIgl_Layer\fR, the input
+\fIgl_Layer\fR
+in the fragment stage will be zero\&. Otherwise, the fragment stage will read the same value written by the geometry stage, even if that value is out of range\&. If a fragment shader contains a static access to
+\fIgl_Layer\fR, it will count against the implementation defined limit for the maximum number of inputs to the fragment stage\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Shading Language Version\fR
+T}
+T{
+\fBFunction Name\fR
+T}:T{
+\fB1\&.10\fR
+T}:T{
+\fB1\&.20\fR
+T}:T{
+\fB1\&.30\fR
+T}:T{
+\fB1\&.40\fR
+T}:T{
+\fB1\&.50\fR
+T}:T{
+\fB3\&.30\fR
+T}:T{
+\fB4\&.00\fR
+T}:T{
+\fB4\&.10\fR
+T}:T{
+\fB4\&.20\fR
+T}:T{
+\fB4\&.30\fR
+T}:T{
+\fB4\&.40\fR
+T}:T{
+\fB4\&.50\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+gl_Layer (geometry stage)
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+gl_Layer (fragment stage)
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBgl_ViewportIndex\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2012-2014 Khronos Group
+.br

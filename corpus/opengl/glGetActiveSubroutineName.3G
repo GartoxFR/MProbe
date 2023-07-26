@@ -1,0 +1,186 @@
+'\" t
+.\"     Title: glGetActiveSubroutineName
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETACTIVESUBROUTIN" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetActiveSubroutineName \- query the name of an active shader subroutine
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetActiveSubroutineName('u
+.BI "void glGetActiveSubroutineName(GLuint\ " "program" ", GLenum\ " "shadertype" ", GLuint\ " "index" ", GLsizei\ " "bufSize" ", GLsizei\ *" "length" ", GLchar\ *" "name" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+Specifies the name of the program containing the subroutine\&.
+.RE
+.PP
+\fIshadertype\fR
+.RS 4
+Specifies the shader stage from which to query the subroutine name\&.
+.RE
+.PP
+\fIindex\fR
+.RS 4
+Specifies the index of the shader subroutine uniform\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+Specifies the size of the buffer whose address is given in
+\fIname\fR\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+Specifies the address of a variable which is to receive the length of the shader subroutine uniform name\&.
+.RE
+.PP
+\fIname\fR
+.RS 4
+Specifies the address of an array into which the name of the shader subroutine uniform will be written\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetActiveSubroutineName\fR
+queries the name of an active shader subroutine uniform from the program object given in
+\fIprogram\fR\&.
+\fIindex\fR
+specifies the index of the shader subroutine uniform within the shader stage given by
+\fIstage\fR, and must between zero and the value of
+\fBGL_ACTIVE_SUBROUTINES\fR
+minus one for the shader stage\&.
+.PP
+The name of the selected subroutine is returned as a null\-terminated string in
+\fIname\fR\&. The actual number of characters written into
+\fIname\fR, not including the null\-terminator, is returned in
+\fIlength\fR\&. If
+\fIlength\fR
+is
+\fBNULL\fR, no length is returned\&. The maximum number of characters that may be written into
+\fIname\fR, including the null\-terminator, is given in
+\fIbufSize\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIindex\fR
+is greater than or equal to the value of
+\fBGL_ACTIVE_SUBROUTINES\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIprogram\fR
+is not the name of an existing program object\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetProgramStage\fR()
+with argument
+\fBGL_ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetActiveSubroutineName\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetSubroutineIndex\fR(),
+\fBglGetActiveSubroutineUniform\fR(),
+\fBglGetProgramStage\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group.
+.br

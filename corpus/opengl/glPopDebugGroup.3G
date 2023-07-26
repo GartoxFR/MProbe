@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: glPopDebugGroup
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLPOPDEBUGGROUP" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glPopDebugGroup \- pop the active debug group
+.SH "C SPECIFICATION"
+.HP \w'void\ glPopDebugGroup('u
+.BI "void glPopDebugGroup(void);"
+.SH "DESCRIPTION"
+.PP
+\fBglPopDebugGroup\fR
+pops the active debug group\&. After popping a debug group, the GL will also generate a debug output message describing its cause based on the
+\fImessage\fR
+string, the source
+\fIsource\fR, and an ID
+\fIid\fR
+submitted to the corresponding
+\fBglPushDebugGroup\fR()
+command\&.
+\fBGL_DEBUG_TYPE_PUSH_GROUP\fR
+and
+\fBGL_DEBUG_TYPE_POP_GROUP\fR
+share a single namespace for message
+\fIid\fR\&.
+\fIseverity\fR
+has the value
+\fBGL_DEBUG_SEVERITY_NOTIFICATION\fR\&. The
+\fItype\fR
+has the value
+\fBGL_DEBUG_TYPE_POP_GROUP\fR\&. Popping a debug group restores the debug output volume control of the parent debug group\&.
+.SH "ERRORS"
+.PP
+\fBGL_STACK_UNDERFLOW\fR
+is generated if an attempt is made to pop the default debug group from the stack\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_DEBUG_MESSAGE_LENGTH\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglPopDebugGroup\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglPushDebugGroup\fR(),
+\fBglObjectLabel\fR(),
+\fBglObjectPtrLabel\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

@@ -1,0 +1,652 @@
+'\" t
+.\"     Title: glGetTexParameter
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETTEXPARAMETER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetTexParameter \- return texture parameter values
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetTexParameterfv('u
+.BI "void glGetTexParameterfv(GLenum\ " "target" ", GLenum\ " "pname" ", GLfloat\ *\ " "params" ");"
+.HP \w'void\ glGetTexParameteriv('u
+.BI "void glGetTexParameteriv(GLenum\ " "target" ", GLenum\ " "pname" ", GLint\ *\ " "params" ");"
+.HP \w'void\ glGetTexParameterIiv('u
+.BI "void glGetTexParameterIiv(GLenum\ " "target" ", GLenum\ " "pname" ", GLint\ *\ " "params" ");"
+.HP \w'void\ glGetTexParameterIuiv('u
+.BI "void glGetTexParameterIuiv(GLenum\ " "target" ", GLenum\ " "pname" ", GLuint\ *\ " "params" ");"
+.HP \w'void\ glGetTextureParameterfv('u
+.BI "void glGetTextureParameterfv(GLuint\ " "texture" ", GLenum\ " "pname" ", GLfloat\ *" "params" ");"
+.HP \w'void\ glGetTextureParameteriv('u
+.BI "void glGetTextureParameteriv(GLuint\ " "texture" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.HP \w'void\ glGetTextureParameterIiv('u
+.BI "void glGetTextureParameterIiv(GLuint\ " "texture" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.HP \w'void\ glGetTextureParameterIuiv('u
+.BI "void glGetTextureParameterIuiv(GLuint\ " "texture" ", GLenum\ " "pname" ", GLuint\ *" "params" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the texture is bound for
+\fBglGetTexParameterfv\fR,
+\fBglGetTexParameteriv\fR,
+\fBglGetTexParameterIiv\fR, and
+\fBglGetTexParameterIuiv\fR
+functions\&.
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_CUBE_MAP\fR,
+\fBGL_TEXTURE_RECTANGLE\fR, and
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR
+are accepted\&.
+.RE
+.PP
+\fItexture\fR
+.RS 4
+Specifies the texture object name for
+\fBglGetTextureParameterfv\fR,
+\fBglGetTextureParameteriv\fR,
+\fBglGetTextureParameterIiv\fR, and
+\fBglGetTextureParameterIuiv\fR
+functions\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the symbolic name of a texture parameter\&.
+\fBGL_DEPTH_STENCIL_TEXTURE_MODE\fR,
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_TYPE\fR,
+\fBGL_TEXTURE_BASE_LEVEL\fR,
+\fBGL_TEXTURE_BORDER_COLOR\fR,
+\fBGL_TEXTURE_COMPARE_MODE\fR,
+\fBGL_TEXTURE_COMPARE_FUNC\fR,
+\fBGL_TEXTURE_IMMUTABLE_FORMAT\fR,
+\fBGL_TEXTURE_IMMUTABLE_LEVELS\fR,
+\fBGL_TEXTURE_LOD_BIAS\fR,
+\fBGL_TEXTURE_MAG_FILTER\fR,
+\fBGL_TEXTURE_MAX_LEVEL\fR,
+\fBGL_TEXTURE_MAX_LOD\fR,
+\fBGL_TEXTURE_MIN_FILTER\fR,
+\fBGL_TEXTURE_MIN_LOD\fR,
+\fBGL_TEXTURE_SWIZZLE_R\fR,
+\fBGL_TEXTURE_SWIZZLE_G\fR,
+\fBGL_TEXTURE_SWIZZLE_B\fR,
+\fBGL_TEXTURE_SWIZZLE_A\fR,
+\fBGL_TEXTURE_SWIZZLE_RGBA\fR,
+\fBGL_TEXTURE_TARGET\fR,
+\fBGL_TEXTURE_VIEW_MIN_LAYER\fR,
+\fBGL_TEXTURE_VIEW_MIN_LEVEL\fR,
+\fBGL_TEXTURE_VIEW_NUM_LAYERS\fR,
+\fBGL_TEXTURE_VIEW_NUM_LEVELS\fR,
+\fBGL_TEXTURE_WRAP_S\fR,
+\fBGL_TEXTURE_WRAP_T\fR, and
+\fBGL_TEXTURE_WRAP_R\fR
+are accepted\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+Returns the texture parameters\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetTexParameter\fR
+and
+\fBglGetTextureParameter\fR
+return in
+\fIparams\fR
+the value or values of the texture parameter specified as
+\fIpname\fR\&.
+\fItarget\fR
+defines the target texture\&.
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_CUBE_MAP\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR, or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR
+specify one\-, two\-, or three\-dimensional, one\-dimensional array, two\-dimensional array, rectangle, cube\-mapped or cube\-mapped array, two\-dimensional multisample, or two\-dimensional multisample array texturing, respectively\&.
+\fIpname\fR
+accepts the same symbols as
+\fBglTexParameter\fR(), with the same interpretations:
+.PP
+\fBGL_DEPTH_STENCIL_TEXTURE_MODE\fR
+.RS 4
+Returns the single\-value depth stencil texture mode, a symbolic constant\&. The initial value is
+\fBGL_DEPTH_COMPONENT\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_MAG_FILTER\fR
+.RS 4
+Returns the single\-valued texture magnification filter, a symbolic constant\&. The initial value is
+\fBGL_LINEAR\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_MIN_FILTER\fR
+.RS 4
+Returns the single\-valued texture minification filter, a symbolic constant\&. The initial value is
+\fBGL_NEAREST_MIPMAP_LINEAR\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_MIN_LOD\fR
+.RS 4
+Returns the single\-valued texture minimum level\-of\-detail value\&. The initial value is
+\-1000\&.
+.RE
+.PP
+\fBGL_TEXTURE_MAX_LOD\fR
+.RS 4
+Returns the single\-valued texture maximum level\-of\-detail value\&. The initial value is 1000\&.
+.RE
+.PP
+\fBGL_TEXTURE_BASE_LEVEL\fR
+.RS 4
+Returns the single\-valued base texture mipmap level\&. The initial value is 0\&.
+.RE
+.PP
+\fBGL_TEXTURE_MAX_LEVEL\fR
+.RS 4
+Returns the single\-valued maximum texture mipmap array level\&. The initial value is 1000\&.
+.RE
+.PP
+\fBGL_TEXTURE_SWIZZLE_R\fR
+.RS 4
+Returns the red component swizzle\&. The initial value is
+\fBGL_RED\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_SWIZZLE_G\fR
+.RS 4
+Returns the green component swizzle\&. The initial value is
+\fBGL_GREEN\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_SWIZZLE_B\fR
+.RS 4
+Returns the blue component swizzle\&. The initial value is
+\fBGL_BLUE\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_SWIZZLE_A\fR
+.RS 4
+Returns the alpha component swizzle\&. The initial value is
+\fBGL_ALPHA\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_SWIZZLE_RGBA\fR
+.RS 4
+Returns the component swizzle for all channels in a single query\&.
+.RE
+.PP
+\fBGL_TEXTURE_WRAP_S\fR
+.RS 4
+Returns the single\-valued wrapping function for texture coordinate
+s, a symbolic constant\&. The initial value is
+\fBGL_REPEAT\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_WRAP_T\fR
+.RS 4
+Returns the single\-valued wrapping function for texture coordinate
+t, a symbolic constant\&. The initial value is
+\fBGL_REPEAT\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_WRAP_R\fR
+.RS 4
+Returns the single\-valued wrapping function for texture coordinate
+r, a symbolic constant\&. The initial value is
+\fBGL_REPEAT\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_BORDER_COLOR\fR
+.RS 4
+Returns four integer or floating\-point numbers that comprise the RGBA color of the texture border\&. Floating\-point values are returned in the range
+0 1\&. Integer values are returned as a linear mapping of the internal floating\-point representation such that 1\&.0 maps to the most positive representable integer and
+\-1\&.0
+maps to the most negative representable integer\&. The initial value is (0, 0, 0, 0)\&.
+.RE
+.PP
+\fBGL_TEXTURE_COMPARE_MODE\fR
+.RS 4
+Returns a single\-valued texture comparison mode, a symbolic constant\&. The initial value is
+\fBGL_NONE\fR\&. See
+\fBglTexParameter\fR()\&.
+.RE
+.PP
+\fBGL_TEXTURE_COMPARE_FUNC\fR
+.RS 4
+Returns a single\-valued texture comparison function, a symbolic constant\&. The initial value is
+\fBGL_LEQUAL\fR\&. See
+\fBglTexParameter\fR()\&.
+.RE
+.PP
+\fBGL_TEXTURE_VIEW_MIN_LEVEL\fR
+.RS 4
+Returns a single\-valued base level of a texture view relative to its parent\&. The initial value is 0\&. See
+\fBglTextureView\fR()\&.
+.RE
+.PP
+\fBGL_TEXTURE_VIEW_NUM_LEVELS\fR
+.RS 4
+Returns a single\-valued number of levels of detail of a texture view\&. See
+\fBglTextureView\fR()\&.
+.RE
+.PP
+\fBGL_TEXTURE_VIEW_MIN_LAYER\fR
+.RS 4
+Returns a single\-valued first level of a texture array view relative to its parent\&. See
+\fBglTextureView\fR()\&.
+.RE
+.PP
+\fBGL_TEXTURE_VIEW_NUM_LAYERS\fR
+.RS 4
+Returns a single\-valued number of layers in a texture array view\&. See
+\fBglTextureView\fR()\&.
+.RE
+.PP
+\fBGL_TEXTURE_IMMUTABLE_LEVELS\fR
+.RS 4
+Returns a single\-valued number of immutable texture levels in a texture view\&. See
+\fBglTextureView\fR()\&.
+.RE
+.PP
+In addition to the parameters that may be set with
+\fBglTexParameter\fR(),
+\fBglGetTexParameter\fR
+and
+\fBglGetTextureParameter\fR
+accept the following read\-only parameters:
+.PP
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_TYPE\fR
+.RS 4
+Returns the matching criteria use for the texture when used as an image texture\&. Can return
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE\fR,
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS\fR
+or
+\fBGL_NONE\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_IMMUTABLE_FORMAT\fR
+.RS 4
+Returns non\-zero if the texture has an immutable format\&. Textures become immutable if their storage is specified with
+\fBglTexStorage1D\fR(),
+\fBglTexStorage2D\fR()
+or
+\fBglTexStorage3D\fR()\&. The initial value is
+\fBGL_FALSE\fR\&.
+.RE
+.PP
+\fBGL_TEXTURE_TARGET\fR
+.RS 4
+Returns the effective target of the texture object\&. For
+\fBglGetTex*Parameter\fR
+functions, this is the target parameter\&. For
+\fBglGetTextureParameter*\fR, it is the target to which the texture was initially bound when it was created, or the value of the target parameter to the call to
+\fBglCreateTextures\fR
+which created the texture\&.
+.RE
+.SH "NOTES"
+.PP
+If an error is generated, no change is made to the contents of
+\fIparams\fR\&.
+.PP
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_TYPE\fR
+is available only if the GL version is 4\&.2 or greater\&.
+.PP
+\fBGL_DEPTH_STENCIL_TEXTURE_MODE\fR,
+\fBGL_TEXTURE_VIEW_MIN_LEVEL\fR,
+\fBGL_TEXTURE_VIEW_NUM_LEVELS\fR,
+\fBGL_TEXTURE_VIEW_MIN_LAYER\fR,
+\fBGL_TEXTURE_VIEW_NUM_LAYERS\fR
+and
+\fBGL_TEXTURE_IMMUTABLE_LEVELS\fR
+are available only if the GL version is 4\&.3 or greater\&.
+.PP
+\fBGL_TEXTURE_TARGET\fR
+are available only if the GL version is 4\&.5 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not an accepted value\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+error is generated by
+\fBglGetTexParameter\fR
+if the effective
+\fItarget\fR
+is not one of the accepted texture targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetTextureParameter*\fR
+if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetTexParameterIiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetTexParameterIuiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetTexParameterfv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetTexParameteriv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetTextureParameterIiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetTextureParameterIuiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetTextureParameterfv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetTextureParameteriv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglTexParameter\fR(),
+
+\fBglTextureParameter\fR,
+\fBglTexStorage1D\fR(),
+\fBglTexStorage2D\fR(),
+\fBglTexStorage3D\fR(),
+
+\fBglTextureStorage1D\fR,
+
+\fBglTextureStorage2D\fR,
+
+\fBglTextureStorage3D\fR,
+\fBglTextureView\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This document is licensed under the SGI Free Software B License\&. For details, see
+\m[blue]\fBhttp://oss\&.sgi\&.com/projects/FreeB/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

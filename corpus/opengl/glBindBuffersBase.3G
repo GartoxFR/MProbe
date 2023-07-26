@@ -1,0 +1,222 @@
+'\" t
+.\"     Title: glBindBuffersBase
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBINDBUFFERSBASE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBindBuffersBase \- bind one or more buffer objects to a sequence of indexed buffer targets
+.SH "C SPECIFICATION"
+.HP \w'void\ glBindBuffersBase('u
+.BI "void glBindBuffersBase(GLenum\ " "target" ", GLuint\ " "first" ", GLsizei\ " "count" ", const\ GLuint\ *" "buffers" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specify the target of the bind operation\&.
+\fItarget\fR
+must be one of
+\fBGL_ATOMIC_COUNTER_BUFFER\fR,
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR,
+\fBGL_UNIFORM_BUFFER\fR
+or
+\fBGL_SHADER_STORAGE_BUFFER\fR\&.
+.RE
+.PP
+\fIfirst\fR
+.RS 4
+Specify the index of the first binding point within the array specified by
+\fItarget\fR\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+Specify the number of contiguous binding points to which to bind buffers\&.
+.RE
+.PP
+\fIbuffers\fR
+.RS 4
+A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or
+\fBNULL\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBindBuffersBase\fR
+binds a set of
+\fIcount\fR
+buffer objects whose names are given in the array
+\fIbuffers\fR
+to the
+\fIcount\fR
+consecutive binding points starting from index
+\fIfirst\fR
+of the array of targets specified by
+\fItarget\fR\&. If
+\fIbuffers\fR
+is
+\fBNULL\fR
+then
+\fBglBindBuffersBase\fR
+unbinds any buffers that are currently bound to the referenced binding points\&. Assuming no errors are generated, it is equivalent to the following pseudo\-code, which calls
+\fBglBindBufferBase\fR(), with the exception that the non\-indexed
+\fItarget\fR
+is not changed by
+\fBglBindBuffersBase\fR:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    for (i = 0; i < count; i++) {
+        if (buffers != NULL) {
+            glBindBufferBase(target, first + i, buffers[i]);
+        } else {
+            glBindBufferBase(target, first + i, 0);
+        }
+    }
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Each entry in
+\fIbuffers\fR
+will be checked individually and if found to be invalid, the state for that buffer binding index will not be changed and an error will be generated\&. However, the state for other buffer binding indices referenced by the command will still be updated\&.
+.SH "NOTES"
+.PP
+\fBglBindBuffersBase\fR
+is available only if the GL version is 4\&.4 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+is not
+\fBGL_ATOMIC_COUNTER_BUFFER\fR,
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR,
+\fBGL_UNIFORM_BUFFER\fR
+or
+\fBGL_SHADER_STORAGE_BUFFER\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIfirst\fR
++
+\fIcount\fR
+is greater than the number of target\-specific indexed binding points\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if any value in
+\fIbuffers\fR
+is not zero or the name of an existing buffer object\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglBindBuffersBase\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenBuffers\fR(),
+\fBglDeleteBuffers\fR(),
+\fBglBindBuffer\fR(),
+\fBglBindBufferBase\fR(),
+\fBglBindBufferRange\fR(),
+\fBglBindBuffersRange\fR(),
+\fBglMapBuffer\fR(),
+\fBglUnmapBuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

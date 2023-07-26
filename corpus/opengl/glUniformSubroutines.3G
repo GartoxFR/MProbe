@@ -1,0 +1,198 @@
+'\" t
+.\"     Title: glUniformSubroutines
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLUNIFORMSUBROUTINES" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glUniformSubroutines \- load active subroutine uniforms
+.SH "C SPECIFICATION"
+.HP \w'void\ glUniformSubroutinesuiv('u
+.BI "void glUniformSubroutinesuiv(GLenum\ " "shadertype" ", GLsizei\ " "count" ", const\ GLuint\ *" "indices" ");"
+.SH "PARAMETERS"
+.PP
+\fIshadertype\fR
+.RS 4
+Specifies the shader stage from which to query for subroutine uniform index\&.
+\fIshadertype\fR
+must be one of
+\fBGL_VERTEX_SHADER\fR,
+\fBGL_TESS_CONTROL_SHADER\fR,
+\fBGL_TESS_EVALUATION_SHADER\fR,
+\fBGL_GEOMETRY_SHADER\fR
+or
+\fBGL_FRAGMENT_SHADER\fR\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+Specifies the number of uniform indices stored in
+\fIindices\fR\&.
+.RE
+.PP
+\fIindices\fR
+.RS 4
+Specifies the address of an array holding the indices to load into the shader subroutine variables\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglUniformSubroutines\fR
+loads all active subroutine uniforms for shader stage
+\fIshadertype\fR
+of the current program with subroutine indices from
+\fIindices\fR, storing
+\fIindices[i]\fR
+into the uniform at location
+\fIi\fR\&.
+\fIcount\fR
+must be equal to the value of
+\fBGL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS\fR
+for the program currently in use at shader stage
+\fIshadertype\fR\&. Furthermore, all values in
+\fIindices\fR
+must be less than the value of
+\fBGL_ACTIVE_SUBROUTINES\fR
+for the shader stage\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if no program object is current\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIcount\fR
+is not equal to the value of
+\fBGL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS\fR
+for the shader stage
+\fIshadertype\fR
+of the current program\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if any value in
+\fIindices\fR
+is geater than or equal to the value of
+\fBGL_ACTIVE_SUBROUTINES\fR
+for the shader stage
+\fIshadertype\fR
+of the current program\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIshadertype\fR
+is not one of the accepted values\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetProgramStage\fR()
+with argument
+\fBGL_ACTIVE_SUBROUTINES\fR
+.PP
+\fBglGetProgramStage\fR()
+with argument
+\fBGL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglUniformSubroutinesuiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetProgram\fR(),
+\fBglGetActiveSubroutineUniform\fR(),
+\fBglGetActiveSubroutineUniformName\fR(),
+\fBglGetProgramStage\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group.
+.br

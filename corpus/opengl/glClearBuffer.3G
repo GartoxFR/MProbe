@@ -1,0 +1,528 @@
+'\" t
+.\"     Title: glClearBuffer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCLEARBUFFER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glClearBuffer \- clear individual buffers of a framebuffer
+.SH "C SPECIFICATION"
+.HP \w'void\ glClearBufferiv('u
+.BI "void glClearBufferiv(GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", const\ GLint\ *\ " "value" ");"
+.HP \w'void\ glClearBufferuiv('u
+.BI "void glClearBufferuiv(GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", const\ GLuint\ *\ " "value" ");"
+.HP \w'void\ glClearBufferfv('u
+.BI "void glClearBufferfv(GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", const\ GLfloat\ *\ " "value" ");"
+.HP \w'void\ glClearBufferfi('u
+.BI "void glClearBufferfi(GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", GLfloat\ " "depth" ", GLint\ " "stencil" ");"
+.HP \w'void\ glClearNamedFramebufferiv('u
+.BI "void glClearNamedFramebufferiv(GLuint\ " "framebuffer" ", GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", const\ GLint\ *" "value" ");"
+.HP \w'void\ glClearNamedFramebufferuiv('u
+.BI "void glClearNamedFramebufferuiv(GLuint\ " "framebuffer" ", GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", const\ GLuint\ *" "value" ");"
+.HP \w'void\ glClearNamedFramebufferfv('u
+.BI "void glClearNamedFramebufferfv(GLuint\ " "framebuffer" ", GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", const\ GLfloat\ *" "value" ");"
+.HP \w'void\ glClearNamedFramebufferfi('u
+.BI "void glClearNamedFramebufferfi(GLuint\ " "framebuffer" ", GLenum\ " "buffer" ", GLint\ " "drawbuffer" ", GLfloat\ " "depth" ", GLint\ " "stencil" ");"
+.SH "PARAMETERS"
+.PP
+\fIframebuffer\fR
+.RS 4
+Specifies the name of the framebuffer object for
+\fBglClearNamedFramebuffer*\fR\&.
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specify the buffer to clear\&.
+.RE
+.PP
+\fIdrawbuffer\fR
+.RS 4
+Specify a particular draw buffer to clear\&.
+.RE
+.PP
+\fIvalue\fR
+.RS 4
+A pointer to the value or values to clear the buffer to\&.
+.RE
+.PP
+\fIdepth\fR
+.RS 4
+The value to clear the depth buffer to\&.
+.RE
+.PP
+\fIstencil\fR
+.RS 4
+The value to clear the stencil buffer to\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+These commands clear a specified buffer of a framebuffer to specified value(s)\&. For
+\fBglClearBuffer*\fR, the framebuffer is the currently bound draw framebuffer object\&. For
+\fBglClearNamedFramebuffer*\fR,
+\fIframebuffer\fR
+is zero, indicating the default draw framebuffer, or the name of a framebuffer object\&.
+.PP
+\fIbuffer\fR
+and
+\fIdrawbuffer\fR
+identify the buffer to clear\&.
+.PP
+If
+\fIbuffer\fR
+is
+\fBGL_COLOR\fR, a particular draw buffer
+\fBGL_DRAW_BUFFER\fR\fIi\fR
+is specified by passing
+\fIi\fR
+as
+\fIdrawbuffer\fR, and
+\fIvalue\fR
+points to a four\-element vector specifying the R, G, B and A color to clear that draw buffer to\&. If the value of
+\fBGL_DRAW_BUFFER\fR\fIi\fR
+is
+\fBGL_NONE\fR, the command has no effect\&. Otherwise, the value of
+\fBGL_DRAW_BUFFER\fR\fIi\fR
+identifies one or more color buffers, each of which is cleared to the same value\&. Clamping and type conversion for fixed\-point color buffers are performed in the same fashion as for
+\fBglClearColor\fR()\&. The
+\fB*fv\fR,
+\fB*iv\fR
+and
+\fB*uiv\fR
+forms of these commands should be used to clear fixed\- and floating\-point, signed integer, and unsigned integer color buffers respectively\&.
+.PP
+If
+\fIbuffer\fR
+is
+\fBGL_DEPTH\fR,
+\fIdrawbuffer\fR
+must be zero, and
+\fIvalue\fR
+points to a single value to clear the depth buffer to\&. Clamping and type conversion for fixed\-point depth buffers are performed in the same fashion as for
+\fBglClearDepth\fR()\&. Only the
+\fB*fv\fR
+forms of these commands should be used to clear depth buffers; other forms do not accept a
+\fIbuffer\fR
+of
+\fBGL_DEPTH\fR\&.
+.PP
+If
+\fIbuffer\fR
+is
+\fBGL_STENCIL\fR,
+\fIdrawbuffer\fR
+must be zero, and
+\fIvalue\fR
+points to a single value to clear the stencil buffer to\&. Masking is performed in the same fashion as for
+\fBglClearStencil\fR()\&. Only the
+\fB*iv\fR
+forms of these commands should be used to clear stencil buffers; be used to clear stencil buffers; other forms do not accept a
+\fIbuffer\fR
+of
+\fBGL_STENCIL\fR\&.
+.PP
+\fBglClearBufferfi\fR
+and
+\fBglClearNamedFramebufferfi\fR
+are used to clear the depth and stencil buffers simultaneously\&.
+\fIbuffer\fR
+must be
+\fBGL_DEPTH_STENCIL\fR
+and
+\fIdrawbuffer\fR
+must be zero\&.
+\fIdepth\fR
+and
+\fIstencil\fR
+are the values to clear the depth and stencil buffers to, respectively\&. Clamping and type conversion of
+\fIdepth\fR
+for fixed\-point depth buffers are performed in the same fashion as for
+\fBglClearDepth\fR()\&. Masking of
+\fIstencil\fR
+for stencil buffers is performed in the same fashion as for
+\fBglClearStencil\fR()\&. These commands are equivalent to clearing the depth and stencil buffers separately, but may be faster when a buffer of internal format
+\fBGL_DEPTH_STENCIL\fR
+is being cleared\&. The same per\-fragment and masking operations defined for
+\fBglClear\fR
+are applied\&.
+.PP
+The result of these commands is undefined if no conversion between the type of the specified
+\fIvalue\fR
+and the type of the buffer being cleared is defined (for example, if
+\fBglClearBufferiv\fR
+is called for a fixed\- or floating\-point buffer, or if
+\fBglClearBufferfv\fR
+is called for a signed or unsigned integer buffer)\&. This is not an error\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglClearNamedFramebuffer*\fR
+if
+\fIframebuffer\fR
+is not zero or the name of an existing framebuffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglClearBufferiv\fR
+and
+\fBglClearNamedFramebufferiv\fR
+\fIbuffer\fR
+is not
+\fBGL_COLOR\fR
+or
+\fBGL_STENCIL\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglClearBufferuiv\fR
+and
+\fBglClearNamedFramebufferuiv\fR
+\fIbuffer\fR
+is not
+\fBGL_COLOR\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglClearBufferfv\fR
+and
+\fBglClearNamedFramebufferfv\fR
+\fIbuffer\fR
+is not
+\fBGL_COLOR\fR
+or
+\fBGL_DEPTH\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglClearBufferfi\fR
+and
+\fBglClearNamedFramebufferfi\fR
+\fIbuffer\fR
+is not
+\fBGL_DEPTH_STENCIL\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbuffer\fR
+is
+\fBGL_COLOR\fR
+\fIdrawbuffer\fR
+is negative, or greater than the value of
+\fBGL_MAX_DRAW_BUFFERS\fR
+minus one\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbuffer\fR
+is
+\fBGL_DEPTH\fR,
+\fBGL_STENCIL\fR
+or
+\fBGL_DEPTH_STENCIL\fR
+and
+\fIdrawbuffer\fR
+is not zero\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglClearBufferfi\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglClearBufferfv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglClearBufferiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglClearBufferuiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglClearNamedFramebufferfi\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglClearNamedFramebufferfv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglClearNamedFramebufferiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglClearNamedFramebufferuiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglClearColor\fR(),
+\fBglClearDepth\fR(),
+\fBglClearStencil\fR(),
+\fBglClear\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

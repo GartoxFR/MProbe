@@ -1,0 +1,197 @@
+'\" t
+.\"     Title: glDispatchComputeIndirect
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLDISPATCHCOMPUTEIND" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glDispatchComputeIndirect \- launch one or more compute work groups using parameters stored in a buffer
+.SH "C SPECIFICATION"
+.HP \w'void\ glDispatchComputeIndirect('u
+.BI "void glDispatchComputeIndirect(GLintptr\ " "indirect" ");"
+.SH "PARAMETERS"
+.PP
+\fIindirect\fR
+.RS 4
+The offset into the buffer object currently bound to the
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+buffer target at which the dispatch parameters are stored\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglDispatchComputeIndirect\fR
+launches one or more compute work groups using parameters stored in the buffer object currently bound to the
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+target\&. Each work group is processed by the active program object for the compute shader stage\&. While the individual shader invocations within a work group are executed as a unit, work groups are executed completely independently and in unspecified order\&.
+\fIindirect\fR
+contains the offset into the data store of the buffer object bound to the
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+target at which the parameters are stored\&.
+.PP
+The parameters addressed by
+\fIindirect\fR
+are packed a structure, which takes the form (in C):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    typedef  struct {
+        uint  num_groups_x;
+        uint  num_groups_y;
+        uint  num_groups_z;
+    } DispatchIndirectCommand;
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+A call to
+\fBglDispatchComputeIndirect\fR
+is equivalent, assuming no errors are generated, to:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    cmd = (const DispatchIndirectCommand  *)indirect;
+    glDispatchCompute(cmd\->num_groups_x, cmd\->num_groups_y, cmd\->num_groups_z);
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Unlike
+\fBglDispatchCompute\fR(), no error is generated if any of the
+num_groups_x,
+num_groups_y
+or
+num_groups_z
+members of the
+DispatchIndirectCommand
+is larger than the value of
+\fBGL_MAX_COMPUTE_WORK_GROUP_COUNT\fR
+for the corresponding dimension\&. In such circumstances, behavior is undefined and may lead to application termination\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if there is no active program for the compute shader stage\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIindirect\fR
+is less than zero or not a multiple of four\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if no buffer is bound to the
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+target or if the command would source data beyond the end of the buffer object\*(Aqs data store\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_COMPUTE_WORK_GROUP_COUNT\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglDispatchComputeIndirect\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDispatchCompute\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

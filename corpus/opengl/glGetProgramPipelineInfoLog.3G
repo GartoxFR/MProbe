@@ -1,0 +1,178 @@
+'\" t
+.\"     Title: glGetProgramPipelineInfoLog
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETPROGRAMPIPELINE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetProgramPipelineInfoLog \- retrieve the info log string from a program pipeline object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetProgramPipelineInfoLog('u
+.BI "void glGetProgramPipelineInfoLog(GLuint\ " "pipeline" ", GLsizei\ " "bufSize" ", GLsizei\ *" "length" ", GLchar\ *" "infoLog" ");"
+.SH "PARAMETERS"
+.PP
+\fIpipeline\fR
+.RS 4
+Specifies the name of a program pipeline object from which to retrieve the info log\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+Specifies the maximum number of characters, including the null terminator, that may be written into
+\fIinfoLog\fR\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+Specifies the address of a variable into which will be written the number of characters written into
+\fIinfoLog\fR\&.
+.RE
+.PP
+\fIinfoLog\fR
+.RS 4
+Specifies the address of an array of characters into which will be written the info log for
+\fIpipeline\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetProgramPipelineInfoLog\fR
+retrieves the info log for the program pipeline object
+\fIpipeline\fR\&. The info log, including its null terminator, is written into the array of characters whose address is given by
+\fIinfoLog\fR\&. The maximum number of characters that may be written into
+\fIinfoLog\fR
+is given by
+\fIbufSize\fR, and the actual number of characters written into
+\fIinfoLog\fR
+is returned in the integer whose address is given by
+\fIlength\fR\&. If
+\fIlength\fR
+is
+\fBNULL\fR, no length is returned\&.
+.PP
+The actual length of the info log for the program pipeline may be determined by calling
+\fBglGetProgramPipeline\fR()
+with
+\fIpname\fR
+set to
+\fBGL_INFO_LOG_LENGTH\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIpipeline\fR
+is not a name previously returned from a call to
+\fBglGenProgramPipelines\fR()
+or if such a name has been deleted by a call to
+\fBglDeleteProgramPipelines\fR()\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetProgramPipeline\fR()
+with parameter
+\fBGL_INFO_LOG_LENGTH\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetProgramPipelineInfoLog\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenProgramPipelines\fR(),
+\fBglBindProgramPipeline\fR(),
+\fBglDeleteProgramPipelines\fR(),
+\fBglGetProgramPipeline\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

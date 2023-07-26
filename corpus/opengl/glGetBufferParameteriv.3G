@@ -1,0 +1,475 @@
+'\" t
+.\"     Title: glGetBufferParameteriv
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETBUFFERPARAMETER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetBufferParameteriv, glGetBufferParameteri64v, glGetNamedBufferParameteriv, glGetNamedBufferParameteri64v \- return parameters of a buffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetBufferParameteriv('u
+.BI "void glGetBufferParameteriv(GLenum\ " "target" ", GLenum\ " "value" ", GLint\ *\ " "data" ");"
+.HP \w'void\ glGetBufferParameteri64v('u
+.BI "void glGetBufferParameteri64v(GLenum\ " "target" ", GLenum\ " "value" ", GLint64\ *\ " "data" ");"
+.HP \w'void\ glGetNamedBufferParameteriv('u
+.BI "void glGetNamedBufferParameteriv(GLuint\ " "buffer" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.HP \w'void\ glGetNamedBufferParameteri64v('u
+.BI "void glGetNamedBufferParameteri64v(GLuint\ " "buffer" ", GLenum\ " "pname" ", GLint64\ *" "params" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound for
+\fBglGetBufferParameteriv\fR
+and
+\fBglGetBufferParameteri64v\fR\&. Must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object for
+\fBglGetNamedBufferParameteriv\fR
+and
+\fBglGetNamedBufferParameteri64v\fR\&.
+.RE
+.PP
+\fIvalue\fR
+.RS 4
+Specifies the name of the buffer object parameter to query\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+Returns the requested parameter\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+These functions return in
+\fIdata\fR
+a selected parameter of the specified buffer object\&.
+.PP
+\fIpname\fR
+names a specific buffer object parameter, as follows:
+.PP
+\fBGL_BUFFER_ACCESS\fR
+.RS 4
+\fIparams\fR
+returns the access policy set while mapping the buffer object (the value of the
+\fIaccess\fR
+parameter enum passed to
+\fBglMapBuffer\fR)\&. If the buffer was mapped with
+\fBglMapBufferRange\fR, the access policy is determined by translating the bits in that
+\fIaccess\fR
+parameter to one of the supported enums for
+\fBglMapBuffer\fR
+as described in the OpenGL Specification\&.
+.RE
+.PP
+\fBGL_BUFFER_ACCESS_FLAGS\fR
+.RS 4
+\fIparams\fR
+returns the access policy set while mapping the buffer object (the value of the
+\fIaccess\fR
+parameter bitfield passed to
+\fBglMapBufferRange\fR)\&. If the buffer was mapped with
+\fBglMapBuffer\fR, the access policy is determined by translating the enums in that
+\fIaccess\fR
+parameter to the corresponding bits for
+\fBglMapBufferRange\fR
+as described in the OpenGL Specification\&. The initial value is zero\&.
+.RE
+.PP
+\fBGL_BUFFER_IMMUTABLE_STORAGE\fR
+.RS 4
+\fIparams\fR
+returns a boolean flag indicating whether the buffer object is immutable\&. The initial value is
+\fBGL_FALSE\fR\&.
+.RE
+.PP
+\fBGL_BUFFER_MAPPED\fR
+.RS 4
+\fIparams\fR
+returns a flag indicating whether the buffer object is currently mapped\&. The initial value is
+\fBGL_FALSE\fR\&.
+.RE
+.PP
+\fBGL_BUFFER_MAP_LENGTH\fR
+.RS 4
+\fIparams\fR
+returns the length of the mapping into the buffer object established with
+\fBglMapBuffer*\fR\&. The
+\fBi64v\fR
+versions of these queries should be used for this parameter\&. The initial value is zero\&.
+.RE
+.PP
+\fBGL_BUFFER_MAP_OFFSET\fR
+.RS 4
+\fIparams\fR
+returns the offset of the mapping into the buffer object established with
+\fBglMapBuffer*\fR\&. The
+\fBi64v\fR
+versions of these queries should be used for this parameter\&. The initial value is zero\&.
+.RE
+.PP
+\fBGL_BUFFER_SIZE\fR
+.RS 4
+\fIparams\fR
+returns the size of the buffer object, measured in bytes\&. The initial value is 0\&.
+.RE
+.PP
+\fBGL_BUFFER_STORAGE_FLAGS\fR
+.RS 4
+\fIparams\fR
+returns a bitfield indicating the storage flags for the buffer object\&. If the buffer object is immutable, the value returned will be that specified when the data store was established with
+\fBglBufferStorage\fR\&. If the data store was established with
+\fBglBufferData\fR, the value will be
+\fBGL_MAP_READ_BIT\fR
+|
+\fBGL_MAP_WRITE_BIT\fR
+|
+\fBGL_DYNAMIC_STORAGE_BIT\fR
+|
+\fBGL_MAP_WRITE_BIT\fR\&. The initial value is zero\&.
+.RE
+.PP
+\fBGL_BUFFER_USAGE\fR
+.RS 4
+\fIparams\fR
+returns the buffer object\*(Aqs usage pattern\&. The initial value is
+\fBGL_STATIC_DRAW\fR\&.
+.RE
+.SH "NOTES"
+.PP
+If an error is generated, no change is made to the contents of
+\fIdata\fR\&.
+.PP
+The
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+target is available only if the GL version is 4\&.2 or greater\&.
+.PP
+The
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+targets are available only if the GL version is 4\&.3 or greater\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+target is available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglGetBufferParameter*\fR
+if
+\fItarget\fR
+is not one of the accepted buffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetBufferParameter*\fR
+if zero is bound to
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetNamedBufferParameter*\fR
+if
+\fIbuffer\fR
+is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not one of the buffer object parameter names described above\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetBufferParameteri64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetBufferParameteriv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetNamedBufferParameteri64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetNamedBufferParameteriv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBuffer\fR(),
+\fBglBufferData\fR(),
+\fBglGetBufferPointerv\fR(),
+\fBglMapBuffer\fR(),
+\fBglUnmapBuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2005 Addison\-Wesley\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2005 Sams Publishing
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

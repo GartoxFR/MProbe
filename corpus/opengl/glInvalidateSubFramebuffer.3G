@@ -1,0 +1,323 @@
+'\" t
+.\"     Title: glInvalidateSubFramebuffer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLINVALIDATESUBFRAME" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glInvalidateSubFramebuffer, glInvalidateNamedFramebufferSubData \- invalidate the content of a region of some or all of a framebuffer\*(Aqs attachments
+.SH "C SPECIFICATION"
+.HP \w'void\ glInvalidateSubFramebuffer('u
+.BI "void glInvalidateSubFramebuffer(GLenum\ " "target" ", GLsizei\ " "numAttachments" ", const\ GLenum\ *\ " "attachments" ", GLint\ " "x" ", GLint\ " "y" ", GLint\ " "width" ", GLint\ " "height" ");"
+.HP \w'void\ glInvalidateNamedFramebufferSubData('u
+.BI "void glInvalidateNamedFramebufferSubData(GLuint\ " "framebuffer" ", GLsizei\ " "numAttachments" ", const\ GLenum\ *" "attachments" ", GLint\ " "x" ", GLint\ " "y" ", GLsizei\ " "width" ", GLsizei\ " "height" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the framebuffer object is attached for
+\fBglInvalidateSubFramebuffer\fR\&.
+.RE
+.PP
+\fIframebuffer\fR
+.RS 4
+Specifies the name of the framebuffer object for
+\fBglInvalidateNamedFramebufferSubData\fR\&.
+.RE
+.PP
+\fInumAttachments\fR
+.RS 4
+Specifies the number of entries in the
+\fIattachments\fR
+array\&.
+.RE
+.PP
+\fIattachments\fR
+.RS 4
+Specifies a pointer to an array identifying the attachments to be invalidated\&.
+.RE
+.PP
+\fIx\fR
+.RS 4
+Specifies the X offset of the region to be invalidated\&.
+.RE
+.PP
+\fIy\fR
+.RS 4
+Specifies the Y offset of the region to be invalidated\&.
+.RE
+.PP
+\fIwidth\fR
+.RS 4
+Specifies the width of the region to be invalidated\&.
+.RE
+.PP
+\fIheight\fR
+.RS 4
+Specifies the height of the region to be invalidated\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglInvalidateSubFramebuffer\fR
+and
+\fBglInvalidateNamedFramebufferSubData\fR
+invalidate the contents of a specified region of a specified set of attachments of a framebuffer\&.
+.PP
+For
+\fBglInvalidateSubFramebuffer\fR, the framebuffer object is that bound to
+\fItarget\fR, which must be one of
+\fBGL_FRAMEBUFFER\fR,
+\fBGL_READ_FRAMEBUFFER\fR
+or
+\fBGL_DRAW_FRAMEBUFFER\fR\&.
+\fBGL_FRAMEBUFFER\fR
+is equivalent to
+\fBGL_DRAW_FRAMEBUFFER\fR\&. Default framebuffers may also be invalidated if bound to
+\fItarget\fR\&.
+.PP
+For
+\fBglInvalidateNamedFramebufferSubData\fR,
+\fIframebuffer\fR
+is the name of the framebuffer object\&. If
+\fIframebuffer\fR
+is zero, the default draw framebuffer is affected\&.
+.PP
+The set of attachments of which a region is to be invalidated are specified in the
+\fIattachments\fR
+array, which contains
+\fInumAttachments\fR
+elements\&.
+.PP
+If the specified framebuffer is a framebuffer object, each element of
+\fIattachments\fR
+must be one of
+\fBGL_DEPTH_ATTACHMENT\fR,
+\fBGL_STENCIL_ATTACHMENT\fR
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR, or
+\fBGL_COLOR_ATTACHMENT\fR\fIi\fR, where
+\fIi\fR
+is between zero and the value of
+\fBGL_MAX_FRAMEBUFFER_ATTACHMENTS\fR
+minus one\&.
+.PP
+If the specified framebuffer is a default framebuffer, each element of
+\fIattachments\fR
+must be one of
+\fBGL_FRONT_LEFT\fR,
+\fBGL_FRONT_RIGHT\fR,
+\fBGL_BACK_LEFT\fR,
+\fBGL_BACK_RIGHT\fR,
+\fBGL_AUX\fR\fIi\fR,
+\fBGL_ACCUM\fR,
+\fBGL_COLOR\fR,
+\fBGL_DEPTH\fR, or
+\fBGL_STENCIL\fR\&.
+\fBGL_COLOR\fR, is treated as
+\fBGL_BACK_LEFT\fR
+for a double\-buffered context and
+\fBGL_FRONT_LEFT\fR
+for a single\-buffered context\&. The other attachments identify the corresponding specific buffer\&.
+.PP
+The contents of the specified region of each specified attachment become undefined after execution of
+\fBglInvalidateSubFramebuffer\fR
+or
+\fBglInvalidateNamedFramebufferSubData\fR\&. The region to be invalidated is specified by
+\fIx\fR,
+\fIy\fR,
+\fIwidth\fR
+and
+\fIheight\fR
+where
+\fIx\fR
+and
+\fIy\fR
+give the offset from the origin (with lower\-left corner at $(0,0)$) and
+\fIwidth\fR
+and
+\fIheight\fR
+are the width and height, respectively, of the region\&. Any pixels lying outside of the window allocated to the current GL context (for the default framebuffer), or outside of the attachments of the framebuffer object, are ignored\&. If the framebuffer object is not complete, these commands may be ignored\&.
+.PP
+If the framebuffer object is not complete,
+\fBglInvalidateSubFramebuffer\fR
+and
+\fBglInvalidateNamedFramebufferSubData\fR
+may be ignored\&. This is not an error\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+by
+\fBglInvalidateSubFramebuffer\fR
+if
+\fItarget\fR
+is not one of the accepted framebuffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+by
+\fBglInvalidateNamedFramebufferSubData\fR
+if
+\fIframebuffer\fR
+is not zero of the name of an existing framebuffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fInumAttachments\fR,
+\fIwidth\fR
+or
+\fIheight\fR
+is negative\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if any element of
+\fIattachments\fR
+is not one of the accepted framebuffer attachment points, as described above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if element of
+\fIattachments\fR
+is
+\fBGL_COLOR_ATTACHMENT\fR\fIm\fR
+where
+\fIm\fR
+is greater than or equal to the value of
+\fBGL_MAX_COLOR_ATTACHMENTS\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_COLOR_ATTACHMENTS\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglInvalidateNamedFramebufferSubData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglInvalidateSubFramebuffer\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglInvalidateTexSubImage\fR(),
+\fBglInvalidateTexImage\fR(),
+\fBglInvalidateBufferSubData\fR(),
+\fBglInvalidateBufferData\fR(),
+\fBglInvalidateFramebuffer\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

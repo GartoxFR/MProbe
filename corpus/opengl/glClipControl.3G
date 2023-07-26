@@ -1,0 +1,225 @@
+'\" t
+.\"     Title: glClipControl
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCLIPCONTROL" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glClipControl \- control clip coordinate to window coordinate behavior
+.SH "C SPECIFICATION"
+.HP \w'void\ glClipControl('u
+.BI "void glClipControl(GLenum\ " "origin" ", GLenum\ " "depth" ");"
+.SH "PARAMETERS"
+.PP
+\fIorigin\fR
+.RS 4
+Specifies the clip control origin\&. Must be one of
+\fBGL_LOWER_LEFT\fR
+or
+\fBGL_UPPER_LEFT\fR\&.
+.RE
+.PP
+\fIdepth\fR
+.RS 4
+Specifies the clip control depth mode\&. Must be one of
+\fBGL_NEGATIVE_ONE_TO_ONE\fR
+or
+\fBGL_ZERO_TO_ONE\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglClipControl\fR
+controls the clipping volume behavior and the clip coordinate to window coordinate transformation behavior\&.
+.PP
+The view volume is defined by $$z_{min} \eleq z_c \eleq w_c$$ where $z_{min} = \-w_c$ when
+\fIdepth\fR
+is
+\fBGL_NEGATIVE_ONE_TO_ONE\fR, and $z_{min} = 0$ when
+\fIdepth\fR
+is
+\fBGL_ZERO_TO_ONE\fR\&.
+.PP
+The normalized device coordinate $y_d$ is given by $$y_d = { { f \etimes y_c } \eover w_c }$$ where $f = 1$ when
+\fIorigin\fR
+is
+\fBGL_LOWER_LEFT\fR, and $f = \-1$ when
+\fIorigin\fR
+is
+\fBGL_UPPER_LEFT\fR\&.
+.PP
+The window coordinate $z_w$ is given by $$z_w = s \etimes z_d + b$$ where $s = { { f \- n } \eover 2 }$ and $b = { {n + f} \eover 2 }$ when
+\fIdepth\fR
+is
+\fBGL_NEGATIVE_ONE_TO_ONE\fR, and $s = f \- n$ and $b = n$ when
+\fIdepth\fR
+is
+\fBGL_ZERO_TO_ONE\fR\&. $n$ and $f$ are the near and far depth range values set with
+\fBglDepthRange\fR()\&.
+.PP
+Finally, the polygon area computation defined by
+\fBgl_FrontFacing\fR()
+to determine if a polygon is front\- or back\-facing has its sign negated when
+\fIorigin\fR
+is
+\fBGL_UPPER_LEFT\fR\&.
+.SH "NOTES"
+.PP
+The default GL clip volume definition is for a
+\fIorigin\fR
+of
+\fBGL_LOWER_LEFT\fR
+and a
+\fIdepth\fR
+of
+\fBGL_NEGATIVE_ONE_TO_ONE\fR\&.
+.PP
+An
+\fIorigin\fR
+of
+\fBGL_UPPER_LEFT\fR
+and a
+\fIdepth\fR
+of
+\fBGL_ZERO_TO_ONE\fR
+corresponds to Direct3D\*(Aqs clip volume definition\&.
+.PP
+An
+\fIorigin\fR
+of
+\fBGL_UPPER_LEFT\fR
+and a
+\fIdepth\fR
+of
+\fBGL_NEGATIVE_ONE_TO_ONE\fR
+corresponds to the upper\-left origin of the window coordinate system of Microsoft Windows and the X Window System\&.
+.PP
+There is extensive discussion of the uses and further consequences of the different clip volume settings in the
+GL_ARB_clip_control
+extension specification in the OpenGL Registry at URL
+\m[blue]\fBhttp://www\&.opengl\&.org/registry/\fR\m[]\&.
+.SH "ERRORS"
+.PP
+An
+\fBGL_INVALID_ENUM\fR
+error is generated if
+\fIorigin\fR
+is not
+\fBGL_LOWER_LEFT\fR
+or
+\fBGL_UPPER_LEFT\fR\&.
+.PP
+An
+\fBGL_INVALID_ENUM\fR
+error is generated if
+\fIdepth\fR
+is not
+\fBGL_NEGATIVE_ONE_TO_ONE\fR
+or
+\fBGL_ZERO_TO_ONE\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglClipControl\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBgl_ClipDistance\fR(),
+\fBgl_CullDistance\fR(),
+\fBgl_FrontFacing\fR(),
+\fBglDepthRange\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

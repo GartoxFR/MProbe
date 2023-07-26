@@ -1,0 +1,203 @@
+'\" t
+.\"     Title: glProgramParameter
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLPROGRAMPARAMETER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glProgramParameter \- specify a parameter for a program object
+.SH "C SPECIFICATION"
+.HP \w'void\ glProgramParameteri('u
+.BI "void glProgramParameteri(GLuint\ " "program" ", GLenum\ " "pname" ", GLint\ " "value" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+Specifies the name of a program object whose parameter to modify\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the name of the parameter to modify\&.
+.RE
+.PP
+\fIvalue\fR
+.RS 4
+Specifies the new value of the parameter specified by
+\fIpname\fR
+for
+\fIprogram\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglProgramParameter\fR
+specifies a new value for the parameter nameed by
+\fIpname\fR
+for the program object
+\fIprogram\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_PROGRAM_BINARY_RETRIEVABLE_HINT\fR,
+\fIvalue\fR
+should be
+\fBGL_FALSE\fR
+or
+\fBGL_TRUE\fR
+to indicate to the implementation the intention of the application to retrieve the program\*(Aqs binary representation with
+\fBglGetProgramBinary\fR()\&. The implementation may use this information to store information that may be useful for a future query of the program\*(Aqs binary\&. It is recommended to set
+\fBGL_PROGRAM_BINARY_RETRIEVABLE_HINT\fR
+for the program to
+\fBGL_TRUE\fR
+before calling
+\fBglLinkProgram\fR(), and using the program at run\-time if the binary is to be retrieved later\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_PROGRAM_SEPARABLE\fR,
+\fIvalue\fR
+must be
+\fBGL_TRUE\fR
+or
+\fBGL_FALSE\fR
+and indicates whether
+\fIprogram\fR
+can be bound to individual pipeline stages via
+\fBglUseProgramStages\fR()\&. A program\*(Aqs
+\fBGL_PROGRAM_SEPARABLE\fR
+parameter must be set to
+\fBGL_TRUE\fR
+\fIbefore\fR
+\fBglLinkProgram\fR()
+is called in order for it to be usable with a program pipeline object\&. The initial state of
+\fBGL_PROGRAM_SEPARABLE\fR
+is
+\fBGL_FALSE\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIprogram\fR
+is not the name of an existing program object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not one of the accepted values\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIvalue\fR
+is not a valid value for the parameter named by
+\fIpname\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetProgram\fR()\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglProgramParameteri\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetProgram\fR(),
+\fBglGetProgramBinary\fR(),
+\fBglProgramBinary\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

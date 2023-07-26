@@ -1,0 +1,348 @@
+'\" t
+.\"     Title: glGetProgramInterface
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETPROGRAMINTERFAC" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetProgramInterface \- query a property of an interface in a program
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetProgramInterfaceiv('u
+.BI "void glGetProgramInterfaceiv(GLuint\ " "program" ", GLenum\ " "programInterface" ", GLenum\ " "pname" ", GLint\ *\ " "params" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+The name of a program object whose interface to query\&.
+.RE
+.PP
+\fIprogramInterface\fR
+.RS 4
+A token identifying the interface within
+\fIprogram\fR
+to query\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+The name of the parameter within
+\fIprogramInterface\fR
+to query\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+The address of a variable to retrieve the value of
+\fIpname\fR
+for the program interface\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetProgramInterfaceiv\fR
+queries the property of the interface identifed by
+\fIprogramInterface\fR
+in
+\fIprogram\fR, the property name of which is given by
+\fIpname\fR\&.
+.PP
+\fIprogram\fR
+must be the name of an existing program object\&.
+\fIprogramInterface\fR
+is the name of the interface within
+\fIprogram\fR
+to query and must be one of the following values:
+.PP
+\fBGL_UNIFORM\fR
+.RS 4
+The query is targeted at the set of active uniforms within
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_UNIFORM_BLOCK\fR
+.RS 4
+The query is targeted at the set of active uniform blocks within
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+.RS 4
+The query is targeted at the set of active atomic counter buffer binding points within
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_PROGRAM_INPUT\fR
+.RS 4
+The query is targeted at the set of active input variables used by the first shader stage of
+\fIprogram\fR\&. If
+\fIprogram\fR
+contains multiple shader stages then input variables from any stage other than the first will not be enumerated\&.
+.RE
+.PP
+\fBGL_PROGRAM_OUTPUT\fR
+.RS 4
+The query is targeted at the set of active output variables produced by the last shader stage of
+\fIprogram\fR\&. If
+\fIprogram\fR
+contains multiple shader stages then output variables from any stage other than the last will not be enumerated\&.
+.RE
+.PP
+\fBGL_VERTEX_SUBROUTINE\fR, \fBGL_TESS_CONTROL_SUBROUTINE\fR, \fBGL_TESS_EVALUATION_SUBROUTINE\fR, \fBGL_GEOMETRY_SUBROUTINE\fR, \fBGL_FRAGMENT_SUBROUTINE\fR, \fBGL_COMPUTE_SUBROUTINE\fR
+.RS 4
+The query is targeted at the set of active subroutines for the vertex, tessellation control, tessellation evaluation, geometry, fragment and compute shader stages of
+\fIprogram\fR, respectively\&.
+.RE
+.PP
+\fBGL_VERTEX_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR, \fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR, \fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, \fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR
+.RS 4
+The query is targeted at the set of active subroutine uniform variables used by the vertex, tessellation control, tessellation evaluation, geometry, fragment and compute shader stages of
+\fIprogram\fR, respectively\&.
+.RE
+.PP
+\fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+.RS 4
+The query is targeted at the set of output variables from the last non\-fragment stage of
+\fIprogram\fR
+that would be captured if transform feedback were active\&.
+.RE
+.PP
+\fBGL_BUFFER_VARIABLE\fR
+.RS 4
+The query is targeted at the set of active buffer variables used by
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_SHADER_STORAGE_BLOCK\fR
+.RS 4
+The query is targeted at the set of active shader storage blocks used by
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+.RS 4
+The query is targeted at the set of active buffer binding points to which output variables in the
+\fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+interface are written\&.
+.RE
+.PP
+\fIpname\fR
+identifies the property of
+\fIprogramInterface\fR
+to return in
+\fIparams\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_ACTIVE_RESOURCES\fR, the value returned is the number of resources in the active resource list for
+\fIprogramInterface\fR\&. If the list of active resources for
+\fIprogramInterface\fR
+is empty, zero is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_MAX_NAME_LENGTH\fR, the value returned is the length of the longest active name string for an active resource in
+\fIprogramInterface\fR\&. This length includes an extra character for the null terminator\&. If the list of active resources for
+\fIprogramInterface\fR
+is empty, zero is returned\&. It is an error to specify
+\fBGL_MAX_NAME_LENGTH\fR
+when
+\fIprogramInterface\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER\fR, as active atomic counter buffer resources are not assigned name strings\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_MAX_NUM_ACTIVE_VARIABLES\fR, the value returned is the number of active variables belonging to the interface block or atomic counter buffer resource in
+\fIprogramInterface\fR
+with the most active variables\&. If the list of active resources for
+\fIprogramInterface\fR
+is empty, zero is returned\&. When
+\fIpname\fR
+is
+\fBGL_MAX_NUM_ACTIVE_VARIABLES\fR,
+\fIprogramInterface\fR
+must be
+\fBGL_UNIFORM_BLOCK\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER\fR, or
+\fBGL_SHADER_STORAGE_BLOCK\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_MAX_NUM_COMPATIBLE_SUBROUTINES\fR, the value returned is the number of compatible subroutines belonging to the active subroutine uniform in
+\fIprogramInterface\fR
+with the most compatible subroutines\&. If the list of active resources for
+\fIprogramInterface\fR
+is empty, zero is returned\&. When
+\fIpname\fR
+is
+\fBGL_MAX_NUM_COMPATIBLE_SUBROUTINES\fR,
+\fIprogramInterface\fR
+must be one of
+\fBGL_VERTEX_SUBROUTINE_UNIFORM\fR,
+\fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR,
+\fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR,
+\fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR,
+\fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, or
+\fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIidentifier\fR
+is not one of the accepted object types\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIprogram\fR
+is not the name of an existing sync object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbufSize\fR
+is zero\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIpname\fR
+is
+\fBGL_MAX_NAME_LENGTH\fR
+and
+\fIprogramInterface\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+or
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR, since active atomic counter and transform feedback buffer resources are not assigned name strings\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if
+\fIpname\fR
+is
+\fBGL_MAX_NUM_ACTIVE_VARIABLES\fR
+and
+\fIprogramInterface\fR
+is not
+\fBGL_UNIFORM_BLOCK\fR,
+\fBGL_SHADER_STORAGE_BLOCK\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER\fR, or
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR\&.
+.PP
+If not NULL,
+\fIlength\fR
+and
+\fIlabel\fR
+should be addresses to which the client has write access, otherwise undefined behavior, including process termination may occur\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_LABEL_LENGTH\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetProgramInterfaceiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglPushDebugGroup\fR(),
+\fBglPopDebugGroup\fR(),
+\fBglObjectLabel\fR(),
+\fBglGetObjectLabel\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

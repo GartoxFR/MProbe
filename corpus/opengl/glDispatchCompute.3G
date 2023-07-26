@@ -1,0 +1,156 @@
+'\" t
+.\"     Title: glDispatchCompute
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLDISPATCHCOMPUTE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glDispatchCompute \- launch one or more compute work groups
+.SH "C SPECIFICATION"
+.HP \w'void\ glDispatchCompute('u
+.BI "void glDispatchCompute(GLuint\ " "num_groups_x" ", GLuint\ " "num_groups_y" ", GLuint\ " "num_groups_z" ");"
+.SH "PARAMETERS"
+.PP
+\fInum_groups_x\fR
+.RS 4
+The number of work groups to be launched in the X dimension\&.
+.RE
+.PP
+\fInum_groups_y\fR
+.RS 4
+The number of work groups to be launched in the Y dimension\&.
+.RE
+.PP
+\fInum_groups_z\fR
+.RS 4
+The number of work groups to be launched in the Z dimension\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglDispatchCompute\fR
+launches one or more compute work groups\&. Each work group is processed by the active program object for the compute shader stage\&. While the individual shader invocations within a work group are executed as a unit, work groups are executed completely independently and in unspecified order\&.
+\fInum_groups_x\fR,
+\fInum_groups_y\fR
+and
+\fInum_groups_z\fR
+specify the number of local work groups that will be dispatched in the X, Y and Z dimensions, respectively\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if there is no active program for the compute shader stage\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if any of
+\fInum_groups_x\fR,
+\fInum_groups_y\fR, or
+\fInum_groups_z\fR
+is greater than or equal to the maximum work\-group count for the corresponding dimension\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_COMPUTE_WORK_GROUP_COUNT\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglDispatchCompute\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDispatchComputeIndirect\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

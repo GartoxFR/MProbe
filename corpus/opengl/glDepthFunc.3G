@@ -1,0 +1,214 @@
+'\" t
+.\"     Title: glDepthFunc
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLDEPTHFUNC" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glDepthFunc \- specify the value used for depth buffer comparisons
+.SH "C SPECIFICATION"
+.HP \w'void\ glDepthFunc('u
+.BI "void glDepthFunc(GLenum\ " "func" ");"
+.SH "PARAMETERS"
+.PP
+\fIfunc\fR
+.RS 4
+Specifies the depth comparison function\&. Symbolic constants
+\fBGL_NEVER\fR,
+\fBGL_LESS\fR,
+\fBGL_EQUAL\fR,
+\fBGL_LEQUAL\fR,
+\fBGL_GREATER\fR,
+\fBGL_NOTEQUAL\fR,
+\fBGL_GEQUAL\fR, and
+\fBGL_ALWAYS\fR
+are accepted\&. The initial value is
+\fBGL_LESS\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglDepthFunc\fR
+specifies the function used to compare each incoming pixel depth value with the depth value present in the depth buffer\&. The comparison is performed only if depth testing is enabled\&. (See
+\fBglEnable\fR()
+and
+
+\fBglDisable\fR
+of
+\fBGL_DEPTH_TEST\fR\&.)
+.PP
+\fIfunc\fR
+specifies the conditions under which the pixel will be drawn\&. The comparison functions are as follows:
+.PP
+\fBGL_NEVER\fR
+.RS 4
+Never passes\&.
+.RE
+.PP
+\fBGL_LESS\fR
+.RS 4
+Passes if the incoming depth value is less than the stored depth value\&.
+.RE
+.PP
+\fBGL_EQUAL\fR
+.RS 4
+Passes if the incoming depth value is equal to the stored depth value\&.
+.RE
+.PP
+\fBGL_LEQUAL\fR
+.RS 4
+Passes if the incoming depth value is less than or equal to the stored depth value\&.
+.RE
+.PP
+\fBGL_GREATER\fR
+.RS 4
+Passes if the incoming depth value is greater than the stored depth value\&.
+.RE
+.PP
+\fBGL_NOTEQUAL\fR
+.RS 4
+Passes if the incoming depth value is not equal to the stored depth value\&.
+.RE
+.PP
+\fBGL_GEQUAL\fR
+.RS 4
+Passes if the incoming depth value is greater than or equal to the stored depth value\&.
+.RE
+.PP
+\fBGL_ALWAYS\fR
+.RS 4
+Always passes\&.
+.RE
+.PP
+The initial value of
+\fIfunc\fR
+is
+\fBGL_LESS\fR\&. Initially, depth testing is disabled\&. If depth testing is disabled or if no depth buffer exists, it is as if the depth test always passes\&.
+.SH "NOTES"
+.PP
+Even if the depth buffer exists and the depth mask is non\-zero, the depth buffer is not updated if the depth test is disabled\&. In order to unconditionally write to the depth buffer, the depth test should be enabled and set to
+\fBGL_ALWAYS\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIfunc\fR
+is not an accepted value\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_DEPTH_FUNC\fR
+.PP
+\fBglIsEnabled\fR()
+with argument
+\fBGL_DEPTH_TEST\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglDepthFunc\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDepthRange\fR(),
+\fBglEnable\fR(),
+\fBglPolygonOffset\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This document is licensed under the SGI Free Software B License\&. For details, see
+\m[blue]\fBhttp://oss\&.sgi\&.com/projects/FreeB/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

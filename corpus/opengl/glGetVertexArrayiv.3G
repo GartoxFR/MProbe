@@ -1,0 +1,156 @@
+'\" t
+.\"     Title: glGetVertexArrayiv
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETVERTEXARRAYIV" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetVertexArrayiv \- retrieve parameters of a vertex array object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetVertexArrayiv('u
+.BI "void glGetVertexArrayiv(GLuint\ " "vaobj" ", GLenum\ " "pname" ", GLint\ *" "param" ");"
+.SH "PARAMETERS"
+.PP
+\fIvaobj\fR
+.RS 4
+specifies the name of the vertex array object to use for the query\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Name of the property to use for the query\&. Must be
+\fBGL_ELEMENT_ARRAY_BUFFER_BINDING\fR\&.
+.RE
+.PP
+\fIparam\fR
+.RS 4
+Returns the requested value\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+This function provides a mean of querying properties of an existing vertex array object\&. The vertex array object does not have to be bound to the rendering context at the time of the call, but must have been bound at least once prior to this call\&.
+.PP
+\fBglGetVertexArrayiv\fR
+can be used to retrieve ID of a buffer object that will be bound to the
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+binding point whenever the queried vertex array object is bound to the rendering context\&. The binding can be changed for an active vertex array object with a
+\fBglBindBuffer\fR
+call\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if
+\fIvaobj\fR
+is not the name of an existing vertex array object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+error is generated if
+\fIpname\fR
+is not
+\fBGL_ELEMENT_ARRAY_BUFFER_BINDING\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetVertexArrayiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBuffer\fR(),
+\fBglBindVertexArray\fR(),
+\fBglGet\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+http://opencontent\&.org/openpub/\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

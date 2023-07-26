@@ -1,0 +1,967 @@
+'\" t
+.\"     Title: glClearBufferData
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCLEARBUFFERDATA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glClearBufferData, glClearNamedBufferData \- fill a buffer object\*(Aqs data store with a fixed value
+.SH "C SPECIFICATION"
+.HP \w'void\ glClearBufferData('u
+.BI "void glClearBufferData(GLenum\ " "target" ", GLenum\ " "internalformat" ", GLenum\ " "format" ", GLenum\ " "type" ", const\ void\ *\ " "data" ");"
+.HP \w'void\ glClearNamedBufferData('u
+.BI "void glClearNamedBufferData(GLuint\ " "buffer" ", GLenum\ " "internalformat" ", GLenum\ " "format" ", GLenum\ " "type" ", const\ void\ *" "data" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound for
+\fBglClearBufferData\fR, which must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object for
+\fBglClearNamedBufferData\fR\&.
+.RE
+.PP
+\fIinternalformat\fR
+.RS 4
+The internal format with which the data will be stored in the buffer object\&.
+.RE
+.PP
+\fIformat\fR
+.RS 4
+The format of the data in memory addressed by
+\fIdata\fR\&.
+.RE
+.PP
+\fItype\fR
+.RS 4
+The type of the data in memory addressed by
+\fIdata\fR\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+The address of a memory location storing the data to be replicated into the buffer\*(Aqs data store\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglClearBufferData\fR
+and
+\fBglClearNamedBufferData\fR
+fill the entirety of a buffer object\*(Aqs data store with data from client memory\&.
+.PP
+Data, initially supplied in a format specified by
+\fIformat\fR
+in data type
+\fItype\fR
+is read from the memory address given by
+\fIdata\fR
+and converted into the internal representation given by
+\fIinternalformat\fR, which must be one of the following sized internal formats:
+.TS
+allbox tab(:);
+lB lB lB lB cB s s s
+lB lB lB lB cB cB cB cB.
+T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\fB Component \fR
+T}
+T{
+\fBSized Internal Format\fR
+T}:T{
+\fBBase Type\fR
+T}:T{
+\fBComponents\fR
+T}:T{
+\fBNorm\fR
+T}:T{
+0
+T}:T{
+1
+T}:T{
+2
+T}:T{
+3
+T}
+.T&
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c
+l l l l c c c c.
+T{
+\fBGL_R8\fR
+T}:T{
+ubyte
+T}:T{
+1
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16\fR
+T}:T{
+ushort
+T}:T{
+1
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16F\fR
+T}:T{
+half
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R32F\fR
+T}:T{
+float
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R8I\fR
+T}:T{
+byte
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16I\fR
+T}:T{
+short
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R32I\fR
+T}:T{
+int
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R8UI\fR
+T}:T{
+ubyte
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R16UI\fR
+T}:T{
+ushort
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_R32UI\fR
+T}:T{
+uint
+T}:T{
+1
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+0
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG8\fR
+T}:T{
+ubyte
+T}:T{
+2
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16\fR
+T}:T{
+ushort
+T}:T{
+2
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16F\fR
+T}:T{
+half
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG32F\fR
+T}:T{
+float
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG8I\fR
+T}:T{
+byte
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16I\fR
+T}:T{
+short
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG32I\fR
+T}:T{
+int
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG8UI\fR
+T}:T{
+ubyte
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG16UI\fR
+T}:T{
+ushort
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RG32UI\fR
+T}:T{
+uint
+T}:T{
+2
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+0
+T}:T{
+1
+T}
+T{
+\fBGL_RGB32F\fR
+T}:T{
+float
+T}:T{
+3
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+1
+T}
+T{
+\fBGL_RGB32I\fR
+T}:T{
+int
+T}:T{
+3
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+1
+T}
+T{
+\fBGL_RGB32UI\fR
+T}:T{
+uint
+T}:T{
+3
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+1
+T}
+T{
+\fBGL_RGBA8\fR
+T}:T{
+uint
+T}:T{
+4
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16\fR
+T}:T{
+short
+T}:T{
+4
+T}:T{
+YES
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16F\fR
+T}:T{
+half
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA32F\fR
+T}:T{
+float
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA8I\fR
+T}:T{
+byte
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16I\fR
+T}:T{
+short
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA32I\fR
+T}:T{
+int
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA8UI\fR
+T}:T{
+ubyte
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA16UI\fR
+T}:T{
+ushort
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+T{
+\fBGL_RGBA32UI\fR
+T}:T{
+uint
+T}:T{
+4
+T}:T{
+NO
+T}:T{
+R
+T}:T{
+G
+T}:T{
+B
+T}:T{
+A
+T}
+.TE
+.sp 1
+.PP
+This converted data is then replicated throughout the buffer object\*(Aqs data store\&. If
+\fIdata\fR
+is NULL, then the buffer\*(Aqs data store is filled with zeros\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglClearBufferData\fR
+if
+\fItarget\fR
+is not one of the generic buffer binding targets\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated by
+\fBglClearBufferData\fR
+if no buffer is bound
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglClearNamedBufferData\fR
+if
+\fIbuffer\fR
+is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIinternalformat\fR
+is not one of the valid sized internal formats listed in the table above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if any part of the specified range of the buffer object is mapped with
+\fBglMapBufferRange\fR()
+or
+\fBglMapBuffer\fR(), unless it was mapped with the
+\fBGL_MAP_PERSISTENT_BIT\fR
+bit set in the
+\fBglMapBufferRange\fR
+\fIaccess\fR
+flags\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIformat\fR
+is not a valid format, or
+\fItype\fR
+is not a valid type\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglClearBufferData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglClearNamedBufferData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglClearBufferSubData\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group
+.br

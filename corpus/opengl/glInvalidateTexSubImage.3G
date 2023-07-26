@@ -1,0 +1,245 @@
+'\" t
+.\"     Title: glInvalidateTexSubImage
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLINVALIDATETEXSUBIM" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glInvalidateTexSubImage \- invalidate a region of a texture image
+.SH "C SPECIFICATION"
+.HP \w'void\ glInvalidateTexSubImage('u
+.BI "void glInvalidateTexSubImage(GLuint\ " "texture" ", GLint\ " "level" ", GLint\ " "xoffset" ", GLint\ " "yoffset" ", GLint\ " "zoffset" ", GLsizei\ " "width" ", GLsizei\ " "height" ", GLsizei\ " "depth" ");"
+.SH "PARAMETERS"
+.PP
+\fItexture\fR
+.RS 4
+The name of a texture object a subregion of which to invalidate\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+The level of detail of the texture object within which the region resides\&.
+.RE
+.PP
+\fIxoffset\fR
+.RS 4
+The X offset of the region to be invalidated\&.
+.RE
+.PP
+\fIyoffset\fR
+.RS 4
+The Y offset of the region to be invalidated\&.
+.RE
+.PP
+\fIzoffset\fR
+.RS 4
+The Z offset of the region to be invalidated\&.
+.RE
+.PP
+\fIwidth\fR
+.RS 4
+The width of the region to be invalidated\&.
+.RE
+.PP
+\fIheight\fR
+.RS 4
+The height of the region to be invalidated\&.
+.RE
+.PP
+\fIdepth\fR
+.RS 4
+The depth of the region to be invalidated\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglInvalidateTexSubImage\fR
+invalidates all or part of a texture image\&.
+\fItexture\fR
+and
+\fIlevel\fR
+indicated which texture image is being invalidated\&. After this command, data in that subregion have undefined values\&.
+\fIxoffset\fR,
+\fIyoffset\fR,
+\fIzoffset\fR,
+\fIwidth\fR,
+\fIheight\fR, and
+\fIdepth\fR
+are interpreted as they are in
+\fBglTexSubImage3D\fR()\&. For texture targets that don\*(Aqt have certain dimensions, this command treats those dimensions as having a size of 1\&. For example, to invalidate a portion of a two\- dimensional texture, the application would use
+\fIzoffset\fR
+equal to zero and
+\fIdepth\fR
+equal to one\&. Cube map textures are treated as an array of six slices in the z\-dimension, where a value of
+\fIzoffset\fR
+is interpreted as specifying face
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR
++
+\fIzoffset\fR\&.
+.PP
+\fIlevel\fR
+must be greater than or equal to zero and be less than the base 2 logarithm of the maximum texture width, height, or depth\&.
+\fIxoffset\fR,
+\fIyoffset\fR
+and
+\fIzoffset\fR
+must be greater than or equal to zero and be less than the width, height or depth of the image, respectively\&. Furthermore,
+\fIxoffset\fR
++
+\fIwidth\fR,
+\fIyoffset\fR
++
+\fIheight\fR, and
+\fIzoffset\fR
++
+\fIdepth\fR
+must be less than or equal to the width, height or depth of the image, respectively\&.
+.PP
+For textures of targets
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_BUFFER\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR, or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR, level must be zero\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIxoffset\fR,
+\fIyoffset\fR
+or
+\fIzoffset\fR
+is less than zero, or if any of them is greater than the size of the image in the corresponding dimension\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIlevel\fR
+is less than zero or if it is greater or equal to the base 2 logarithm of the maximum texture width, height, or depth\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the target of
+\fItexture\fR
+is any of
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_BUFFER\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR, or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR
+and
+\fIlevel\fR
+is not zero\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_TEXTURE_SIZE\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglInvalidateTexSubImage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglInvalidateTexImage\fR(),,
+\fBglInvalidateBufferSubData\fR(),
+\fBglInvalidateBufferData\fR(),
+\fBglInvalidateFramebuffer\fR(),
+\fBglInvalidateSubFramebuffer\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

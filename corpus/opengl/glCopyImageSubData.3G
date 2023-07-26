@@ -1,0 +1,373 @@
+'\" t
+.\"     Title: glCopyImageSubData
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCOPYIMAGESUBDATA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glCopyImageSubData \- perform a raw data copy between two images
+.SH "C SPECIFICATION"
+.HP \w'void\ glCopyImageSubData('u
+.BI "void glCopyImageSubData(GLuint\ " "srcName" ", GLenum\ " "srcTarget" ", GLint\ " "srcLevel" ", GLint\ " "srcX" ", GLint\ " "srcY" ", GLint\ " "srcZ" ", GLuint\ " "dstName" ", GLenum\ " "dstTarget" ", GLint\ " "dstLevel" ", GLint\ " "dstX" ", GLint\ " "dstY" ", GLint\ " "dstZ" ", GLsizei\ " "srcWidth" ", GLsizei\ " "srcHeight" ", GLsizei\ " "srcDepth" ");"
+.SH "PARAMETERS"
+.PP
+\fIsrcName\fR
+.RS 4
+The name of a texture or renderbuffer object from which to copy\&.
+.RE
+.PP
+\fIsrcTarget\fR
+.RS 4
+The target representing the namespace of the source name
+\fIsrcName\fR\&.
+.RE
+.PP
+\fIsrcLevel\fR
+.RS 4
+The mipmap level to read from the source\&.
+.RE
+.PP
+\fIsrcX\fR
+.RS 4
+The X coordinate of the left edge of the souce region to copy\&.
+.RE
+.PP
+\fIsrcY\fR
+.RS 4
+The Y coordinate of the top edge of the souce region to copy\&.
+.RE
+.PP
+\fIsrcZ\fR
+.RS 4
+The Z coordinate of the near edge of the souce region to copy\&.
+.RE
+.PP
+\fIdstName\fR
+.RS 4
+The name of a texture or renderbuffer object to which to copy\&.
+.RE
+.PP
+\fIdstTarget\fR
+.RS 4
+The target representing the namespace of the destination name
+\fIdstName\fR\&.
+.RE
+.PP
+\fIdstX\fR
+.RS 4
+The X coordinate of the left edge of the destination region\&.
+.RE
+.PP
+\fIdstY\fR
+.RS 4
+The Y coordinate of the top edge of the destination region\&.
+.RE
+.PP
+\fIdstZ\fR
+.RS 4
+The Z coordinate of the near edge of the destination region\&.
+.RE
+.PP
+\fIsrcWidth\fR
+.RS 4
+The width of the region to be copied\&.
+.RE
+.PP
+\fIsrcHeight\fR
+.RS 4
+The height of the region to be copied\&.
+.RE
+.PP
+\fIsrcDepth\fR
+.RS 4
+The depth of the region to be copied\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglCopyImageSubData\fR
+may be used to copy data from one image (i\&.e\&. texture or renderbuffer) to another\&.
+\fBglCopyImageSubData\fR
+does not perform general\-purpose conversions such as scaling, resizing, blending, color\-space, or format conversions\&. It should be considered to operate in a manner similar to a CPU memcpy\&. CopyImageSubData can copy between images with different internal formats, provided the formats are compatible\&.
+.PP
+\fBglCopyImageSubData\fR
+also allows copying between certain types of compressed and uncompressed internal formats\&. This copy does not perform on\-the\-fly compression or decompression\&. When copying from an uncompressed internal format to a compressed internal format, each texel of uncompressed data becomes a single block of compressed data\&. When copying from a compressed internal format to an uncompressed internal format, a block of compressed data becomes a single texel of uncompressed data\&. The texel size of the uncompressed format must be the same size the block size of the compressed formats\&. Thus it is permitted to copy between a 128\-bit uncompressed format and a compressed format which uses 8\-bit 4x4 blocks, or between a 64\-bit uncompressed format and a compressed format which uses 4\-bit 4x4 blocks\&.
+.PP
+The source object is identified by
+\fIsrcName\fR
+and
+\fIsrcTarget\fR
+and the destination object is identified by
+\fIdstName\fR
+and
+\fIdstTarget\fR\&. The interpretation of the name depends on the value of the corresponding
+\fItarget\fR
+parameter\&. If
+\fItarget\fR
+is
+\fBGL_RENDERBUFFER\fR, the name is interpreted as the name of a renderbuffer object\&. If the target parameter is a texture target, the name is interpreted as a texture object\&. All non\-proxy texture targets are accepted, with the exception of
+\fBGL_TEXTURE_BUFFER\fR
+and the cubemap face selectors\&.
+.PP
+\fIsrcLevel\fR
+and
+\fIdstLevel\fR
+identify the source and destination level of detail\&. For textures, this must be a valid level of detail in the texture object\&. For renderbuffers, this value must be zero\&.
+.PP
+\fIsrcX\fR,
+\fIsrcY\fR, and
+\fIsrcZ\fR
+specify the lower left texel coordinates of a
+\fIsrcWidth\fR\-wide by
+\fIsrcHeight\fR\-high by
+\fIsrcDepth\fR\-deep rectangular subregion of the source texel array\&. Similarly,
+\fIdstX\fR,
+\fIdstY\fR
+and
+\fIdstZ\fR
+specify the coordinates of a subregion of the destination texel array\&. The source and destination subregions must be contained entirely within the specified level of the corresponding image objects\&.
+.PP
+The dimensions are always specified in texels, even for compressed texture formats\&. However, it should be noted that if only one of the source and destination textures is compressed then the number of texels touched in the compressed image will be a factor of the block size larger than in the uncompressed image\&.
+.PP
+Slices of a
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR
+\fBGL_TEXTURE_3D\fR
+and faces of
+\fBGL_TEXTURE_CUBE_MAP\fR
+are all compatible provided they share a compatible internal format, and multiple slices or faces may be copied between these objects with a single call by specifying the starting slice with
+\fIsrcZ\fR
+and
+\fIdstZ\fR, and the number of slices to be copied with
+\fIsrcDepth\fR\&. Cubemap textures always have six faces which are selected by a zero\-based face index\&.
+.PP
+For the purposes of CopyImageSubData, two internal formats are considered compatible if any of the following conditions are met:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+the formats are the same,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+the formats are considered compatible according to the compatibility rules used for texture views as defined in section 3\&.9\&.X\&. In particular, if both internal formats are listed in the same entry of Table 3\&.X\&.2, they are considered compatible, or
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+one format is compressed and the other is uncompressed and Table 4\&.X\&.1 lists the two formats in the same row\&.
+.RE
+.sp
+If the formats are not compatible, an INVALID_OPERATION error is generated\&.
+.sp
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.B Table\ \&1.\ \&Sized Internal Formats
+.TS
+allbox tab(:);
+lB lB lB.
+T{
+\fB Texel / Block Size \fR
+T}:T{
+\fB Uncompressed Internal Format \fR
+T}:T{
+\fB Compressed Internal Format(s) \fR
+T}
+.T&
+l l l
+l l l.
+T{
+64\-bit
+T}:T{
+\fBGL_RGBA32UI\fR, \fBGL_RGBA32I\fR, \fBGL_RGBA32F\fR
+T}:T{
+\fBGL_COMPRESSED_RGBA_S3TC_DXT3_EXT\fR,
+                   \fBGL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT\fR,
+                   \fBGL_COMPRESSED_RGBA_S3TC_DXT5_EXT\fR,
+                   \fBGL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT\fR,
+                   \fBGL_COMPRESSED_RG_RGTC2\fR,
+                   \fBGL_COMPRESSED_SIGNED_RG_RGTC2\fR,
+                   \fBGL_COMPRESSED_RGBA_BPTC_UNORM\fR,
+                   \fBGL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM\fR,
+                   \fBGL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT\fR,
+                   \fBGL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT\fR
+T}
+T{
+128\-bit
+T}:T{
+\fBGL_RGBA16UI\fR,
+                   \fBGL_RGBA16I\fR,
+                   \fBGL_RGBA16F\fR,
+                   \fBGL_RG32F\fR,
+                   \fBGL_RG32UI\fR,
+                   \fBGL_RG32I\fR,
+                   \fBGL_RGBA16\fR,
+                   \fBGL_RGBA16_SNORM\fR
+T}:T{
+\fBGL_COMPRESSED_RGB_S3TC_DXT1_EXT\fR,
+                   \fBGL_COMPRESSED_SRGB_S3TC_DXT1_EXT\fR,
+                   \fBGL_COMPRESSED_RGBA_S3TC_DXT1_EXT\fR,
+                   \fBGL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT\fR,
+                   \fBGL_COMPRESSED_RED_RGTC1\fR,
+                   \fBGL_COMPRESSED_SIGNED_RED_RGTC1\fR
+T}
+.TE
+.sp 1
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the texel size of the uncompressed image is not equal to the block size of the compressed image\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if either target parameter is not
+\fBGL_RENDERBUFFER\fR, a valid non\-proxy texture target other than
+\fBGL_TEXTURE_BUFFER\fR, or is one of the cubemap face selectors\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+does not match the type of the object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if either object is a texture and the texture is not complete\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the source and destination internal formats are not compatible, or if the number of samples do not match\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if either name does not correspond to a valid renderbuffer or texture object according to the corresponding target parameter\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the specified level of either the source or destination is not a valid level for the corresponding image\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the dimensions of the either subregion exceeds the boundaries of the corresponding image object, or if the image format is compressed and the dimensions of the subregion fail to meet the alignment constraints of the format\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_MAX_COMPUTE_WORK_GROUP_COUNT\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglCopyImageSubData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglDispatchComputeIndirect\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

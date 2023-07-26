@@ -1,0 +1,574 @@
+'\" t
+.\"     Title: glMapBufferRange
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLMAPBUFFERRANGE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glMapBufferRange, glMapNamedBufferRange \- map all or part of a buffer object\*(Aqs data store into the client\*(Aqs address space
+.SH "C SPECIFICATION"
+.HP \w'void\ *glMapBufferRange('u
+.BI "void *glMapBufferRange(GLenum\ " "target" ", GLintptr\ " "offset" ", GLsizeiptr\ " "length" ", GLbitfield\ " "access" ");"
+.HP \w'void\ *glMapNamedBufferRange('u
+.BI "void *glMapNamedBufferRange(GLuint\ " "buffer" ", GLintptr\ " "offset" ", GLsizeiptr\ " "length" ", GLbitfield\ " "access" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound for
+\fBglMapBufferRange\fR, which must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object for
+\fBglMapNamedBufferRange\fR\&.
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+Specifies the starting offset within the buffer of the range to be mapped\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+Specifies the length of the range to be mapped\&.
+.RE
+.PP
+\fIaccess\fR
+.RS 4
+Specifies a combination of access flags indicating the desired access to the mapped range\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglMapBufferRange\fR
+and
+\fBglMapNamedBufferRange\fR
+map all or part of the data store of a specified buffer object into the client\*(Aqs address space\&.
+\fIoffset\fR
+and
+\fIlength\fR
+indicate the range of data in the buffer object that is to be mapped, in terms of basic machine units\&.
+\fIaccess\fR
+is a bitfield containing flags which describe the requested mapping\&. These flags are described below\&.
+.PP
+A pointer to the beginning of the mapped range is returned once all pending operations on the buffer object have completed, and may be used to modify and/or query the corresponding range of the data store according to the following flag bits set in
+\fIaccess\fR:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_READ_BIT\fR
+indicates that the returned pointer may be used to read buffer object data\&. No GL error is generated if the pointer is used to query a mapping which excludes this flag, but the result is undefined and system errors (possibly including program termination) may occur\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_WRITE_BIT\fR
+indicates that the returned pointer may be used to modify buffer object data\&. No GL error is generated if the pointer is used to modify a mapping which excludes this flag, but the result is undefined and system errors (possibly including program termination) may occur\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_PERSISTENT_BIT\fR
+indicates that the mapping is to be made in a persistent fassion and that the client intends to hold and use the returned pointer during subsequent GL operation\&. It is not an error to call drawing commands (render) while buffers are mapped using this flag\&. It is an error to specify this flag if the buffer\*(Aqs data store was not allocated through a call to the
+\fBglBufferStorage\fR()
+command in which the
+\fBGL_MAP_PERSISTENT_BIT\fR
+was also set\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_COHERENT_BIT\fR
+indicates that a persistent mapping is also to be coherent\&. Coherent maps guarantee that the effect of writes to a buffer\*(Aqs data store by either the client or server will eventually become visible to the other without further intervention from the application\&. In the absence of this bit, persistent mappings are not coherent and modified ranges of the buffer store must be explicitly communicated to the GL, either by unmapping the buffer, or through a call to
+\fBglFlushMappedBufferRange\fR()
+or
+\fBglMemoryBarrier\fR()\&.
+.RE
+.PP
+The following
+\fIoptional\fR
+flag bits in
+\fIaccess\fR
+may be used to modify the mapping:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_INVALIDATE_RANGE_BIT\fR
+indicates that the previous contents of the specified range may be discarded\&. Data within this range are undefined with the exception of subsequently written data\&. No GL error is generated if subsequent GL operations access unwritten data, but the result is undefined and system errors (possibly including program termination) may occur\&. This flag may not be used in combination with
+\fBGL_MAP_READ_BIT\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_INVALIDATE_BUFFER_BIT\fR
+indicates that the previous contents of the entire buffer may be discarded\&. Data within the entire buffer are undefined with the exception of subsequently written data\&. No GL error is generated if subsequent GL operations access unwritten data, but the result is undefined and system errors (possibly including program termination) may occur\&. This flag may not be used in combination with
+\fBGL_MAP_READ_BIT\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_FLUSH_EXPLICIT_BIT\fR
+indicates that one or more discrete subranges of the mapping may be modified\&. When this flag is set, modifications to each subrange must be explicitly flushed by calling
+\fBglFlushMappedBufferRange\fR()\&. No GL error is set if a subrange of the mapping is modified and not flushed, but data within the corresponding subrange of the buffer are undefined\&. This flag may only be used in conjunction with
+\fBGL_MAP_WRITE_BIT\fR\&. When this option is selected, flushing is strictly limited to regions that are explicitly indicated with calls to
+\fBglFlushMappedBufferRange\fR()
+prior to unmap; if this option is not selected
+\fBglUnmapBuffer\fR()
+will automatically flush the entire mapped range when called\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_UNSYNCHRONIZED_BIT\fR
+indicates that the GL should not attempt to synchronize pending operations on the buffer prior to returning from
+\fBglMapBufferRange\fR
+or
+\fBglMapNamedBufferRange\fR\&. No GL error is generated if pending operations which source or modify the buffer overlap the mapped region, but the result of such previous and any subsequent operations is undefined\&.
+.RE
+.PP
+If an error occurs, a
+NULL
+pointer is returned\&.
+.PP
+If no error occurs, the returned pointer will reflect an allocation aligned to the value of
+\fBGL_MIN_MAP_BUFFER_ALIGNMENT\fR
+basic machine units\&. Subtracting
+\fIoffset\fR
+from this returned pointer will always produce a multiple of the value of
+\fBGL_MIN_MAP_BUFFER_ALIGNMENT\fR\&.
+.PP
+The returned pointer values may not be passed as parameter values to GL commands\&. For example, they may not be used to specify array pointers, or to specify or query pixel or texture image data; such actions produce undefined results, although implementations may not check for such behavior for performance reasons\&.
+.PP
+Mappings to the data stores of buffer objects may have nonstandard performance characteristics\&. For example, such mappings may be marked as uncacheable regions of memory, and in such cases reading from them may be very slow\&. To ensure optimal performance, the client should use the mapping in a fashion consistent with the values of
+\fBGL_BUFFER_USAGE\fR
+for the buffer object and of
+\fIaccess\fR\&. Using a mapping in a fashion inconsistent with these values is liable to be multiple orders of magnitude slower than using normal memory\&.
+.SH "NOTES"
+.PP
+Alignment of the returned pointer is guaranteed only if the version of the GL version is 4\&.2 or greater\&. Also, the
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+target is accepted only if the GL version is 4\&.2 or greater\&.
+.PP
+The
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+targets are accepted only if the GL version is 4\&.3 or greater\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+target is available only if the GL version is 4\&.4 or greater\&.
+.PP
+The
+\fBGL_MAP_PERSISTENT_BIT\fR
+and
+\fBGL_MAP_COHERENT_BIT\fR
+flags are available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglMapBufferRange\fR
+if
+\fItarget\fR
+is not one of the buffer binding targets listed above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglMapBufferRange\fR
+if zero is bound to
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglMapNamedBufferRange\fR
+if
+\fIbuffer\fR
+is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIoffset\fR
+or
+\fIlength\fR
+is negative, if $offset + length$ is greater than the value of
+\fBGL_BUFFER_SIZE\fR
+for the buffer object, or if
+\fIaccess\fR
+has any bits set other than those defined above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated for any of the following conditions:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIlength\fR
+is zero\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The buffer object is already in a mapped state\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Neither
+\fBGL_MAP_READ_BIT\fR
+nor
+\fBGL_MAP_WRITE_BIT\fR
+is set\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_READ_BIT\fR
+is set and any of
+\fBGL_MAP_INVALIDATE_RANGE_BIT\fR,
+\fBGL_MAP_INVALIDATE_BUFFER_BIT\fR
+or
+\fBGL_MAP_UNSYNCHRONIZED_BIT\fR
+is set\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_MAP_FLUSH_EXPLICIT_BIT\fR
+is set and
+\fBGL_MAP_WRITE_BIT\fR
+is not set\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Any of
+\fBGL_MAP_READ_BIT\fR,
+\fBGL_MAP_WRITE_BIT\fR,
+\fBGL_MAP_PERSISTENT_BIT\fR, or
+\fBGL_MAP_COHERENT_BIT\fR
+are set, but the same bit is not included in the buffer\*(Aqs storage flags\&.
+.RE
+.PP
+No error is generated if memory outside the mapped range is modified or queried, but the result is undefined and system errors (possibly including program termination) may occur\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with
+\fIpname\fR
+\fBGL_MIN_MAP_BUFFER_ALIGNMENT\fR\&. The value must be a power of two that is at least 64\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglMapBufferRange\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglMapNamedBufferRange\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglMapBuffer\fR(),
+\fBglUnmapBuffer\fR(),
+\fBglFlushMappedBufferRange\fR(),
+\fBglBindBuffer\fR(),
+\fBglBufferStorage\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

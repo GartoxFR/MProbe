@@ -1,0 +1,181 @@
+'\" t
+.\"     Title: glBindFramebuffer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBINDFRAMEBUFFER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBindFramebuffer \- bind a framebuffer to a framebuffer target
+.SH "C SPECIFICATION"
+.HP \w'void\ glBindFramebuffer('u
+.BI "void glBindFramebuffer(GLenum\ " "target" ", GLuint\ " "framebuffer" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the framebuffer target of the binding operation\&.
+.RE
+.PP
+\fIframebuffer\fR
+.RS 4
+Specifies the name of the framebuffer object to bind\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBindFramebuffer\fR
+binds the framebuffer object with name
+\fIframebuffer\fR
+to the framebuffer target specified by
+\fItarget\fR\&.
+\fItarget\fR
+must be either
+\fBGL_DRAW_FRAMEBUFFER\fR,
+\fBGL_READ_FRAMEBUFFER\fR
+or
+\fBGL_FRAMEBUFFER\fR\&. If a framebuffer object is bound to
+\fBGL_DRAW_FRAMEBUFFER\fR
+or
+\fBGL_READ_FRAMEBUFFER\fR, it becomes the target for rendering or readback operations, respectively, until it is deleted or another framebuffer is bound to the corresponding bind point\&. Calling
+\fBglBindFramebuffer\fR
+with
+\fItarget\fR
+set to
+\fBGL_FRAMEBUFFER\fR
+binds
+\fIframebuffer\fR
+to both the read and draw framebuffer targets\&.
+\fIframebuffer\fR
+is the name of a framebuffer object previously returned from a call to
+\fBglGenFramebuffers\fR(), or zero to break the existing binding of a framebuffer object to
+\fItarget\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+is not
+\fBGL_DRAW_FRAMEBUFFER\fR,
+\fBGL_READ_FRAMEBUFFER\fR
+or
+\fBGL_FRAMEBUFFER\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIframebuffer\fR
+is not zero or the name of a framebuffer previously returned from a call to
+\fBglGenFramebuffers\fR()\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglBindFramebuffer\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenFramebuffers\fR(),
+\fBglFramebufferRenderbuffer\fR(),
+\fBglFramebufferTexture\fR(),
+
+\fBglFramebufferTexture1D\fR,
+
+\fBglFramebufferTexture2D\fR,
+
+\fBglFramebufferTexture3D\fR,
+\fBglFramebufferTextureLayer\fR(),
+\fBglDeleteFramebuffers\fR(),
+\fBglIsFramebuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

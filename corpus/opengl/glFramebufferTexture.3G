@@ -1,0 +1,508 @@
+'\" t
+.\"     Title: glFramebufferTexture
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLFRAMEBUFFERTEXTURE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glFramebufferTexture \- attach a level of a texture object as a logical buffer of a framebuffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glFramebufferTexture('u
+.BI "void glFramebufferTexture(GLenum\ " "target" ", GLenum\ " "attachment" ", GLuint\ " "texture" ", GLint\ " "level" ");"
+.HP \w'void\ glFramebufferTexture1D('u
+.BI "void glFramebufferTexture1D(GLenum\ " "target" ", GLenum\ " "attachment" ", GLenum\ " "textarget" ", GLuint\ " "texture" ", GLint\ " "level" ");"
+.HP \w'void\ glFramebufferTexture2D('u
+.BI "void glFramebufferTexture2D(GLenum\ " "target" ", GLenum\ " "attachment" ", GLenum\ " "textarget" ", GLuint\ " "texture" ", GLint\ " "level" ");"
+.HP \w'void\ glFramebufferTexture3D('u
+.BI "void glFramebufferTexture3D(GLenum\ " "target" ", GLenum\ " "attachment" ", GLenum\ " "textarget" ", GLuint\ " "texture" ", GLint\ " "level" ", GLint\ " "layer" ");"
+.HP \w'void\ glNamedFramebufferTexture('u
+.BI "void glNamedFramebufferTexture(GLuint\ " "framebuffer" ", GLenum\ " "attachment" ", GLuint\ " "texture" ", GLint\ " "level" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the framebuffer is bound for all commands
+\fIexcept\fR
+\fBglNamedFramebufferTexture\fR\&.
+.RE
+.PP
+\fIframebuffer\fR
+.RS 4
+Specifies the name of the framebuffer object for
+\fBglNamedFramebufferTexture\fR\&.
+.RE
+.PP
+\fIattachment\fR
+.RS 4
+Specifies the attachment point of the framebuffer\&.
+.RE
+.PP
+\fItextarget\fR
+.RS 4
+For
+\fBglFramebufferTexture1D\fR,
+\fBglFramebufferTexture2D\fR
+and
+\fBglFramebufferTexture3D\fR, specifies what type of texture is expected in the
+\fItexture\fR
+parameter, or for cube map textures, which face is to be attached\&.
+.RE
+.PP
+\fItexture\fR
+.RS 4
+Specifies the name of an existing texture object to attach\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+Specifies the mipmap level of the texture object to attach\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+These commands attach a selected mipmap level or image of a texture object as one of the logical buffers of the specified framebuffer object\&. Textures cannot be attached to the default draw and read framebuffer, so they are not valid targets of these commands\&.
+.PP
+For all commands
+\fIexcept\fR
+\fBglNamedFramebufferTexture\fR, the framebuffer object is that bound to
+\fItarget\fR, which must be
+\fBGL_DRAW_FRAMEBUFFER\fR,
+\fBGL_READ_FRAMEBUFFER\fR, or
+\fBGL_FRAMEBUFFER\fR\&.
+\fBGL_FRAMEBUFFER\fR
+is equivalent to
+\fBGL_DRAW_FRAMEBUFFER\fR\&.
+.PP
+For
+\fBglNamedFramebufferTexture\fR,
+\fIframebuffer\fR
+is the name of the framebuffer object\&.
+.PP
+\fIattachment\fR
+specifies the logical attachment of the framebuffer and must be
+\fBGL_COLOR_ATTACHMENT\fR\fIi\fR,
+\fBGL_DEPTH_ATTACHMENT\fR,
+\fBGL_STENCIL_ATTACHMENT\fR
+or
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR\&.
+\fIi\fR
+in
+\fBGL_COLOR_ATTACHMENT\fR\fIi\fR
+may range from zero to the value of
+\fBGL_MAX_COLOR_ATTACHMENTS\fR
+minus one\&. Attaching a level of a texture to
+\fBGL_DEPTH_STENCIL_ATTACHMENT\fR
+is equivalent to attaching that level to both the
+\fBGL_DEPTH_ATTACHMENT\fR
+\fIand\fR
+the
+\fBGL_STENCIL_ATTACHMENT\fR
+attachment points simultaneously\&.
+.PP
+For
+\fBglFramebufferTexture1D\fR,
+\fBglFramebufferTexture2D\fR
+and
+\fBglFramebufferTexture3D\fR,
+\fItextarget\fR
+specifies what type of texture is named by
+\fItexture\fR, and for cube map textures, specifies the face that is to be attached\&. If
+\fItexture\fR
+is not zero, it must be the name of an existing texture object with effective target
+\fItextarget\fR
+unless it is a cube map texture, in which case
+\fItextarget\fR
+must be
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Z\fR, or
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Z\fR\&.
+.PP
+If
+\fItexture\fR
+is non\-zero, the specified
+\fIlevel\fR
+of the texture object named
+\fItexture\fR
+is attached to the framebfufer attachment point named by
+\fIattachment\fR\&. For
+\fBglFramebufferTexture1D\fR,
+\fBglFramebufferTexture2D\fR, and
+\fBglFramebufferTexture3D\fR,
+\fItexture\fR
+must be zero or the name of an existing texture with an effective target of
+\fItextarget\fR, or
+\fItexture\fR
+must be the name of an existing cube\-map texture and
+\fItextarget\fR
+must be one of
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Z\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Y\fR, or
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Z\fR\&.
+.PP
+If
+\fItextarget\fR
+is
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR, or
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR, then
+\fIlevel\fR
+must be zero\&.
+.PP
+If
+\fItextarget\fR
+is
+\fBGL_TEXTURE_3D\fR, then
+\fIlevel\fR
+must be greater than or equal to zero and less than or equal to $log_2$ of the value of
+\fBGL_MAX_3D_TEXTURE_SIZE\fR\&.
+.PP
+If
+\fItextarget\fR
+is one of
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Z\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Y\fR, or
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Z\fR, then
+\fIlevel\fR
+must be greater than or equal to zero and less than or equal to $log_2$ of the value of
+\fBGL_MAX_CUBE_MAP_TEXTURE_SIZE\fR\&.
+.PP
+For all other values of
+\fItextarget\fR,
+\fIlevel\fR
+must be greater than or equal to zero and less than or equal to $log_2$ of the value of
+\fBGL_MAX_TEXTURE_SIZE\fR\&.
+.PP
+\fIlayer\fR
+specifies the layer of a 2\-dimensional image within a 3\-dimensional texture\&.
+.PP
+For
+\fBglFramebufferTexture1D\fR, if
+\fItexture\fR
+is not zero, then
+\fItextarget\fR
+must be
+\fBGL_TEXTURE_1D\fR\&. For
+\fBglFramebufferTexture2D\fR, if
+\fItexture\fR
+is not zero,
+\fItextarget\fR
+must be one of
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_RECTANGLE\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Z\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Z\fR, or
+\fBGL_TEXTURE_2D_MULTISAMPLE\fR\&. For
+\fBglFramebufferTexture3D\fR, if
+\fItexture\fR
+is not zero, then
+\fItextarget\fR
+must be
+\fBGL_TEXTURE_3D\fR\&.
+.PP
+For
+\fBglFramebufferTexture\fR
+and
+\fBglNamedFramebufferTexture\fR, if
+\fItexture\fR
+is the name of a three\-dimensional, cube map array, cube map, one\- or two\-dimensional array, or two\-dimensional multisample array texture, the specified texture level is an array of images, and the framebuffer attachment is considered to be
+\fIlayered\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by all commands accepting a
+\fItarget\fR
+parameter if it is not one of the accepted framebuffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by all commands accepting a
+\fItarget\fR
+parameter if zero is bound to that target\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglNamedFramebufferTexture\fR
+if
+\fIframebuffer\fR
+is not the name of an existing framebuffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIattachment\fR
+is not one of the accepted attachment points\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fItexture\fR
+is not zero or the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fItexture\fR
+is not zero and
+\fIlevel\fR
+is not a supported texture level for
+\fItexture\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated by
+\fBglFramebufferTexture3D\fR
+if
+\fItexture\fR
+is not zero and
+\fIlayer\fR
+is larger than the value of
+\fBGL_MAX_3D_TEXTURE_SIZE\fR
+minus one\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by all commands accepting a
+\fItextarget\fR
+parameter if
+\fItexture\fR
+is not zero, and
+\fItextarget\fR
+and the effective target of
+\fItexture\fR
+are not compatible\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by if
+\fItexture\fR
+is a buffer texture\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglFramebufferTexture\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglFramebufferTexture1D\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglFramebufferTexture2D\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglFramebufferTexture3D\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglNamedFramebufferTexture\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenFramebuffers\fR(),
+\fBglBindFramebuffer\fR(),
+\fBglGenRenderbuffers\fR(),
+\fBglFramebufferTexture\fR(),
+
+\fBglFramebufferTexture1D\fR,
+
+\fBglFramebufferTexture2D\fR,
+
+\fBglFramebufferTexture3D\fR
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

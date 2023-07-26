@@ -1,0 +1,283 @@
+'\" t
+.\"     Title: glGetProgramResourceName
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETPROGRAMRESOURCE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetProgramResourceName \- query the name of an indexed resource within a program
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetProgramResourceName('u
+.BI "void glGetProgramResourceName(GLuint\ " "program" ", GLenum\ " "programInterface" ", GLuint\ " "index" ", GLsizei\ " "bufSize" ", GLsizei\ *\ " "length" ", char\ *\ " "name" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+The name of a program object whose resources to query\&.
+.RE
+.PP
+\fIprogramInterface\fR
+.RS 4
+A token identifying the interface within
+\fIprogram\fR
+containing the indexed resource\&.
+.RE
+.PP
+\fIindex\fR
+.RS 4
+The index of the resource within
+\fIprogramInterface\fR
+of
+\fIprogram\fR\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+The size of the character array whose address is given by
+\fIname\fR\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+The address of a variable which will receive the length of the resource name\&.
+.RE
+.PP
+\fIname\fR
+.RS 4
+The address of a character array into which will be written the name of the resource\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetProgramResourceName\fR
+retrieves the name string assigned to the single active resource with an index of
+\fIindex\fR
+in the interface
+\fIprogramInterface\fR
+of program object
+\fIprogram\fR\&.
+\fIindex\fR
+must be less than the number of entries in the active resource list for
+\fIprogramInterface\fR\&.
+.PP
+\fIprogram\fR
+must be the name of an existing program object\&.
+\fIprogramInterface\fR
+is the name of the interface within
+\fIprogram\fR
+which contains the resource and must be one of the following values:
+.PP
+\fBGL_UNIFORM\fR
+.RS 4
+The query is targeted at the set of active uniforms within
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_UNIFORM_BLOCK\fR
+.RS 4
+The query is targeted at the set of active uniform blocks within
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_PROGRAM_INPUT\fR
+.RS 4
+The query is targeted at the set of active input variables used by the first shader stage of
+\fIprogram\fR\&. If
+\fIprogram\fR
+contains multiple shader stages then input variables from any stage other than the first will not be enumerated\&.
+.RE
+.PP
+\fBGL_PROGRAM_OUTPUT\fR
+.RS 4
+The query is targeted at the set of active output variables produced by the last shader stage of
+\fIprogram\fR\&. If
+\fIprogram\fR
+contains multiple shader stages then output variables from any stage other than the last will not be enumerated\&.
+.RE
+.PP
+\fBGL_VERTEX_SUBROUTINE\fR, \fBGL_TESS_CONTROL_SUBROUTINE\fR, \fBGL_TESS_EVALUATION_SUBROUTINE\fR, \fBGL_GEOMETRY_SUBROUTINE\fR, \fBGL_FRAGMENT_SUBROUTINE\fR, \fBGL_COMPUTE_SUBROUTINE\fR
+.RS 4
+The query is targeted at the set of active subroutines for the vertex, tessellation control, tessellation evaluation, geometry, fragment and compute shader stages of
+\fIprogram\fR, respectively\&.
+.RE
+.PP
+\fBGL_VERTEX_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR, \fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR, \fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, \fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR
+.RS 4
+The query is targeted at the set of active subroutine uniform variables used by the vertex, tessellation control, tessellation evaluation, geometry, fragment and compute shader stages of
+\fIprogram\fR, respectively\&.
+.RE
+.PP
+\fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+.RS 4
+The query is targeted at the set of output variables from the last non\-fragment stage of
+\fIprogram\fR
+that would be captured if transform feedback were active\&.
+.RE
+.PP
+\fBGL_BUFFER_VARIABLE\fR
+.RS 4
+The query is targeted at the set of active buffer variables used by
+\fIprogram\fR\&.
+.RE
+.PP
+\fBGL_SHADER_STORAGE_BLOCK\fR
+.RS 4
+The query is targeted at the set of active shader storage blocks used by
+\fIprogram\fR\&.
+.RE
+.PP
+The name string assigned to the active resource identified by
+\fIindex\fR
+is returned as a null\-terminated string in the character array whose address is given in
+\fIname\fR\&. The actual number of characters written into
+\fIname\fR, excluding the null terminator, is returned in
+\fIlength\fR\&. If
+\fIlength\fR
+is NULL, no length is returned\&. The maximum number of characters that may be written into
+\fIname\fR, including the null terminator, is specified by
+\fIbufSize\fR\&. If the length of the name string
+\fIincluding the null terminator\fR
+is greater than
+\fIbufSize\fR, the first
+\fIbufSize\fR\-1 characters of the name string will be written to
+\fIname\fR, followed by a null terminator\&. If
+\fIbufSize\fR
+is zero, no error will be generated but no characters will be written to
+\fIname\fR\&. The length of the longest name string for
+\fIprogramInterface\fR>, including a null terminator, can be queried by calling
+\fBglGetProgramInterface\fR()
+with a
+\fIpname\fR
+of
+\fBGL_MAX_NAME_LENGTH\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIprogramInterface\fR
+is not one of the accepted interface types\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIprogam\fR
+is not the name of an existing program\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIindex\fR
+is greater than or equal to the number of entries in the active resource list for
+\fIprogramInterface\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIprogramInterface\fR
+is
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+or
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR, since active atomic counter and transform feedback buffer resources are not assigned name strings\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetProgramResourceName\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetProgramResourceIndex\fR(),
+\fBglGetProgramResource\fR(),
+\fBglGetProgramResourceLocation\fR(),
+\fBglGetProgramResourceLocationIndex\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

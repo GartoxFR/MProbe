@@ -1,0 +1,371 @@
+'\" t
+.\"     Title: glBufferSubData
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBUFFERSUBDATA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBufferSubData, glNamedBufferSubData \- updates a subset of a buffer object\*(Aqs data store
+.SH "C SPECIFICATION"
+.HP \w'void\ glBufferSubData('u
+.BI "void glBufferSubData(GLenum\ " "target" ", GLintptr\ " "offset" ", GLsizeiptr\ " "size" ", const\ GLvoid\ *\ " "data" ");"
+.HP \w'void\ glNamedBufferSubData('u
+.BI "void glNamedBufferSubData(GLuint\ " "buffer" ", GLintptr\ " "offset" ", GLsizeiptr\ " "size" ", const\ void\ *" "data" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound for
+\fBglBufferSubData\fR, which must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object for
+\fBglNamedBufferSubData\fR\&.
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+Specifies the offset into the buffer object\*(Aqs data store where data replacement will begin, measured in bytes\&.
+.RE
+.PP
+\fIsize\fR
+.RS 4
+Specifies the size in bytes of the data store region being replaced\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+Specifies a pointer to the new data that will be copied into the data store\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBufferSubData\fR
+and
+\fBglNamedBufferSubData\fR
+redefine some or all of the data store for the specified buffer object\&. Data starting at byte offset
+\fIoffset\fR
+and extending for
+\fIsize\fR
+bytes is copied to the data store from the memory pointed to by
+\fIdata\fR\&.
+\fIoffset\fR
+and
+\fIsize\fR
+must define a range lying entirely within the buffer object\*(Aqs data store\&.
+.SH "NOTES"
+.PP
+When replacing the entire data store, consider using
+\fBglBufferSubData\fR
+rather than completely recreating the data store with
+\fBglBufferData\fR\&. This avoids the cost of reallocating the data store\&.
+.PP
+Consider using multiple buffer objects to avoid stalling the rendering pipeline during data store updates\&. If any rendering in the pipeline makes reference to data in the buffer object being updated by
+\fBglBufferSubData\fR, especially from the specific region being updated, that rendering must drain from the pipeline before the data store can be updated\&.
+.PP
+Clients must align data elements consistent with the requirements of the client platform, with an additional base\-level requirement that an offset within a buffer to a datum comprising $N$ bytes be a multiple of $N$\&.
+.PP
+The
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+target is available only if the GL version is 4\&.2 or greater\&.
+.PP
+The
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+targets are available only if the GL version is 4\&.3 or greater\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+target is available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglBufferSubData\fR
+if
+\fItarget\fR
+is not one of the accepted buffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglBufferSubData\fR
+if zero is bound to
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglNamedBufferSubData\fR
+if
+\fIbuffer\fR
+is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIoffset\fR
+or
+\fIsize\fR
+is negative, or if $offset + size$ is greater than the value of
+\fBGL_BUFFER_SIZE\fR
+for the specified buffer object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if any part of the specified range of the buffer object is mapped with
+\fBglMapBufferRange\fR()
+or
+\fBglMapBuffer\fR(), unless it was mapped with the
+\fBGL_MAP_PERSISTENT_BIT\fR
+bit set in the
+\fBglMapBufferRange\fR
+\fIaccess\fR
+flags\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the value of the
+\fBGL_BUFFER_IMMUTABLE_STORAGE\fR
+flag of the buffer object is
+\fBGL_TRUE\fR
+and the value of
+\fBGL_BUFFER_STORAGE_FLAGS\fR
+for the buffer object does not have the
+\fBGL_DYNAMIC_STORAGE_BIT\fR
+bit set\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetBufferSubData\fR()
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglBufferSubData\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglNamedBufferSubData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBuffer\fR(),
+\fBglBufferData\fR(),
+\fBglMapBuffer\fR(),
+\fBglMapBufferRange\fR(),
+\fBglUnmapBuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2005 Addison\-Wesley\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2005 Sams Publishing
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

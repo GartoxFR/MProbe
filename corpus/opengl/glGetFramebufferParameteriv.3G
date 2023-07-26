@@ -1,0 +1,338 @@
+'\" t
+.\"     Title: glGetFramebufferParameter
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETFRAMEBUFFERPARA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetFramebufferParameteriv, glGetNamedFramebufferParameteriv \- query a named parameter of a framebuffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetFramebufferParameteriv('u
+.BI "void glGetFramebufferParameteriv(GLenum\ " "target" ", GLenum\ " "pname" ", GLint\ *" "params" ");"
+.HP \w'void\ glGetNamedFramebufferParameteriv('u
+.BI "void glGetNamedFramebufferParameteriv(GLuint\ " "framebuffer" ", GLenum\ " "pname" ", GLint\ *" "param" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the framebuffer object is bound for
+\fBglGetFramebufferParameteriv\fR\&.
+.RE
+.PP
+\fIframebuffer\fR
+.RS 4
+Specifies the name of the framebuffer object for
+\fBglGetNamedFramebufferParameteriv\fR\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the parameter of the framebuffer object to query\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+Returns the value of parameter
+\fIpname\fR
+for the framebuffer object\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetFramebufferParameteriv\fR
+and
+\fBglGetNamedFramebufferParameteriv\fR
+query parameters of a specified framebuffer object\&.
+.PP
+For
+\fBglGetFramebufferParameteriv\fR, the framebuffer object is that bound to
+\fItarget\fR, which must be one of
+\fBGL_DRAW_FRAMEBUFFER\fR,
+\fBGL_READ_FRAMEBUFFER\fR
+or
+\fBGL_FRAMEBUFFER\fR\&.
+\fBGL_FRAMEBUFFER\fR
+is equivalent to
+\fBGL_DRAW_FRAMEBUFFER\fR\&. Default framebuffers may also be queried if bound to
+\fItarget\fR\&.
+.PP
+For
+\fBglGetNamedFramebufferParameteriv\fR,
+\fIframebuffer\fR
+is the name of the framebuffer object\&. If
+\fIframebuffer\fR
+is zero, the default draw framebuffer is queried\&.
+.PP
+Upon successful return,
+\fIparam\fR
+will contain the value of the framebuffer parameter specified by
+\fIpname\fR, as described below\&.
+.PP
+The following parameters can only be queried for framebuffer objects:
+.PP
+\fBGL_FRAMEBUFFER_DEFAULT_WIDTH\fR
+.RS 4
+\fIparams\fR
+returns the value of
+\fBGL_FRAMEBUFFER_DEFAULT_WIDTH\fR
+for the framebuffer object\&.
+.RE
+.PP
+\fBGL_FRAMEBUFFER_DEFAULT_HEIGHT\fR
+.RS 4
+\fIparams\fR
+returns the value of
+\fBGL_FRAMEBUFFER_DEFAULT_HEIGHT\fR
+for the framebuffer object\&.
+.RE
+.PP
+\fBGL_FRAMEBUFFER_DEFAULT_LAYERS\fR
+.RS 4
+\fIparams\fR
+returns the value of
+\fBGL_FRAMEBUFFER_DEFAULT_LAYERS\fR
+for the framebuffer object\&.
+.RE
+.PP
+\fBGL_FRAMEBUFFER_DEFAULT_SAMPLES\fR
+.RS 4
+\fIparams\fR
+returns the value of
+\fBGL_FRAMEBUFFER_DEFAULT_SAMPLES\fR
+for the framebuffer object\&.
+.RE
+.PP
+\fBGL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS\fR
+.RS 4
+\fIparams\fR
+returns the boolean value of
+\fBGL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS\fR\&.
+.RE
+.PP
+The following parameters can be queried for both default framebuffers and framebuffer objects:
+.PP
+\fBGL_DOUBLEBUFFER\fR
+.RS 4
+\fIparam\fR
+returns a boolean value indicating whether double buffering is supported for the framebuffer object\&.
+.RE
+.PP
+\fBGL_IMPLEMENTATION_COLOR_READ_FORMAT\fR
+.RS 4
+\fIparam\fR
+returns a GLenum value indicating the preferred pixel data format for the framebuffer object\&. See
+\fBglReadPixels\fR()\&.
+.RE
+.PP
+\fBGL_IMPLEMENTATION_COLOR_READ_TYPE\fR
+.RS 4
+\fIparam\fR
+returns a GLenum value indicating the implementation\*(Aqs preferred pixel data type for the framebuffer object\&. See
+\fBglReadPixels\fR()\&.
+.RE
+.PP
+\fBGL_SAMPLES\fR
+.RS 4
+\fIparam\fR
+returns an integer value indicating the coverage mask size for the framebuffer object\&. See
+\fBglSampleCoverage\fR()\&.
+.RE
+.PP
+\fBGL_SAMPLE_BUFFERS\fR
+.RS 4
+\fIparam\fR
+returns an integer value indicating the number of sample buffers associated with the framebuffer object\&. See
+\fBglSampleCoverage\fR()\&.
+.RE
+.PP
+\fBGL_STEREO\fR
+.RS 4
+\fIparam\fR
+returns a boolean value indicating whether stereo buffers (left and right) are supported for the framebuffer object\&.
+.RE
+.SH "NOTES"
+.PP
+Queries of default framebuffers are supported only if the GL version is 4\&.5 or higher\&. Otherwise, an
+\fBGL_INVALID_OPERATION\fR
+error is generated\&.
+.PP
+Queries of the framebuffer\-dependent parameters
+\fBGL_DOUBLEBUFFER\fR,
+\fBGL_IMPLEMENTATION_COLOR_READ_FORMAT\fR,
+\fBGL_IMPLEMENTATION_COLOR_READ_TYPE\fR,
+\fBGL_SAMPLES\fR,
+\fBGL_SAMPLE_BUFFERS\fR
+and
+\fBGL_STEREO\fR
+are supported only if the GL version is 4\&.5 or higher\&.
+.PP
+The framebuffer\-dependent state
+\fBGL_SAMPLE_POSITION\fR
+cannot be queried with these commands\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglGetFramebufferParameteriv\fR
+if
+\fItarget\fR
+is not one of the accepted framebuffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetNamedFramebufferAttachmentParameteriv\fR
+if
+\fIframebuffer\fR
+is not zero or the name of an existing framebuffer object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not one of the accepted parameter names\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if a default framebuffer is queried, and
+\fIpname\fR
+is not one of
+\fBGL_DOUBLEBUFFER\fR,
+\fBGL_IMPLEMENTATION_COLOR_READ_FORMAT\fR,
+\fBGL_IMPLEMENTATION_COLOR_READ_TYPE\fR,
+\fBGL_SAMPLES\fR,
+\fBGL_SAMPLE_BUFFERS\fR
+or
+\fBGL_STEREO\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetFramebufferAttachmentParameter\fR()
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetFramebufferParameteriv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetNamedFramebufferParameteriv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglFramebufferParameteri\fR(),
+\fBglGetFramebufferAttachmentParameter\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

@@ -1,0 +1,504 @@
+'\" t
+.\"     Title: glGetQueryObject
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETQUERYOBJECT" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetQueryObject, glGetQueryBufferObject \- return parameters of a query object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetQueryObjectiv('u
+.BI "void glGetQueryObjectiv(GLuint\ " "id" ", GLenum\ " "pname" ", GLint\ *\ " "params" ");"
+.HP \w'void\ glGetQueryObjectuiv('u
+.BI "void glGetQueryObjectuiv(GLuint\ " "id" ", GLenum\ " "pname" ", GLuint\ *\ " "params" ");"
+.HP \w'void\ glGetQueryObjecti64v('u
+.BI "void glGetQueryObjecti64v(GLuint\ " "id" ", GLenum\ " "pname" ", GLint64\ *\ " "params" ");"
+.HP \w'void\ glGetQueryObjectui64v('u
+.BI "void glGetQueryObjectui64v(GLuint\ " "id" ", GLenum\ " "pname" ", GLuint64\ *\ " "params" ");"
+.HP \w'void\ glGetQueryBufferObjectiv('u
+.BI "void glGetQueryBufferObjectiv(GLuint\ " "id" ", GLuint\ " "buffer" ", GLenum\ " "pname" ", GLintptr\ " "offset" ");"
+.HP \w'void\ glGetQueryBufferObjectuiv('u
+.BI "void glGetQueryBufferObjectuiv(GLuint\ " "id" ", GLuint\ " "buffer" ", GLenum\ " "pname" ", GLintptr\ " "offset" ");"
+.HP \w'void\ glGetQueryBufferObjecti64v('u
+.BI "void glGetQueryBufferObjecti64v(GLuint\ " "id" ", GLuint\ " "buffer" ", GLenum\ " "pname" ", GLintptr\ " "offset" ");"
+.HP \w'void\ glGetQueryBufferObjectui64v('u
+.BI "void glGetQueryBufferObjectui64v(GLuint\ " "id" ", GLuint\ " "buffer" ", GLenum\ " "pname" ", GLintptr\ " "offset" ");"
+.SH "PARAMETERS"
+.PP
+\fIid\fR
+.RS 4
+Specifies the name of a query object\&.
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of a buffer object\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the symbolic name of a query object parameter\&. Accepted values are
+\fBGL_QUERY_RESULT\fR
+or
+\fBGL_QUERY_RESULT_AVAILABLE\fR\&.
+.RE
+.PP
+\fIparams\fR
+.RS 4
+If a buffer is bound to the
+\fBGL_QUERY_RESULT_BUFFER\fR
+target, then
+\fIparams\fR
+is treated as an offset to a location within that buffer\*(Aqs data store to receive the result of the query\&. If no buffer is bound to
+\fBGL_QUERY_RESULT_BUFFER\fR, then
+\fIparams\fR
+is treated as an address in client memory of a variable to receive the resulting data\&.
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+Specifies the byte offset into
+\fIbuffer\fR\*(Aqs data store where the queried result will be written\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+These commands return a selected parameter of the query object specified by
+\fIid\fR\&.
+\fBglGetQueryObject\fR
+returns in
+\fIparams\fR
+a selected parameter of the query object specified by
+\fIid\fR\&.
+\fBglGetQueryBufferObject\fR
+returns in
+\fIbuffer\fR
+a selected parameter of the query object specified by
+\fIid\fR, by writing it to
+\fIbuffer\fR\*(Aqs data store at the byte offset specified by
+\fIoffset\fR\&.
+.PP
+\fIpname\fR
+names a specific query object parameter\&.
+\fIpname\fR
+can be as follows:
+.PP
+\fBGL_QUERY_RESULT\fR
+.RS 4
+\fIparams\fR
+or
+\fIbuffer\fR
+returns the value of the query object\*(Aqs passed samples counter\&. The initial value is 0\&.
+.RE
+.PP
+\fBGL_QUERY_RESULT_NO_WAIT\fR
+.RS 4
+If the result of the query is available (that is, a query of
+\fBGL_QUERY_RESULT_AVAILABLE\fR
+would return non\-zero), then
+\fIparams\fR
+or
+\fIbuffer\fR
+returns the value of the query object\*(Aqs passed samples counter, otherwise, the data referred to by
+\fIparams\fR
+or
+\fIbuffer\fR
+is not modified\&. The initial value is 0\&.
+.RE
+.PP
+\fBGL_QUERY_RESULT_AVAILABLE\fR
+.RS 4
+\fIparams\fR
+or
+\fIbuffer\fR
+returns whether the passed samples counter is immediately available\&. If a delay would occur waiting for the query result,
+\fBGL_FALSE\fR
+is returned\&. Otherwise,
+\fBGL_TRUE\fR
+is returned, which also indicates that the results of all previous queries are available as well\&.
+.RE
+.SH "NOTES"
+.PP
+If an error is generated, no change is made to the contents of
+\fIparams\fR
+or
+\fIbuffer\fR\&.
+.PP
+\fBglGetQueryObject\fR
+and
+\fBglGetQueryBufferObject\fR
+implicitly flush the GL pipeline so that any incomplete rendering delimited by the occlusion query completes in finite time\&.
+.PP
+If multiple queries are issued using the same query object
+\fIid\fR
+before calling
+\fBglGetQueryObject\fR
+or
+\fBglGetQueryBufferObject\fR, the results of the most recent query will be returned\&. In this case, when issuing a new query, the results of the previous query are discarded\&.
+.PP
+\fBglGetQueryObjecti64v\fR
+and
+\fBglGetQueryObjectui64v\fR
+are available only if the GL version is 3\&.3 or greater\&.
+.PP
+\fBGL_QUERY_RESULT_NO_WAIT\fR
+is accepted for
+\fIpname\fR
+only if the GL version is 4\&.4 or greater\&.
+.PP
+The
+\fBGL_QUERY_RESULT_BUFFER\fR
+target is available only if the GL version is 4\&.4 or higher\&. On earlier versions of the GL,
+\fIparams\fR
+is always an address in client memory\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIpname\fR
+is not an accepted value\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIid\fR
+is not the name of a query object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetQueryBufferObject\fR
+if
+\fIbuffer\fR
+is not the name of an already created buffer object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIid\fR
+is the name of a currently active query object\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetQueryObject\fR
+if a buffer is currently bound to the
+\fBGL_QUERY_RESULT_BUFFER\fR
+target and the command would cause data to be written beyond the bounds of that buffer\*(Aqs data store\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetQueryBufferObject\fR
+if the command would cause data to be written beyond the bounds of
+\fIbuffer\fR\*(Aqs data store\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated by
+\fBglGetQueryBufferObject\fR
+if
+\fIoffset\fR
+is negative\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetQueryObjecti64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryObjectiv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryObjectui64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryObjectuiv\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryBufferObjecti64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryBufferObjectiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryBufferObjectui64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetQueryBufferObjectuiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBeginQuery\fR(),
+
+\fBglEndQuery\fR,
+\fBglGetQueryiv\fR(),
+\fBglIsQuery\fR(),
+\fBglQueryCounter\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2005 Addison\-Wesley\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2005 Sams Publishing
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

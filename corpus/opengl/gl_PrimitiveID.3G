@@ -1,0 +1,173 @@
+'\" t
+.\"     Title: gl_PrimitiveID
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GL_PRIMITIVEID" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gl_PrimitiveID \- contains the index of the current primitive
+.SH "DECLARATION"
+.PP
+.nf
+// In tessellation control, tessellation evaluation, and
+// fragment shaders
+.fi
+.sp
+
+in\ \&int\ \&gl_PrimitiveID\ \&;
+.PP
+.nf
+// In geometry shaders
+.fi
+.sp
+
+out\ \&int\ \&gl_PrimitiveID\ \&;
+.SH "DESCRIPTION"
+.PP
+\fIgl_PrimitiveID\fR
+is a tessellation control, tessellation evaluation and fragment language input variable\&. For the tessellation control and tessellation evaluation languages, it holds the number of primitives processed by the shader since the current set of rendering primitives was started\&. The first primitive processed by the drawing command is numbered zero and the primitive ID counter is incremented after every individual point, line or triangle primitive is processed\&. For triangles drawn in point or line mode, the primitive ID counter is incremented only once, even through multiple points or lines may actually be drawn\&. Restarting a primitive topology using the primitive restart index has no effect on the primitive ID counter\&.
+.PP
+In the geometry language,
+\fIgl_PrimitiveID\fR
+is an output variable that is passed to the corresponding
+\fIgl_PrimitiveID\fR
+input variable in the fragment shader\&. If no geomery shader is present then
+\fIgl_PrimitiveID\fR
+in the fragment language behaves identically as it would in the tessellation control and evaluation languages\&. If a geometry shader is present but does not write to
+\fIgl_PrimitiveID\fR, the value of
+\fIgl_PrimitiveID\fR
+in the fragment shader is undefined\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Shading Language Version\fR
+T}
+T{
+\fBFunction Name\fR
+T}:T{
+\fB1\&.10\fR
+T}:T{
+\fB1\&.20\fR
+T}:T{
+\fB1\&.30\fR
+T}:T{
+\fB1\&.40\fR
+T}:T{
+\fB1\&.50\fR
+T}:T{
+\fB3\&.30\fR
+T}:T{
+\fB4\&.00\fR
+T}:T{
+\fB4\&.10\fR
+T}:T{
+\fB4\&.20\fR
+T}:T{
+\fB4\&.30\fR
+T}:T{
+\fB4\&.40\fR
+T}:T{
+\fB4\&.50\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fIgl_PrimitiveID\fR (Fragment and Geometry Languages)
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fIgl_PrimitiveID\fR (Tessellation Control and Evaluation Languages)
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBgl_InstanceID\fR(),
+\fBgl_VertexID\fR(),
+\fBgl_PrimitiveIDIn\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group
+.br

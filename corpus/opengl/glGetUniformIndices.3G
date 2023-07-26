@@ -1,0 +1,183 @@
+'\" t
+.\"     Title: glGetUniformIndices
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETUNIFORMINDICES" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetUniformIndices \- retrieve the index of a named uniform block
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetUniformIndices('u
+.BI "void glGetUniformIndices(GLuint\ " "program" ", GLsizei\ " "uniformCount" ", const\ GLchar\ **" "uniformNames" ", GLuint\ *" "uniformIndices" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+Specifies the name of a program containing uniforms whose indices to query\&.
+.RE
+.PP
+\fIuniformCount\fR
+.RS 4
+Specifies the number of uniforms whose indices to query\&.
+.RE
+.PP
+\fIuniformNames\fR
+.RS 4
+Specifies the address of an array of pointers to buffers containing the names of the queried uniforms\&.
+.RE
+.PP
+\fIuniformIndices\fR
+.RS 4
+Specifies the address of an array that will receive the indices of the uniforms\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetUniformIndices\fR
+retrieves the indices of a number of uniforms within
+\fIprogram\fR\&.
+.PP
+\fIprogram\fR
+must be the name of a program object for which the command
+\fBglLinkProgram\fR()
+must have been called in the past, although it is not required that
+\fBglLinkProgram\fR()
+must have succeeded\&. The link could have failed because the number of active uniforms exceeded the limit\&.
+.PP
+\fIuniformCount\fR
+indicates both the number of elements in the array of names
+\fIuniformNames\fR
+and the number of indices that may be written to
+\fIuniformIndices\fR\&.
+.PP
+\fIuniformNames\fR
+contains a list of
+\fIuniformCount\fR
+name strings identifying the uniform names to be queried for indices\&. For each name string in
+\fIuniformNames\fR, the index assigned to the active uniform of that name will be written to the corresponding element of
+\fIuniformIndices\fR\&. If a string in
+\fIuniformNames\fR
+is not the name of an active uniform, the special value
+\fBGL_INVALID_INDEX\fR
+will be written to the corresponding element of
+\fIuniformIndices\fR\&.
+.PP
+If an error occurs, nothing is written to
+\fIuniformIndices\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIprogram\fR
+is not the name of a program object for which
+\fBglLinkProgram\fR()
+has been called in the past\&.
+.SH "NOTES"
+.PP
+\fBglGetUniformIndices\fR
+is available only if the GL version is 3\&.1 or greater\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetUniformIndices\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetActiveUniform\fR(),
+\fBglGetActiveUniformName\fR(),
+\fBglLinkProgram\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

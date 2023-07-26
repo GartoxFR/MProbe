@@ -1,0 +1,202 @@
+'\" t
+.\"     Title: glTransformFeedbackBufferRange
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLTRANSFORMFEEDBACKB" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glTransformFeedbackBufferRange \- bind a range within a buffer object to a transform feedback buffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glTransformFeedbackBufferRange('u
+.BI "void glTransformFeedbackBufferRange(GLuint\ " "xfb" ", GLuint\ " "index" ", GLuint\ " "buffer" ", GLintptr\ " "offset" ", GLsizei\ " "size" ");"
+.SH "PARAMETERS"
+.PP
+\fIxfb\fR
+.RS 4
+Name of the transform feedback buffer object\&.
+.RE
+.PP
+\fIindex\fR
+.RS 4
+Index of the binding point within
+\fIxfb\fR\&.
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Name of the buffer object to bind to the specified binding point\&.
+.RE
+.PP
+\fIoffset\fR
+.RS 4
+The starting offset in basic machine units into the buffer object\&.
+.RE
+.PP
+\fIsize\fR
+.RS 4
+The amount of data in basic machine units that can be read from or written to the buffer object while used as an indexed target\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglTransformFeedbackBufferRange\fR
+binds a range of the buffer object
+\fIbuffer\fR
+represented by
+\fIoffset\fR
+and
+\fIsize\fR
+to the binding point at index
+\fIindex\fR
+of the transform feedback object
+\fIxfb\fR\&.
+.PP
+\fIoffset\fR
+specifies the offset in basic machine units into the buffer object
+\fIbuffer\fR
+and
+\fIsize\fR
+specifies the amount of data that can be read from the buffer object while used as an indexed target\&.
+.SH "NOTES"
+.PP
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIxfb\fR
+is not the name of an existing transform feedback object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if in
+\fIbuffer\fR
+is not zero or the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIindex\fR
+is greater than or equal to the number of transform feedback buffer binding points (the value of
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_BINDING\fR)\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIoffset\fR
+is negative\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbuffer\fR
+is non\-zero and either
+\fIsize\fR
+is less than or equal to zero, or
+\fIoffset\fR
++
+\fIsize\fR
+is greater than the value of
+\fBGL_BUFFER_SIZE\fR
+for
+\fIbuffer\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglTransformFeedbackBufferRange\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBufferRange\fR(),
+\fBglBindBufferBase\fR(),
+\fBglTransformFeedbackBufferBase\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

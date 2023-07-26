@@ -1,0 +1,345 @@
+'\" t
+.\"     Title: glGetCompressedTexImage
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETCOMPRESSEDTEXIM" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetCompressedTexImage, glGetnCompressedTexImage, glGetCompressedTextureImage \- return a compressed texture image
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetCompressedTexImage('u
+.BI "void glGetCompressedTexImage(GLenum\ " "target" ", GLint\ " "level" ", GLvoid\ *\ " "pixels" ");"
+.HP \w'void\ glGetnCompressedTexImage('u
+.BI "void glGetnCompressedTexImage(GLenum\ " "target" ", GLint\ " "level" ", GLsizei\ " "bufSize" ", void\ *" "pixels" ");"
+.HP \w'void\ glGetCompressedTextureImage('u
+.BI "void glGetCompressedTextureImage(GLuint\ " "texture" ", GLint\ " "level" ", GLsizei\ " "bufSize" ", void\ *" "pixels" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the texture is bound for
+\fBglGetCompressedTexImage\fR
+and
+\fBglGetnCompressedTexImage\fR
+functions\&.
+\fBGL_TEXTURE_1D\fR,
+\fBGL_TEXTURE_1D_ARRAY\fR,
+\fBGL_TEXTURE_2D\fR,
+\fBGL_TEXTURE_2D_ARRAY\fR,
+\fBGL_TEXTURE_3D\fR,
+\fBGL_TEXTURE_CUBE_MAP_ARRAY\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_X\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Y\fR,
+\fBGL_TEXTURE_CUBE_MAP_POSITIVE_Z\fR, and
+\fBGL_TEXTURE_CUBE_MAP_NEGATIVE_Z\fR,
+\fBGL_TEXTURE_RECTANGLE\fR
+are accepted\&.
+.RE
+.PP
+\fItexture\fR
+.RS 4
+Specifies the texture object name for
+\fBglGetCompressedTextureImage\fR
+function\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+Specifies the level\-of\-detail number of the desired image\&. Level 0 is the base image level\&. Level $n$ is the $n$\-th mipmap reduction image\&.
+.RE
+.PP
+\fIbufSize\fR
+.RS 4
+Specifies the size of the buffer
+\fIpixels\fR
+for
+\fBglGetCompressedTextureImage\fR
+and
+\fBglGetnCompressedTexImage\fR
+functions\&.
+.RE
+.PP
+\fIpixels\fR
+.RS 4
+Returns the compressed texture image\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetCompressedTexImage\fR
+and
+\fBglGetnCompressedTexImage\fR
+return the compressed texture image associated with
+\fItarget\fR
+and
+\fIlod\fR
+into
+\fIpixels\fR\&.
+\fBglGetCompressedTextureImage\fR
+serves the same purpose, but instead of taking a texture target, it takes the ID of the texture object\&.
+\fIpixels\fR
+should be an array of
+\fIbufSize\fR
+bytes for
+\fBglGetnCompresedTexImage\fR
+and
+\fBglGetCompressedTextureImage\fR
+functions, and of
+\fBGL_TEXTURE_COMPRESSED_IMAGE_SIZE\fR
+bytes in case of
+\fBglGetCompressedTexImage\fR\&. If the actual data takes less space than
+\fIbufSize\fR, the remaining bytes will not be touched\&.
+\fItarget\fR
+specifies the texture target, to which the texture the data the function should extract the data from is bound to\&.
+\fIlod\fR
+specifies the level\-of\-detail number of the desired image\&.
+.PP
+If a non\-zero named buffer object is bound to the
+\fBGL_PIXEL_PACK_BUFFER\fR
+target (see
+\fBglBindBuffer\fR()) while a texture image is requested,
+\fIpixels\fR
+is treated as a byte offset into the buffer object\*(Aqs data store\&.
+.PP
+To minimize errors, first verify that the texture is compressed by calling
+\fBglGetTexLevelParameter\fR()
+with argument
+\fBGL_TEXTURE_COMPRESSED\fR\&. If the texture is compressed, you can determine the amount of memory required to store the compressed texture by calling
+\fBglGetTexLevelParameter\fR()
+with argument
+\fBGL_TEXTURE_COMPRESSED_IMAGE_SIZE\fR\&. Finally, retrieve the internal format of the texture by calling
+\fBglGetTexLevelParameter\fR()
+with argument
+\fBGL_TEXTURE_INTERNAL_FORMAT\fR\&. To store the texture for later use, associate the internal format and size with the retrieved texture image\&. These data can be used by the respective texture or subtexture loading routine used for loading
+\fItarget\fR
+textures\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglGetCompressedTextureImage\fR
+if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIlevel\fR
+is less than zero or greater than the maximum number of LODs permitted by the implementation\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fBglGetCompressedTexImage\fR,
+\fBglGetnCompressedTexImage\fR, and
+\fBglGetCompressedTextureImage\fR
+is used to retrieve a texture that is in an uncompressed internal format\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if a non\-zero buffer object name is bound to the
+\fBGL_PIXEL_PACK_BUFFER\fR
+target, the buffer storage was not initialized with
+\fBglBufferStorage\fR
+using
+\fBGL_MAP_PERSISTENT_BIT\fR
+flag, and the buffer object\*(Aqs data store is currently mapped\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if a non\-zero buffer object name is bound to the
+\fBGL_PIXEL_PACK_BUFFER\fR
+target and the data would be packed to the buffer object such that the memory writes required would exceed the data store size\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetTexLevelParameter\fR()
+with argument
+\fBGL_TEXTURE_COMPRESSED\fR
+.PP
+\fBglGetTexLevelParameter\fR()
+with argument
+\fBGL_TEXTURE_COMPRESSED_IMAGE_SIZE\fR
+.PP
+\fBglGetTexLevelParameter\fR()
+with argument
+\fBGL_TEXTURE_INTERNAL_FORMAT\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_PIXEL_PACK_BUFFER_BINDING\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetCompressedTexImage\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglGetCompressedTextureImage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetnCompressedTexImage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglActiveTexture\fR(),
+\fBglCompressedTexImage1D\fR(),
+\fBglCompressedTexImage2D\fR(),
+\fBglCompressedTexImage3D\fR(),
+\fBglCompressedTexSubImage1D\fR(),
+\fBglCompressedTexSubImage2D\fR(),
+\fBglCompressedTexSubImage3D\fR(),
+\fBglReadPixels\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage3D\fR(),
+\fBglTexParameter\fR(),
+\fBglTexSubImage1D\fR(),
+\fBglTexSubImage2D\fR(),
+\fBglTexSubImage3D\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This document is licensed under the SGI Free Software B License\&. For details, see
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

@@ -1,0 +1,196 @@
+'\" t
+.\"     Title: glShaderBinary
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLSHADERBINARY" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glShaderBinary \- load pre\-compiled shader binaries
+.SH "C SPECIFICATION"
+.HP \w'void\ glShaderBinary('u
+.BI "void glShaderBinary(GLsizei\ " "count" ", const\ GLuint\ *" "shaders" ", GLenum\ " "binaryFormat" ", const\ void\ *" "binary" ", GLsizei\ " "length" ");"
+.SH "PARAMETERS"
+.PP
+\fIcount\fR
+.RS 4
+Specifies the number of shader object handles contained in
+\fIshaders\fR\&.
+.RE
+.PP
+\fIshaders\fR
+.RS 4
+Specifies the address of an array of shader handles into which to load pre\-compiled shader binaries\&.
+.RE
+.PP
+\fIbinaryFormat\fR
+.RS 4
+Specifies the format of the shader binaries contained in
+\fIbinary\fR\&.
+.RE
+.PP
+\fIbinary\fR
+.RS 4
+Specifies the address of an array of bytes containing pre\-compiled binary shader code\&.
+.RE
+.PP
+\fIlength\fR
+.RS 4
+Specifies the length of the array whose address is given in
+\fIbinary\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglShaderBinary\fR
+loads pre\-compiled shader binary code into the
+\fIcount\fR
+shader objects whose handles are given in
+\fIshaders\fR\&.
+\fIbinary\fR
+points to
+\fIlength\fR
+bytes of binary shader code stored in client memory\&.
+\fIbinaryFormat\fR
+specifies the format of the pre\-compiled code\&.
+.PP
+The binary image contained in
+\fIbinary\fR
+will be decoded according to the extension specification defining the specified
+\fIbinaryFormat\fR
+token\&. OpenGL does not define any specific binary formats, but it does provide a mechanism to obtain token vaues for such formats provided by such extensions\&.
+.PP
+Depending on the types of the shader objects in
+\fIshaders\fR,
+\fBglShaderBinary\fR
+will individually load binary vertex or fragment shaders, or load an executable binary that contains an optimized pair of vertex and fragment shaders stored in the same binary\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if more than one of the handles in
+\fIshaders\fR
+refers to the same shader object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIbinaryFormat\fR
+is not an accepted value\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the data pointed to by
+\fIbinary\fR
+does not match the format specified by
+\fIbinaryFormat\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with parameter
+\fBGL_NUM_SHADER_BINARY_FORMATS\fR\&.
+.PP
+\fBglGet\fR()
+with parameter
+\fBGL_SHADER_BINARY_FORMATS\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglShaderBinary\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetProgram\fR(),
+\fBglGetProgramBinary\fR(),
+\fBglProgramBinary\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

@@ -1,0 +1,522 @@
+'\" t
+.\"     Title: glBufferStorage
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBUFFERSTORAGE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBufferStorage, glNamedBufferStorage \- creates and initializes a buffer object\*(Aqs immutable data store
+.SH "C SPECIFICATION"
+.HP \w'void\ glBufferStorage('u
+.BI "void glBufferStorage(GLenum\ " "target" ", GLsizeiptr\ " "size" ", const\ GLvoid\ *\ " "data" ", GLbitfield\ " "flags" ");"
+.HP \w'void\ glNamedBufferStorage('u
+.BI "void glNamedBufferStorage(GLuint\ " "buffer" ", GLsizeiptr\ " "size" ", const\ void\ *" "data" ", GLbitfield\ " "flags" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound for
+\fBglBufferStorage\fR, which must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of the buffer object for
+\fBglNamedBufferStorage\fR
+function\&.
+.RE
+.PP
+\fIsize\fR
+.RS 4
+Specifies the size in bytes of the buffer object\*(Aqs new data store\&.
+.RE
+.PP
+\fIdata\fR
+.RS 4
+Specifies a pointer to data that will be copied into the data store for initialization, or
+\fBNULL\fR
+if no data is to be copied\&.
+.RE
+.PP
+\fIflags\fR
+.RS 4
+Specifies the intended usage of the buffer\*(Aqs data store\&. Must be a bitwise combination of the following flags\&.
+\fBGL_DYNAMIC_STORAGE_BIT\fR,
+\fBGL_MAP_READ_BIT\fR
+\fBGL_MAP_WRITE_BIT\fR,
+\fBGL_MAP_PERSISTENT_BIT\fR,
+\fBGL_MAP_COHERENT_BIT\fR, and
+\fBGL_CLIENT_STORAGE_BIT\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBufferStorage\fR
+and
+\fBglNamedBufferStorage\fR
+create a new immutable data store\&. For
+\fBglBufferStorage\fR, the buffer object currently bound to
+\fItarget\fR
+will be initialized\&. For
+\fBglNamedBufferStorage\fR,
+\fIbuffer\fR
+is the name of the buffer object that will be configured\&. The size of the data store is specified by
+\fIsize\fR\&. If an initial data is available, its address may be supplied in
+\fIdata\fR\&. Otherwise, to create an uninitialized data store,
+\fIdata\fR
+should be
+\fBNULL\fR\&.
+.PP
+The
+\fIflags\fR
+parameters specifies the intended usage of the buffer\*(Aqs data store\&. It must be a bitwise combination of a subset of the following flags:
+.PP
+\fBGL_DYNAMIC_STORAGE_BIT\fR
+.RS 4
+The contents of the data store may be updated after creation through calls to
+\fBglBufferSubData\fR()\&. If this bit is not set, the buffer content may not be directly updated by the client\&. The data argument may be used to specify the initial content of the buffer\*(Aqs data store regardless of the presence of the
+\fBGL_DYNAMIC_STORAGE_BIT\fR\&. Regardless of the presence of this bit, buffers may always be updated with server\-side calls such as
+\fBglCopyBufferSubData\fR()
+and
+\fBglClearBufferSubData\fR()\&.
+.RE
+.PP
+\fBGL_MAP_READ_BIT\fR
+.RS 4
+The data store may be mapped by the client for read access and a pointer in the client\*(Aqs address space obtained that may be read from\&.
+.RE
+.PP
+\fBGL_MAP_WRITE_BIT\fR
+.RS 4
+The data store may be mapped by the client for write access and a pointer in the client\*(Aqs address space obtained that may be written through\&.
+.RE
+.PP
+\fBGL_MAP_PERSISTENT_BIT\fR
+.RS 4
+The client may request that the server read from or write to the buffer while it is mapped\&. The client\*(Aqs pointer to the data store remains valid so long as the data store is mapped, even during execution of drawing or dispatch commands\&.
+.RE
+.PP
+\fBGL_MAP_COHERENT_BIT\fR
+.RS 4
+Shared access to buffers that are simultaneously mapped for client access and are used by the server will be coherent, so long as that mapping is performed using
+\fBglMapBufferRange\fR()\&. That is, data written to the store by either the client or server will be immediately visible to the other with no further action taken by the application\&. In particular,
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fBGL_MAP_COHERENT_BIT\fR
+is not set and the client performs a write followed by a call to the
+\fBglMemoryBarrier\fR()
+command with the
+\fBGL_CLIENT_MAPPED_BUFFER_BARRIER_BIT\fR
+set, then in subsequent commands the server will see the writes\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fBGL_MAP_COHERENT_BIT\fR
+is set and the client performs a write, then in subsequent commands the server will see the writes\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fBGL_MAP_COHERENT_BIT\fR
+is not set and the server performs a write, the application must call
+\fBglMemoryBarrier\fR()
+with the
+\fBGL_CLIENT_MAPPED_BUFFER_BARRIER_BIT\fR
+set and then call
+\fBglFenceSync\fR()
+with
+\fBGL_SYNC_GPU_COMMANDS_COMPLETE\fR
+(or
+\fBglFinish\fR)\&. Then the CPU will see the writes after the sync is complete\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fBGL_MAP_COHERENT_BIT\fR
+is set and the server does a write, the app must call
+\fBglFenceSync\fR
+with
+\fBGL_SYNC_GPU_COMMANDS_COMPLETE\fR
+(or
+\fBglFinish\fR())\&. Then the CPU will see the writes after the sync is complete\&.
+.RE
+.RE
+.PP
+\fBGL_CLIENT_STORAGE_BIT\fR
+.RS 4
+When all other criteria for the buffer storage allocation are met, this bit may be used by an implementation to determine whether to use storage that is local to the server or to the client to serve as the backing store for the buffer\&.
+.RE
+.PP
+The allowed combinations of flags are subject to certain restrictions\&. They are as follows:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIflags\fR
+contains
+\fBGL_MAP_PERSISTENT_BIT\fR, it must also contain at least one of
+\fBGL_MAP_READ_BIT\fR
+or
+\fBGL_MAP_WRITE_BIT\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fIflags\fR
+contains
+\fBGL_MAP_COHERENT_BIT\fR, it must also contain
+\fBGL_MAP_PERSISTENT_BIT\fR\&.
+.RE
+.SH "NOTES"
+.PP
+\fBglBufferStorage\fR
+is available only if the GL version is 4\&.4 or greater\&.
+.PP
+\fBglNamedBufferStorage\fR
+is available only if the GL version is 4\&.5 or greater\&.
+.PP
+If
+\fIdata\fR
+is
+\fBNULL\fR, a data store of the specified size is still created, but its contents remain uninitialized and thus undefined\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglBufferStorage\fR
+if
+\fItarget\fR
+is not one of the accepted buffer targets\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglNamedBufferStorage\fR
+if buffer is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIsize\fR
+is less than or equal to zero\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglBufferStorage\fR
+if the reserved buffer object name 0 is bound to
+\fItarget\fR\&.
+.PP
+\fBGL_OUT_OF_MEMORY\fR
+is generated if the GL is unable to create a data store with the properties requested in
+\fIflags\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIflags\fR
+has any bits set other than those defined above\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if
+\fIflags\fR
+contains
+\fBGL_MAP_PERSISTENT_BIT\fR
+but does not contain at least one of
+\fBGL_MAP_READ_BIT\fR
+or
+\fBGL_MAP_WRITE_BIT\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIflags\fR
+contains
+\fBGL_MAP_COHERENT_BIT\fR, but does not also contain
+\fBGL_MAP_PERSISTENT_BIT\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglBufferStorage\fR
+if the
+\fBGL_BUFFER_IMMUTABLE_STORAGE\fR
+flag of the buffer bound to
+\fItarget\fR
+is
+\fBGL_TRUE\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetBufferSubData\fR()
+.PP
+\fBglGetBufferParameter\fR()
+with argument
+\fBGL_BUFFER_SIZE\fR
+or
+\fBGL_BUFFER_USAGE\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglBufferStorage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglNamedBufferStorage\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBuffer\fR(),
+\fBglBufferSubData\fR(),
+\fBglMapBuffer\fR(),
+\fBglUnmapBuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

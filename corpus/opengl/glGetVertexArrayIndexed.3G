@@ -1,0 +1,354 @@
+'\" t
+.\"     Title: glGetVertexArrayIndexed
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETVERTEXARRAYINDE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetVertexArrayIndexed \- retrieve parameters of an attribute of a vertex array object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetVertexArrayIndexed64iv('u
+.BI "void glGetVertexArrayIndexed64iv(GLuint\ " "vaobj" ", GLuint\ " "index" ", GLenum\ " "pname" ", GLint64\ *" "param" ");"
+.HP \w'void\ glGetVertexArrayIndexediv('u
+.BI "void glGetVertexArrayIndexediv(GLuint\ " "vaobj" ", GLuint\ " "index" ", GLenum\ " "pname" ", GLint\ *" "param" ");"
+.SH "PARAMETERS"
+.PP
+\fIvaobj\fR
+.RS 4
+Specifies the name of a vertex array object\&.
+.RE
+.PP
+\fIindex\fR
+.RS 4
+Specifies the index of the vertex array object attribute\&. Must be a number between 0 and (\fBGL_MAX_VERTEX_ATTRIBS\fR
+\- 1)\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the property to be used for the query\&. For
+\fBglGetVertexArrayIndexediv\fR, it must be one of the following values:
+\fBGL_VERTEX_ATTRIB_ARRAY_ENABLED\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_SIZE\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_STRIDE\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_TYPE\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_NORMALIZED\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_INTEGER\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_LONG\fR,
+\fBGL_VERTEX_ATTRIB_ARRAY_DIVISOR\fR, or
+\fBGL_VERTEX_ATTRIB_RELATIVE_OFFSET\fR\&. For
+\fBglGetVertexArrayIndexed64v\fR, it must be equal to
+\fBGL_VERTEX_BINDING_OFFSET\fR\&.
+.RE
+.PP
+\fIparam\fR
+.RS 4
+Returns the requested value\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetVertexArrayIndexediv\fR
+and
+\fBglGetVertexArrayIndexed64iv\fR
+provide a way of querying parameters of an attribute at an user\-specified index of a vertex array object\&. The vertex array object does not have to be bound to the rendering context at the time of the call, but must have been bound at least once prior to this call\&.
+.PP
+The following parameter values can be retrieved with
+\fBglGetVertexArrayIndexediv\fR
+for each of the attributes defined for a vertex array object:
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_ENABLED\fR:
+\fIparam\fR
+returns a value that is non\-zero (true) if the vertex attribute array for index is enabled and 0 (false) if it is disabled\&. The initial value is
+\fBGL_FALSE\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_SIZE\fR:
+\fIparam\fR
+returns a single value, the size of the vertex attribute array for index\&. The size is the number of values for each element of the vertex attribute array, and it will be 1, 2, 3 or 4\&. The initial value is 4\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_STRIDE\fR:
+\fIparam\fR
+returns a single value, the array stride for (number of bytes between successive elements in) the vertex attribute array for index\&. A value of 0 indicates the array elements are stored sequentially in memory\&. The initial value is 0\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_TYPE\fR:
+\fIparam\fR
+returns a single value, a symbolic constant indicating the array type for the vertex attribute array for index\&. Possible values are
+\fBGL_BYTE\fR,
+\fBGL_DOUBLE\fR,
+\fBGL_FIXED\fR,
+\fBGL_FLOAT\fR,
+\fBGL_HALF_FLOAT\fR,
+\fBGL_INT\fR,
+\fBGL_INT_2_10_10_10_REV\fR,
+\fBGL_SHORT\fR,
+\fBGL_UNSIGNED_BYTE\fR,
+\fBGL_UNSIGNED_SHORT\fR,
+\fBGL_UNSIGNED_INT\fR,
+\fBGL_UNSIGNED_INT_2_10_10_10_REV\fR, and
+\fBGL_UNSIGNED_INT_10F_11F_11F_REV\fR
+\&. The initial value is
+\fBGL_FLOAT\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_NORMALIZED\fR:
+\fIparam\fR
+returns a single value that is non\-zero (true) if fixed\-point data types for the vertex attribute array indicated by index are normalized when they are converted to floating\-point, and 0 (false) otherwise\&. The initial value is
+\fBGL_FALSE\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_INTEGER\fR:
+\fIparam\fR
+returns a single value that is non\-zero (true) if fixed\-point data types for the vertex attribute array indicated by index have integer data type, and 0 (false) otherwise\&. The initial value is 0 (\fBGL_FALSE\fR)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_LONG\fR:
+\fIparam\fR
+returns a single value that is non\-zero (true) if a vertex attribute is stored as an unconverted double, and 0 (false) otherwise\&. The initial value is 0 (\fBGL_FALSE\fR)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_ARRAY_DIVISOR\fR:
+\fIparam\fR
+returns a single value that is the frequency divisor used for instanced rendering\&. See glVertexAttribDivisor\&. The initial value is 0\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBGL_VERTEX_ATTRIB_RELATIVE_OFFSET\fR:
+\fIparam\fR
+returns a single value that is the byte offset of the first element relative to the start of the vertex buffer binding specified attribute fetches from\&. The initial value is 0\&.
+.RE
+.sp
+\fBglGetVertexArrayIndexed64iv\fR
+can be used to retrieve
+\fBGL_VERTEX_BINDING_OFFSET\fR
+parameter value for any of the attributes defined for a vertex array object\&. When
+\fIpname\fR
+is set to
+\fBGL_VERTEX_BINDING_OFFSET\fR,
+\fIparam\fR
+returns a single value that is the byte offset of the first element in the bound buffer\*(Aqs data store\&. The initial value for this parameter is 0\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if
+\fIvaobj\fR
+is not the name of an existing vertex array object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated if index is greater than or equal to the value of
+\fBGL_MAX_VERTEX_ATTRIBS\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+error is generated if
+\fIpname\fR
+is not one of the valid values\&. For more details, please see above\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetVertexArrayIndexed64iv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetVertexArrayIndexediv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetVertexAttrib\fR(),
+\fBglVertexAttribBinding\fR(),
+
+\fBglVertexAttribIPointer\fR,
+
+\fBglVertexAttribLPointer\fR,
+\fBglVertexAttribPointer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

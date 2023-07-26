@@ -1,0 +1,693 @@
+'\" t
+.\"     Title: glBlendEquationSeparate
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBLENDEQUATIONSEPAR" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBlendEquationSeparate \- set the RGB blend equation and the alpha blend equation separately
+.SH "C SPECIFICATION"
+.HP \w'void\ glBlendEquationSeparate('u
+.BI "void glBlendEquationSeparate(GLenum\ " "modeRGB" ", GLenum\ " "modeAlpha" ");"
+.HP \w'void\ glBlendEquationSeparatei('u
+.BI "void glBlendEquationSeparatei(GLuint\ " "buf" ", GLenum\ " "modeRGB" ", GLenum\ " "modeAlpha" ");"
+.SH "PARAMETERS"
+.PP
+\fIbuf\fR
+.RS 4
+for
+\fBglBlendEquationSeparatei\fR, specifies the index of the draw buffer for which to set the blend equations\&.
+.RE
+.PP
+\fImodeRGB\fR
+.RS 4
+specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined\&. It must be
+\fBGL_FUNC_ADD\fR,
+\fBGL_FUNC_SUBTRACT\fR,
+\fBGL_FUNC_REVERSE_SUBTRACT\fR,
+\fBGL_MIN\fR,
+\fBGL_MAX\fR\&.
+.RE
+.PP
+\fImodeAlpha\fR
+.RS 4
+specifies the alpha blend equation, how the alpha component of the source and destination colors are combined\&. It must be
+\fBGL_FUNC_ADD\fR,
+\fBGL_FUNC_SUBTRACT\fR,
+\fBGL_FUNC_REVERSE_SUBTRACT\fR,
+\fBGL_MIN\fR,
+\fBGL_MAX\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+The blend equations determines how a new pixel (the \*(Aq\*(Aqsource\*(Aq\*(Aq color) is combined with a pixel already in the framebuffer (the \*(Aq\*(Aqdestination\*(Aq\*(Aq color)\&. These functions specify one blend equation for the RGB\-color components and one blend equation for the alpha component\&.
+\fBglBlendEquationSeparatei\fR
+specifies the blend equations for a single draw buffer whereas
+\fBglBlendEquationSeparate\fR
+sets the blend equations for all draw buffers\&.
+.PP
+The blend equations use the source and destination blend factors specified by either
+\fBglBlendFunc\fR()
+or
+\fBglBlendFuncSeparate\fR()\&. See
+\fBglBlendFunc\fR()
+or
+\fBglBlendFuncSeparate\fR()
+for a description of the various blend factors\&.
+.PP
+In the equations that follow, source and destination color components are referred to as
+R s G s B s A s
+and
+R d G d B d A d, respectively\&. The result color is referred to as
+R r G r B r A r\&. The source and destination blend factors are denoted
+s R s G s B s A
+and
+d R d G d B d A, respectively\&. For these equations all color components are understood to have values in the range
+0 1\&.
+.TS
+allbox tab(:);
+lB lB lB.
+T{
+\fB Mode \fR
+T}:T{
+\fB RGB Components \fR
+T}:T{
+\fB Alpha Component \fR
+T}
+.T&
+l l l
+l l l
+l l l
+l l l
+l l l.
+T{
+\fBGL_FUNC_ADD\fR
+T}:T{
+Rr
+                                =
+                                
+                                    R
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    R
+                                    
+                                    +
+                                    R
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    R
+                                    
+                                
+                            
+                        
+                        
+                            
+                            
+                                Gr
+                                =
+                                
+                                    G
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    G
+                                    
+                                    +
+                                    G
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    G
+                                    
+                                
+                            
+                        
+                        
+                            
+                            
+                                Br
+                                =
+                                
+                                    B
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    B
+                                    
+                                    +
+                                    B
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    B
+T}:T{
+Ar
+                                =
+                                
+                                    A
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    A
+                                    
+                                    +
+                                    A
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    A
+T}
+T{
+\fBGL_FUNC_SUBTRACT\fR
+T}:T{
+Rr
+                                =
+                                
+                                    R
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    R
+                                    
+                                    \-
+                                    R
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    R
+                                    
+                                
+                            
+                        
+                        
+                            
+                            
+                                Gr
+                                =
+                                
+                                    G
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    G
+                                    
+                                    \-
+                                    G
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    G
+                                    
+                                
+                            
+                        
+                        
+                            
+                            
+                                Br
+                                =
+                                
+                                    B
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    B
+                                    
+                                    \-
+                                    B
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    B
+T}:T{
+Ar
+                                =
+                                
+                                    A
+                                    s
+                                    
+                                    ⁢
+                                    s
+                                    A
+                                    
+                                    \-
+                                    A
+                                    d
+                                    
+                                    ⁢
+                                    d
+                                    A
+T}
+T{
+\fBGL_FUNC_REVERSE_SUBTRACT\fR
+T}:T{
+Rr
+                                    =
+                                    
+                                        R
+                                        d
+                                        
+                                        ⁢
+                                        d
+                                        R
+                                        
+                                        \-
+                                        R
+                                        s
+                                        
+                                        ⁢
+                                        s
+                                        R
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                
+                                    Gr
+                                    =
+                                    
+                                        G
+                                        d
+                                        
+                                        ⁢
+                                        d
+                                        G
+                                        
+                                        \-
+                                        G
+                                        s
+                                        
+                                        ⁢
+                                        s
+                                        G
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                
+                                    Br
+                                    =
+                                    
+                                        B
+                                        d
+                                        
+                                        ⁢
+                                        d
+                                        B
+                                        
+                                        \-
+                                        B
+                                        s
+                                        
+                                        ⁢
+                                        s
+                                        B
+T}:T{
+Ar
+                                    =
+                                    
+                                        A
+                                        d
+                                        
+                                        ⁢
+                                        d
+                                        A
+                                        
+                                        \-
+                                        A
+                                        s
+                                        
+                                        ⁢
+                                        s
+                                        A
+T}
+T{
+\fBGL_MIN\fR
+T}:T{
+Rr
+                                    =
+                                    
+                                        min
+                                        ⁡
+                                        
+                                            
+                                                R
+                                                s
+                                                
+                                            
+                                            
+                                                R
+                                                d
+                                                
+                                            
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                
+                                    Gr
+                                    =
+                                    
+                                        min
+                                        ⁡
+                                        
+                                            
+                                                G
+                                                s
+                                                
+                                            
+                                            
+                                                G
+                                                d
+                                                
+                                            
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                
+                                    Br
+                                    =
+                                    
+                                        min
+                                        ⁡
+                                        
+                                            
+                                                B
+                                                s
+                                                
+                                            
+                                            
+                                                B
+                                                d
+T}:T{
+Ar
+                                    =
+                                    
+                                        min
+                                        ⁡
+                                        
+                                            
+                                                A
+                                                s
+                                                
+                                            
+                                            
+                                                A
+                                                d
+T}
+T{
+\fBGL_MAX\fR
+T}:T{
+Rr
+                                    =
+                                    
+                                        max
+                                        ⁡
+                                        
+                                            
+                                                R
+                                                s
+                                                
+                                            
+                                            
+                                                R
+                                                d
+                                                
+                                            
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                
+                                    Gr
+                                    =
+                                    
+                                        max
+                                        ⁡
+                                        
+                                            
+                                                G
+                                                s
+                                                
+                                            
+                                            
+                                                G
+                                                d
+                                                
+                                            
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                
+                                    Br
+                                    =
+                                    
+                                        max
+                                        ⁡
+                                        
+                                            
+                                                B
+                                                s
+                                                
+                                            
+                                            
+                                                B
+                                                d
+T}:T{
+Ar
+                                    =
+                                    
+                                        max
+                                        ⁡
+                                        
+                                            
+                                                A
+                                                s
+                                                
+                                            
+                                            
+                                                A
+                                                d
+T}
+.TE
+.sp 1
+.PP
+The results of these equations are clamped to the range
+0 1\&.
+.PP
+The
+\fBGL_MIN\fR
+and
+\fBGL_MAX\fR
+equations are useful for applications that analyze image data (image thresholding against a constant color, for example)\&. The
+\fBGL_FUNC_ADD\fR
+equation is useful for antialiasing and transparency, among other things\&.
+.PP
+Initially, both the RGB blend equation and the alpha blend equation are set to
+\fBGL_FUNC_ADD\fR\&.
+.PP
+.SH "NOTES"
+.PP
+The
+\fBGL_MIN\fR, and
+\fBGL_MAX\fR
+equations do not use the source or destination factors, only the source and destination colors\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if either
+\fImodeRGB\fR
+or
+\fImodeAlpha\fR
+is not one of
+\fBGL_FUNC_ADD\fR,
+\fBGL_FUNC_SUBTRACT\fR,
+\fBGL_FUNC_REVERSE_SUBTRACT\fR,
+\fBGL_MAX\fR, or
+\fBGL_MIN\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated by
+\fBglBlendEquationSeparatei\fR
+if
+\fIbuf\fR
+is greater than or equal to the value of
+\fBGL_MAX_DRAW_BUFFERS\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with an argument of
+\fBGL_BLEND_EQUATION_RGB\fR
+.PP
+\fBglGet\fR()
+with an argument of
+\fBGL_BLEND_EQUATION_ALPHA\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglBlendEquationSeparate\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglBlendEquationSeparatei\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetString\fR(),
+\fBglBlendColor\fR(),
+\fBglBlendFunc\fR(),
+\fBglBlendFuncSeparate\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+1991\-2006 Silicon Graphics, Inc\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 1991-2006 Silicon Graphics, Inc.
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

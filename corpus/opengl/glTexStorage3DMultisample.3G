@@ -1,0 +1,1301 @@
+'\" t
+.\"     Title: glTexStorage3DMultisample
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLTEXSTORAGE3DMULTIS" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glTexStorage3DMultisample, glTextureStorage3DMultisample \- specify storage for a two\-dimensional multisample array texture
+.SH "C SPECIFICATION"
+.HP \w'void\ glTexStorage3DMultisample('u
+.BI "void glTexStorage3DMultisample(GLenum\ " "target" ", GLsizei\ " "samples" ", GLenum\ " "internalformat" ", GLsizei\ " "width" ", GLsizei\ " "height" ", GLsizei\ " "depth" ", GLboolean\ " "fixedsamplelocations" ");"
+.HP \w'void\ glTextureStorage3DMultisample('u
+.BI "void glTextureStorage3DMultisample(GLuint\ " "texture" ", GLsizei\ " "samples" ", GLenum\ " "internalformat" ", GLsizei\ " "width" ", GLsizei\ " "height" ", GLsizei\ " "depth" ", GLboolean\ " "fixedsamplelocations" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the texture object is bound for
+\fBglTexStorage3DMultisample\fR\&. Must be one of
+\fBGL_TEXTURE_2D_MULTISAMPLE_ARRAY\fR
+or
+\fBGL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY\fR\&.
+.RE
+.PP
+\fItexture\fR
+.RS 4
+Specifies the texture object name for
+\fBglTextureStorage3DMultisample\fR\&. The effective target of
+\fItexture\fR
+must be one of the valid non\-proxy
+\fItarget\fR
+values above\&.
+.RE
+.PP
+\fIsamples\fR
+.RS 4
+Specify the number of samples in the texture\&.
+.RE
+.PP
+\fIinternalformat\fR
+.RS 4
+Specifies the sized internal format to be used to store texture image data\&.
+.RE
+.PP
+\fIwidth\fR
+.RS 4
+Specifies the width of the texture, in texels\&.
+.RE
+.PP
+\fIheight\fR
+.RS 4
+Specifies the height of the texture, in texels\&.
+.RE
+.PP
+\fIdepth\fR
+.RS 4
+Specifies the depth of the texture, in layers\&.
+.RE
+.PP
+\fIfixedsamplelocations\fR
+.RS 4
+Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglTexStorage3DMultisample\fR
+and
+\fBglTextureStorage3DMultisample\fR
+specify the storage requirements for a two\-dimensional multisample array texture\&. Once a texture is specified with this command, its format and dimensions become immutable unless it is a proxy texture\&. The contents of the image may still be modified, however, its storage requirements may not change\&. Such a texture is referred to as an
+\fIimmutable\-format\fR
+texture\&.
+.PP
+\fIsamples\fR
+specifies the number of samples to be used for the texture and must be greater than zero and less than or equal to the value of
+\fBGL_MAX_SAMPLES\fR\&.
+\fIinternalformat\fR
+must be a color\-renderable, depth\-renderable, or stencil\-renderable format\&.
+\fIwidth\fR
+and
+\fIheight\fR
+specify the width and height, respectively, of the texture and
+\fIdepth\fR
+specifies the depth (or the number of layers) of the texture\&. If
+\fIfixedsamplelocations\fR
+is
+\fBGL_TRUE\fR, the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image\&.
+.PP
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.B Table\ \&1.\ \&Sized Internal Formats
+.TS
+allbox tab(:);
+lB lB lB lB lB lB lB.
+T{
+\fBSized Internal Format\fR
+T}:T{
+\fBBase Internal Format\fR
+T}:T{
+\fBRed Bits\fR
+T}:T{
+\fBGreen Bits\fR
+T}:T{
+\fBBlue Bits\fR
+T}:T{
+\fBAlpha Bits\fR
+T}:T{
+\fBShared Bits\fR
+T}
+.T&
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c
+l l c c c c c.
+T{
+\fBGL_R8\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R8_SNORM\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+s8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R16\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R16_SNORM\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+s16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG8\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+8
+T}:T{
+8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG8_SNORM\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+s8
+T}:T{
+s8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG16\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+16
+T}:T{
+16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG16_SNORM\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+s16
+T}:T{
+s16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R3_G3_B2\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+3
+T}:T{
+3
+T}:T{
+2
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB4\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+4
+T}:T{
+4
+T}:T{
+4
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB5\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+5
+T}:T{
+5
+T}:T{
+5
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB8\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+8
+T}:T{
+8
+T}:T{
+8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB8_SNORM\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+s8
+T}:T{
+s8
+T}:T{
+s8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB10\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+10
+T}:T{
+10
+T}:T{
+10
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB12\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+12
+T}:T{
+12
+T}:T{
+12
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB16_SNORM\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+16
+T}:T{
+16
+T}:T{
+16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA2\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+2
+T}:T{
+2
+T}:T{
+2
+T}:T{
+2
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA4\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+4
+T}:T{
+4
+T}:T{
+4
+T}:T{
+4
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB5_A1\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+5
+T}:T{
+5
+T}:T{
+5
+T}:T{
+1
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA8\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+8
+T}:T{
+8
+T}:T{
+8
+T}:T{
+8
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA8_SNORM\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+s8
+T}:T{
+s8
+T}:T{
+s8
+T}:T{
+s8
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB10_A2\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+10
+T}:T{
+10
+T}:T{
+10
+T}:T{
+2
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB10_A2UI\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+ui10
+T}:T{
+ui10
+T}:T{
+ui10
+T}:T{
+ui2
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA12\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+12
+T}:T{
+12
+T}:T{
+12
+T}:T{
+12
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA16\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+16
+T}:T{
+16
+T}:T{
+16
+T}:T{
+16
+T}:T{
+\ \&
+T}
+T{
+\fBGL_SRGB8\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+8
+T}:T{
+8
+T}:T{
+8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_SRGB8_ALPHA8\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+8
+T}:T{
+8
+T}:T{
+8
+T}:T{
+8
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R16F\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+f16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG16F\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+f16
+T}:T{
+f16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB16F\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+f16
+T}:T{
+f16
+T}:T{
+f16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA16F\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+f16
+T}:T{
+f16
+T}:T{
+f16
+T}:T{
+f16
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R32F\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+f32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG32F\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+f32
+T}:T{
+f32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB32F\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+f32
+T}:T{
+f32
+T}:T{
+f32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA32F\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+f32
+T}:T{
+f32
+T}:T{
+f32
+T}:T{
+f32
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R11F_G11F_B10F\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+f11
+T}:T{
+f11
+T}:T{
+f10
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB9_E5\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+9
+T}:T{
+9
+T}:T{
+9
+T}:T{
+\ \&
+T}:T{
+5
+T}
+T{
+\fBGL_R8I\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+i8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R8UI\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+ui8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R16I\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+i16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R16UI\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+ui16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R32I\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+i32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_R32UI\fR
+T}:T{
+\fBGL_RED\fR
+T}:T{
+ui32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG8I\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+i8
+T}:T{
+i8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG8UI\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+ui8
+T}:T{
+ui8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG16I\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+i16
+T}:T{
+i16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG16UI\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+ui16
+T}:T{
+ui16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG32I\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+i32
+T}:T{
+i32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RG32UI\fR
+T}:T{
+\fBGL_RG\fR
+T}:T{
+ui32
+T}:T{
+ui32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB8I\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+i8
+T}:T{
+i8
+T}:T{
+i8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB8UI\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+ui8
+T}:T{
+ui8
+T}:T{
+ui8
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB16I\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+i16
+T}:T{
+i16
+T}:T{
+i16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB16UI\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+ui16
+T}:T{
+ui16
+T}:T{
+ui16
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB32I\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+i32
+T}:T{
+i32
+T}:T{
+i32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGB32UI\fR
+T}:T{
+\fBGL_RGB\fR
+T}:T{
+ui32
+T}:T{
+ui32
+T}:T{
+ui32
+T}:T{
+\ \&
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA8I\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+i8
+T}:T{
+i8
+T}:T{
+i8
+T}:T{
+i8
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA8UI\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+ui8
+T}:T{
+ui8
+T}:T{
+ui8
+T}:T{
+ui8
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA16I\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+i16
+T}:T{
+i16
+T}:T{
+i16
+T}:T{
+i16
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA16UI\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+ui16
+T}:T{
+ui16
+T}:T{
+ui16
+T}:T{
+ui16
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA32I\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+i32
+T}:T{
+i32
+T}:T{
+i32
+T}:T{
+i32
+T}:T{
+\ \&
+T}
+T{
+\fBGL_RGBA32UI\fR
+T}:T{
+\fBGL_RGBA\fR
+T}:T{
+ui32
+T}:T{
+ui32
+T}:T{
+ui32
+T}:T{
+ui32
+T}:T{
+\ \&
+T}
+.TE
+.sp 1
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglTexStorage3DMultisample\fR
+if zero is bound to
+\fItarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglTextureStorage3DMultisample\fR
+if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIinternalformat\fR
+is not a valid color\-renderable, depth\-renderable or stencil\-renderable format\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+or the effective target of
+\fItexture\fR
+is not one of the accepted targets described above\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIwidth\fR
+or
+\fIheight\fR
+are less than 1 or greater than the value of
+\fBGL_MAX_TEXTURE_SIZE\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIdepth\fR
+is less than 1 or greater than the value of
+\fBGL_MAX_ARRAY_TEXTURE_LAYERS\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIlevels\fR
+is less than 1\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIsamples\fR
+is zero\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIsamples\fR
+is greater than the maximum number of samples supported for this
+\fItarget\fR
+and
+\fIinternalformat\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if the value of
+\fBGL_TEXTURE_IMMUTABLE_FORMAT\fR
+for the texture bound to
+\fItarget\fR
+is not
+\fBGL_FALSE\fR\&.
+.SH "ASSOCIATED GETS"
+.PP
+
+\fBglGetInteger\fR
+with arguments
+\fBGL_MAX_TEXTURE_SIZE\fR,
+\fBGL_MAX_ARRAY_TEXTURE_LEVELS\fR,
+\fBGL_TEXTURE_VIEW_MIN_LAYER\fR,
+\fBGL_TEXTURE_VIEW_NUM_LAYERS\fR, or
+\fBGL_TEXTURE_IMMUTABLE_LEVELS\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglTexStorage3DMultisample\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglTextureStorage3DMultisample\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglTexImage3D\fR(),
+\fBglTexImage3DMultisample\fR(),
+\fBglTexStorage1D\fR(),
+\fBglTexStorage2DMultisample\fR(),
+\fBglTexStorage3D\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

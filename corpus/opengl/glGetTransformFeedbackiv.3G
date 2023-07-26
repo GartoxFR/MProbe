@@ -1,0 +1,345 @@
+'\" t
+.\"     Title: glGetTransformFeedback
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETTRANSFORMFEEDBA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetTransformFeedbackiv \- query the state of a transform feedback object\&.
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetTransformFeedbackiv('u
+.BI "void glGetTransformFeedbackiv(GLuint\ " "xfb" ", GLenum\ " "pname" ", GLint\ *" "param" ");"
+.HP \w'void\ glGetTransformFeedbacki_v('u
+.BI "void glGetTransformFeedbacki_v(GLuint\ " "xfb" ", GLenum\ " "pname" ", GLuint\ " "index" ", GLint\ *" "param" ");"
+.HP \w'void\ glGetTransformFeedbacki64_v('u
+.BI "void glGetTransformFeedbacki64_v(GLuint\ " "xfb" ", GLenum\ " "pname" ", GLuint\ " "index" ", GLint64\ *" "param" ");"
+.SH "PARAMETERS"
+.PP
+\fIxfb\fR
+.RS 4
+The name of an existing transform feedback object, or zero for the default transform feedback object\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Property to use for the query\&. Must be one of the values:
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_BINDING\fR,
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_START\fR,
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_SIZE\fR,
+\fBGL_TRANSFORM_FEEDBACK_PAUSED\fR,
+\fBGL_TRANSFORM_FEEDBACK_ACTIVE\fR\&.
+.RE
+.PP
+\fIindex\fR
+.RS 4
+Index of the transform feedback stream (for indexed state)\&.
+.RE
+.PP
+\fIparam\fR
+.RS 4
+The address of a buffer into which will be written the requested state information\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+In order to use the Transform Feedback functionality, you need to configure the Transform Feedback Buffer indexed bindings\&. This can be achieved by either using
+\fBglBindBufferBase\fR
+or
+\fBglBindBuffersBase\fR
+to associate whole buffer object storage to one of the Transform Feedback Binding Points, or by calling
+\fBglBindBufferRange\fR
+or
+\fBglBindBuffersRange\fR
+to use a region of a buffer object storage for the binding\&. You may want to (but are not required to) bind a Transform Feedback Object first, in order to cache the binding configuration\&. This usually allows you to restore the Transform Feedback configuration faster, than if you were to execute a list of API calls necessary to set up the Transform Feedback state of your liking\&.
+.PP
+This reference page discusses two types of getters that operate on Transform Feedback Objects and their bindings\&.
+.PP
+The first class operates on general Transform Feedback binding point and includes
+\fBglGetTransformFeedbackiv\fR
+function\&.
+\fBglGetTransformFeedbackiv\fR
+can be used to retrieve information about Transform Feedback object bound to the general Transform Feedback binding point, as configured with a
+\fBglBindTransformFeedback\fR
+call\&. In this case, you can check:
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+What the ID of the currently bound Transform Feedback Object is; (\fBGL_TRANSFORM_FEEDBACK_BUFFER_BINDING\fR)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Whether the Transform Feedback process is currently paused; (\fBGL_TRANSFORM_FEEDBACK_PAUSED\fR)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Whether the Transform Feedback process has been begun and is currently undergoing; (\fBGL_TRANSFORM_FEEDBACK_ACTIVE\fR)
+.RE
+.PP
+The latter class, which includes
+\fBglGetTransformFeedbacki_v\fR
+and
+\fBglGetTransformFeedbacki64_v\fR
+functions, can be used to check what the current configuration of each of the buffer object regions bound to Transform Feedback Buffer binding points is\&. This allows you to query for the following information:
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBglGetTransformFeedbacki_v\fR
+only: What the ID of the Buffer Object bound to a Transform Feedback Binding Point of user\-specified index is; (\fBGL_TRANSFORM_FEEDBACK_BUFFER_BINDING\fR)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBglGetTransformFeedbacki64_v\fR
+only: What the start offset configured for the binding is; (\fBGL_TRANSFORM_FEEDBACK_BUFFER_START\fR);
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBglGetTransformFeedbacki64_v\fR
+only: What the length of the region used for the binding is; (\fBGL_TRANSFORM_FEEDBACK_BUFFER_SIZE\fR);
+.RE
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+error is generated if
+\fIxfb\fR
+is not zero or the name of an existing transform feedback object\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+error is generated by
+\fBglGetTransformFeedbackiv\fR
+if
+\fIpname\fR
+is not
+\fBGL_TRANSFORM_FEEDBACK_PAUSED\fR
+or
+\fBGL_TRANSFORM_FEEDBACK_ACTIVE\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+error is generated by
+\fBglGetTransformFeedbacki_v\fR
+if
+\fIpname\fR
+is not
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_BINDING\fR\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+error is generated by
+\fBglGetTransformFeedbacki64_v\fR
+if
+\fIpname\fR
+is not
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_START\fR
+or
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_SIZE\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+error is generated by
+\fBglGetTransformFeedbacki_v\fR
+and
+\fBglGetTransformFeedbacki64_v\fR
+if
+\fIindex\fR
+is greater than or equal to the number of binding points for transform feedback (the value of
+\fBGL_MAX_TRANSFORM_FEEDBACK_BUFFERS\fR)\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglGetTransformFeedbackiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetTransformFeedbacki_v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+T{
+\fBglGetTransformFeedbacki64v\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglBindBufferBase\fR(),
+\fBglBindBufferRange\fR(),
+\fBglBindBuffersBase\fR(),
+\fBglBindBuffersRange\fR(),
+\fBglBindTransformFeedback\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2014 Khronos Group
+.br

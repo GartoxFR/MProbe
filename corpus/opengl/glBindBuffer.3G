@@ -1,0 +1,443 @@
+'\" t
+.\"     Title: glBindBuffer
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBINDBUFFER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBindBuffer \- bind a named buffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glBindBuffer('u
+.BI "void glBindBuffer(GLenum\ " "target" ", GLuint\ " "buffer" ");"
+.SH "PARAMETERS"
+.PP
+\fItarget\fR
+.RS 4
+Specifies the target to which the buffer object is bound, which must be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.RE
+.PP
+\fIbuffer\fR
+.RS 4
+Specifies the name of a buffer object\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBindBuffer\fR
+binds a buffer object to the specified buffer binding point\&. Calling
+\fBglBindBuffer\fR
+with
+\fItarget\fR
+set to one of the accepted symbolic constants and
+\fIbuffer\fR
+set to the name of a buffer object binds that buffer object name to the target\&. If no buffer object with name
+\fIbuffer\fR
+exists, one is created with that name\&. When a buffer object is bound to a target, the previous binding for that target is automatically broken\&.
+.PP
+Buffer object names are unsigned integers\&. The value zero is reserved, but there is no default buffer object for each buffer object target\&. Instead,
+\fIbuffer\fR
+set to zero effectively unbinds any buffer object previously bound, and restores client memory usage for that buffer object target (if supported for that target)\&. Buffer object names and the corresponding buffer object contents are local to the shared object space of the current GL rendering context; two rendering contexts share buffer object names only if they explicitly enable sharing between contexts through the appropriate GL windows interfaces functions\&.
+.PP
+\fBglGenBuffers\fR()
+must be used to generate a set of unused buffer object names\&.
+.PP
+The state of a buffer object immediately after it is first bound is an unmapped zero\-sized memory buffer with
+\fBGL_READ_WRITE\fR
+access and
+\fBGL_STATIC_DRAW\fR
+usage\&.
+.PP
+While a non\-zero buffer object name is bound, GL operations on the target to which it is bound affect the bound buffer object, and queries of the target to which it is bound return state from the bound buffer object\&. While buffer object name zero is bound, as in the initial state, attempts to modify or query state on the target to which it is bound generates an
+\fBGL_INVALID_OPERATION\fR
+error\&.
+.PP
+When a non\-zero buffer object is bound to the
+\fBGL_ARRAY_BUFFER\fR
+target, the vertex array pointer parameter is interpreted as an offset within the buffer object measured in basic machine units\&.
+.PP
+When a non\-zero buffer object is bound to the
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+target, parameters for draws issued through
+\fBglDrawArraysIndirect\fR()
+and
+\fBglDrawElementsIndirect\fR()
+are sourced from the specified offset in that buffer object\*(Aqs data store\&.
+.PP
+When a non\-zero buffer object is bound to the
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+target, the parameters for compute dispatches issued through
+\fBglDispatchComputeIndirect\fR()
+are sourced from the specified offset in that buffer object\*(Aqs data store\&.
+.PP
+While a non\-zero buffer object is bound to the
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+target, the indices parameter of
+\fBglDrawElements\fR(),
+\fBglDrawElementsInstanced\fR(),
+\fBglDrawElementsBaseVertex\fR(),
+\fBglDrawRangeElements\fR(),
+\fBglDrawRangeElementsBaseVertex\fR(),
+\fBglMultiDrawElements\fR(), or
+\fBglMultiDrawElementsBaseVertex\fR()
+is interpreted as an offset within the buffer object measured in basic machine units\&.
+.PP
+While a non\-zero buffer object is bound to the
+\fBGL_PIXEL_PACK_BUFFER\fR
+target, the following commands are affected:
+\fBglGetCompressedTexImage\fR(),
+\fBglGetTexImage\fR(), and
+\fBglReadPixels\fR()\&. The pointer parameter is interpreted as an offset within the buffer object measured in basic machine units\&.
+.PP
+While a non\-zero buffer object is bound to the
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+target, the following commands are affected:
+\fBglCompressedTexImage1D\fR(),
+\fBglCompressedTexImage2D\fR(),
+\fBglCompressedTexImage3D\fR(),
+\fBglCompressedTexSubImage1D\fR(),
+\fBglCompressedTexSubImage2D\fR(),
+\fBglCompressedTexSubImage3D\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage3D\fR(),
+\fBglTexSubImage1D\fR(),
+\fBglTexSubImage2D\fR(), and
+\fBglTexSubImage3D\fR()\&. The pointer parameter is interpreted as an offset within the buffer object measured in basic machine units\&.
+.PP
+The buffer targets
+\fBGL_COPY_READ_BUFFER\fR
+and
+\fBGL_COPY_WRITE_BUFFER\fR
+are provided to allow
+\fBglCopyBufferSubData\fR()
+to be used without disturbing the state of other bindings\&. However,
+\fBglCopyBufferSubData\fR()
+may be used with any pair of buffer binding points\&.
+.PP
+The
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+buffer binding point may be passed to
+\fBglBindBuffer\fR, but will not directly affect transform feedback state\&. Instead, the indexed
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+bindings must be used through a call to
+\fBglBindBufferBase\fR()
+or
+\fBglBindBufferRange\fR()\&. This will affect the generic
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+binding\&.
+.PP
+Likewise, the
+\fBGL_UNIFORM_BUFFER\fR,
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+buffer binding points may be used, but do not directly affect uniform buffer, atomic counter buffer or shader storage buffer state, respectively\&.
+\fBglBindBufferBase\fR()
+or
+\fBglBindBufferRange\fR()
+must be used to bind a buffer to an indexed uniform buffer, atomic counter buffer or shader storage buffer binding point\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+binding point is used to specify a buffer object that is to receive the results of query objects through calls to the
+\fBglGetQueryObject\fR()
+family of commands\&.
+.PP
+A buffer object binding created with
+\fBglBindBuffer\fR
+remains active until a different buffer object name is bound to the same target, or until the bound buffer object is deleted with
+\fBglDeleteBuffers\fR()\&.
+.PP
+Once created, a named buffer object may be re\-bound to any target as often as needed\&. However, the GL implementation may make choices about how to optimize the storage of a buffer object based on its initial binding target\&.
+.SH "NOTES"
+.PP
+The
+\fBGL_COPY_READ_BUFFER\fR,
+\fBGL_UNIFORM_BUFFER\fR
+and
+\fBGL_TEXTURE_BUFFER\fR
+targets are available only if the GL version is 3\&.1 or greater\&.
+.PP
+The
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+target is available only if the GL version is 4\&.2 or greater\&.
+.PP
+The
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+targets are available only if the GL version is 4\&.3 or greater\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+target is available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+is not one of the allowable values\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIbuffer\fR
+is not a name previously returned from a call to
+\fBglGenBuffers\fR()\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_ARRAY_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_ATOMIC_COUNTER_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_COPY_READ_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_COPY_WRITE_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_DRAW_INDIRECT_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_DISPATCH_INDIRECT_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_ELEMENT_ARRAY_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_PIXEL_PACK_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_PIXEL_UNPACK_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_SHADER_STORAGE_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_BINDING\fR
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_UNIFORM_BUFFER_BINDING\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglBindBuffer\fR
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenBuffers\fR(),
+\fBglBindBufferBase\fR(),
+\fBglBindBufferRange\fR(),
+\fBglMapBuffer\fR(),
+\fBglUnmapBuffer\fR(),
+\fBglDeleteBuffers\fR(),
+\fBglGet\fR(),
+\fBglIsBuffer\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2005 Addison\-Wesley\&. Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2005 Sams Publishing
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

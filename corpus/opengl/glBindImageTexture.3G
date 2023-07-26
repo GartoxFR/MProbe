@@ -1,0 +1,526 @@
+'\" t
+.\"     Title: glBindImageTexture
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBINDIMAGETEXTURE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBindImageTexture \- bind a level of a texture to an image unit
+.SH "C SPECIFICATION"
+.HP \w'void\ glBindImageTexture('u
+.BI "void glBindImageTexture(GLuint\ " "unit" ", GLuint\ " "texture" ", GLint\ " "level" ", GLboolean\ " "layered" ", GLint\ " "layer" ", GLenum\ " "access" ", GLenum\ " "format" ");"
+.SH "PARAMETERS"
+.PP
+\fIunit\fR
+.RS 4
+Specifies the index of the image unit to which to bind the texture
+.RE
+.PP
+\fItexture\fR
+.RS 4
+Specifies the name of the texture to bind to the image unit\&.
+.RE
+.PP
+\fIlevel\fR
+.RS 4
+Specifies the level of the texture that is to be bound\&.
+.RE
+.PP
+\fIlayered\fR
+.RS 4
+Specifies whether a layered texture binding is to be established\&.
+.RE
+.PP
+\fIlayer\fR
+.RS 4
+If
+\fIlayered\fR
+is
+\fBGL_FALSE\fR, specifies the layer of
+\fItexture\fR
+to be bound to the image unit\&. Ignored otherwise\&.
+.RE
+.PP
+\fIaccess\fR
+.RS 4
+Specifies a token indicating the type of access that will be performed on the image\&.
+.RE
+.PP
+\fIformat\fR
+.RS 4
+Specifies the format that the elements of the image will be treated as for the purposes of formatted stores\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBindImageTexture\fR
+binds a single level of a texture to an image unit for the purpose of reading and writing it from shaders\&.
+\fIunit\fR
+specifies the zero\-based index of the image unit to which to bind the texture level\&.
+\fItexture\fR
+specifies the name of an existing texture object to bind to the image unit\&. If
+\fItexture\fR
+is zero, then any existing binding to the image unit is broken\&.
+\fIlevel\fR
+specifies the level of the texture to bind to the image unit\&.
+.PP
+If
+\fItexture\fR
+is the name of a one\-, two\-, or three\-dimensional array texture, a cube map or cube map array texture, or a two\-dimensional multisample array texture, then it is possible to bind either the entire array, or only a single layer of the array to the image unit\&. In such cases, if
+\fIlayered\fR
+is
+\fBGL_TRUE\fR, the entire array is attached to the image unit and
+\fIlayer\fR
+is ignored\&. However, if
+\fIlayered\fR
+is
+\fBGL_FALSE\fR
+then
+\fIlayer\fR
+specifies the layer of the array to attach to the image unit\&.
+.PP
+\fIaccess\fR
+specifies the access types to be performed by shaders and may be set to
+\fBGL_READ_ONLY\fR,
+\fBGL_WRITE_ONLY\fR, or
+\fBGL_READ_WRITE\fR
+to indicate read\-only, write\-only or read\-write access, respectively\&. Violation of the access type specified in
+\fIaccess\fR
+(for example, if a shader writes to an image bound with
+\fIaccess\fR
+set to
+\fBGL_READ_ONLY\fR) will lead to undefined results, possibly including program termination\&.
+.PP
+\fIformat\fR
+specifies the format that is to be used when performing formatted stores into the image from shaders\&.
+\fIformat\fR
+must be compatible with the texture\*(Aqs internal format and must be one of the formats listed in the following table\&.
+.PP
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.B Table\ \&1.\ \&Internal Image Formats
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fB Image Unit Format \fR
+T}:T{
+\fB Format Qualifier \fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_RGBA32F\fR
+T}:T{
+rgba32f
+T}
+T{
+\fBGL_RGBA16F\fR
+T}:T{
+rgba16f
+T}
+T{
+\fBGL_RG32F\fR
+T}:T{
+rg32f
+T}
+T{
+\fBGL_RG16F\fR
+T}:T{
+rg16f
+T}
+T{
+\fBGL_R11F_G11F_B10F\fR
+T}:T{
+r11f_g11f_b10f
+T}
+T{
+\fBGL_R32F\fR
+T}:T{
+r32f
+T}
+T{
+\fBGL_R16F\fR
+T}:T{
+r16f
+T}
+T{
+\fBGL_RGBA32UI\fR
+T}:T{
+rgba32ui
+T}
+T{
+\fBGL_RGBA16UI\fR
+T}:T{
+rgba16ui
+T}
+T{
+\fBGL_RGB10_A2UI\fR
+T}:T{
+rgb10_a2ui
+T}
+T{
+\fBGL_RGBA8UI\fR
+T}:T{
+rgba8ui
+T}
+T{
+\fBGL_RG32UI\fR
+T}:T{
+rg32ui
+T}
+T{
+\fBGL_RG16UI\fR
+T}:T{
+rg16ui
+T}
+T{
+\fBGL_RG8UI\fR
+T}:T{
+rg8ui
+T}
+T{
+\fBGL_R32UI\fR
+T}:T{
+r32ui
+T}
+T{
+\fBGL_R16UI\fR
+T}:T{
+r16ui
+T}
+T{
+\fBGL_R8UI\fR
+T}:T{
+r8ui
+T}
+T{
+\fBGL_RGBA32I\fR
+T}:T{
+rgba32i
+T}
+T{
+\fBGL_RGBA16I\fR
+T}:T{
+rgba16i
+T}
+T{
+\fBGL_RGBA8I\fR
+T}:T{
+rgba8i
+T}
+T{
+\fBGL_RG32I\fR
+T}:T{
+rg32i
+T}
+T{
+\fBGL_RG16I\fR
+T}:T{
+rg16i
+T}
+T{
+\fBGL_RG8I\fR
+T}:T{
+rg8i
+T}
+T{
+\fBGL_R32I\fR
+T}:T{
+r32i
+T}
+T{
+\fBGL_R16I\fR
+T}:T{
+r16i
+T}
+T{
+\fBGL_R8I\fR
+T}:T{
+r8i
+T}
+T{
+\fBGL_RGBA16\fR
+T}:T{
+rgba16
+T}
+T{
+\fBGL_RGB10_A2\fR
+T}:T{
+rgb10_a2
+T}
+T{
+\fBGL_RGBA8\fR
+T}:T{
+rgba8
+T}
+T{
+\fBGL_RG16\fR
+T}:T{
+rg16
+T}
+T{
+\fBGL_RG8\fR
+T}:T{
+rg8
+T}
+T{
+\fBGL_R16\fR
+T}:T{
+r16
+T}
+T{
+\fBGL_R8\fR
+T}:T{
+r8
+T}
+T{
+\fBGL_RGBA16_SNORM\fR
+T}:T{
+rgba16_snorm
+T}
+T{
+\fBGL_RGBA8_SNORM\fR
+T}:T{
+rgba8_snorm
+T}
+T{
+\fBGL_RG16_SNORM\fR
+T}:T{
+rg16_snorm
+T}
+T{
+\fBGL_RG8_SNORM\fR
+T}:T{
+rg8_snorm
+T}
+T{
+\fBGL_R16_SNORM\fR
+T}:T{
+r16_snorm
+T}
+T{
+\fBGL_R8_SNORM\fR
+T}:T{
+r8_snorm
+T}
+.TE
+.sp 1
+.PP
+When a texture is bound to an image unit, the
+\fIformat\fR
+parameter for the image unit need not exactly match the texture internal format as long as the formats are considered compatible as defined in the OpenGL Specification\&. The matching criterion used for a given texture may be determined by calling
+\fBglGetTexParameter\fR()
+with
+\fIvalue\fR
+set to
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_TYPE\fR, with return values of
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE\fR
+and
+\fBGL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS\fR, specifying matches by size and class, respectively\&.
+.SH "NOTES"
+.PP
+The
+\fBglBindImageTexture\fR
+is available only if the GL version is 4\&.2 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIunit\fR
+greater than or equal to the value of
+\fBGL_MAX_IMAGE_UNITS\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fItexture\fR
+is not the name of an existing texture object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIlevel\fR
+or
+\fIlayer\fR
+is less than zero\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIaccess\fR
+or
+\fIformat\fR
+is not one of the supported tokens\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_IMAGE_BINDING_NAME\fR\&.
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_IMAGE_BINDING_LEVEL\fR\&.
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_IMAGE_BINDING_LAYERED\fR\&.
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_IMAGE_BINDING_LAYER\fR\&.
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_IMAGE_BINDING_ACCESS\fR\&.
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_IMAGE_BINDING_FORMAT\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglBindImageTexture\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenTextures\fR(),
+\fBglTexImage1D\fR(),
+\fBglTexImage2D\fR(),
+\fBglTexImage3D\fR(),
+\fBglTexStorage1D\fR(),
+\fBglTexStorage2D\fR(),
+\fBglTexStorage3D\fR(),
+\fBglBindTexture\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2011\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2011-2014 Khronos Group
+.br

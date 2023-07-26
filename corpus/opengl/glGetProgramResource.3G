@@ -1,0 +1,532 @@
+'\" t
+.\"     Title: glGetProgramResource
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETPROGRAMRESOURCE" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetProgramResource \- retrieve values for multiple properties of a single active resource within a program object
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetProgramResourceiv('u
+.BI "void glGetProgramResourceiv(GLuint\ " "program" ", GLenum\ " "programInterface" ", GLuint\ " "index" ", GLsizei\ " "propCount" ", const\ GLenum\ *\ " "props" ", GLsizei\ " "bufSize" ", GLsizei\ *\ " "length" ", GLint\ *\ " "params" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+The name of a program object whose resources to query\&.
+.RE
+.PP
+\fIprogramInterface\fR
+.RS 4
+A token identifying the interface within
+\fIprogram\fR
+containing the resource named
+\fIname\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetProgramResourceiv\fR
+returns values for multiple properties of a single active resource with an index of
+\fIindex\fR
+in the interface
+\fIprogramInterface\fR
+of program object
+\fIprogram\fR\&. For each resource, values for
+\fIpropCount\fR
+properties specified by the array
+\fIprops\fR
+are returned\&.
+\fIpropCount\fR
+may not be zero\&. An error is generated if any value in
+\fIprops\fR
+is not one of the properties described immediately belowor if any value in
+\fIprops\fR
+is not allowed for
+\fIprogramInterface\fR\&. The set of allowed
+\fIprogramInterface\fR
+values for each property can be found in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+Property
+T}:T{
+Supported Interfaces
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_NAME_LENGTH\fR
+T}:T{
+Any except \fBGL_ATOMIC_COUNTER_BUFFER\fR and \fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}
+T{
+\fBGL_TYPE\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR, \fBGL_TRANSFORM_FEEDBACK_VARYING\fR, \fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_ARRAY_SIZE\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_BUFFER_VARIABLE\fR, \fBGL_PROGRAM_INPUT\fR,
+                                            \fBGL_PROGRAM_OUTPUT, VERTEX_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR, \fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, \fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR, \fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+T}
+T{
+\fBGL_OFFSET\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_BUFFER_VARIABLE\fR, \fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+T}
+T{
+\fBGL_BLOCK_INDEX\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_ARRAY_STRIDE\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_MATRIX_STRIDE\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_IS_ROW_MAJOR\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER_INDEX\fR
+T}:T{
+\fBGL_UNIFORM\fR
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+\fInone\fR
+T}
+T{
+\fBGL_BUFFER_BINDING\fR
+T}:T{
+\fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}
+T{
+\fBGL_BUFFER_DATA_SIZE\fR
+T}:T{
+\fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR
+T}
+T{
+\fBGL_NUM_ACTIVE_VARIABLES\fR
+T}:T{
+\fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}
+T{
+\fBGL_ACTIVE_VARIABLES\fR
+T}:T{
+\fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}
+T{
+\fBGL_REFERENCED_BY_VERTEX_SHADER\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_SHADER\fR,
+                                            \fBGL_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_BUFFER_VARIABLE\fR,
+                                            \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_REFERENCED_BY_TESS_CONTROL_SHADER\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_SHADER\fR,
+                                            \fBGL_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_BUFFER_VARIABLE\fR,
+                                            \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_REFERENCED_BY_TESS_EVALUATION_SHADER\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_SHADER\fR,
+                                            \fBGL_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_BUFFER_VARIABLE\fR,
+                                            \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_REFERENCED_BY_GEOMETRY_SHADER\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_SHADER\fR,
+                                            \fBGL_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_BUFFER_VARIABLE\fR,
+                                            \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_REFERENCED_BY_FRAGMENT_SHADER\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_SHADER\fR,
+                                            \fBGL_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_BUFFER_VARIABLE\fR,
+                                            \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_REFERENCED_BY_COMPUTE_SHADER\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_UNIFORM_BLOCK\fR, \fBGL_ATOMIC_COUNTER_SHADER\fR,
+                                            \fBGL_BUFFER\fR, \fBGL_SHADER_STORAGE_BLOCK\fR, \fBGL_BUFFER_VARIABLE\fR,
+                                            \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_NUM_COMPATIBLE_SUBROUTINES\fR
+T}:T{
+\fBGL_VERTEX_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR, \fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, \fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR
+T}
+T{
+\fBGL_COMPATIBLE_SUBROUTINES\fR
+T}:T{
+\fBGL_VERTEX_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR, \fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, \fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR
+T}
+T{
+\fBGL_TOP_LEVEL_ARRAY_SIZE\fR
+T}:T{
+\fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_TOP_LEVEL_ARRAY_STRIDE\fR
+T}:T{
+\fBGL_BUFFER_VARIABLE\fR
+T}
+T{
+\fBGL_LOCATION\fR
+T}:T{
+\fBGL_UNIFORM\fR, \fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR,
+                                            \fBGL_VERTEX_SUBROUTINE_UNIFORM\fR, \fBGL_TESS_CONTROL_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_TESS_EVALUATION_SUBROUTINE_UNIFORM\fR, \fBGL_GEOMETRY_SUBROUTINE_UNIFORM\fR,
+                                            \fBGL_FRAGMENT_SUBROUTINE_UNIFORM\fR, \fBGL_COMPUTE_SUBROUTINE_UNIFORM\fR
+T}
+T{
+\fBGL_LOCATION_INDEX\fR
+T}:T{
+\fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_IS_PER_PATCH\fR
+T}:T{
+\fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_LOCATION_COMPONENT\fR
+T}:T{
+\fBGL_PROGRAM_INPUT\fR, \fBGL_PROGRAM_OUTPUT\fR
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_INDEX\fR
+T}:T{
+\fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_STRIDE\fR
+T}:T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}
+.TE
+.sp 1
+.PP
+For the property
+\fBGL_NAME_LENGTH\fR, a single integer identifying the length of the name string associated with an active variable, interface block, or subroutine is written to
+\fIparams\fR\&. The name length includes a terminating null character\&.
+.PP
+For the property
+\fBGL_TYPE\fR, a single integer identifying the type of an active variable is written to
+\fIparams\fR\&. The integer returned is one of the values found in table 2\&.16\&.
+.PP
+For the property
+\fBGL_ARRAY_SIZE\fR, a single integer identifying the number of active array elements of an active variable is written to
+\fIparams\fR\&. The array size returned is in units of the type associated with the property
+\fBGL_TYPE\fR\&. For active variables not corresponding to an array of basic types, the value zero is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_BLOCK_INDEX\fR, a single integer identifying the index of the active interface block containing an active variable is written to
+\fIparams\fR\&. If the variable is not the member of an interface block, the value \-1 is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_OFFSET\fR, a single integer identifying the offset of an active variable is written to
+\fIparams\fR\&. For variables in the
+\fBGL_UNIFORM\fR
+and
+\fBGL_BUFFER_VARIABLE\fR
+interfaces that are backed by a buffer object, the value written is the offset of that variable relative to the base of the buffer range holding its value\&. For variables in the
+\fBGL_TRANSFORM_FEEDBACK_VARYING\fR
+interface, the value written is the offset in the transform feedback buffer storage assigned to each vertex captured in transform feedback mode where the value of the variable will be stored\&. Such offsets are specified via the
+xfb_offset
+layout qualifier or assigned according to the variables position in the list of strings passed to
+\fBglTransformFeedbackVaryings\fR()\&. Offsets are expressed in basic machine units\&. For all variables not recorded in transform feedback mode, including the special names
+"gl_NextBuffer",
+"gl_SkipComponents1",
+"gl_SkipComponents2",
+"gl_SkipComponents3", and
+"gl_SkipComponents4", \-1 is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_ARRAY_STRIDE\fR, a single integer identifying the stride between array elements in an active variable is written to
+\fIparams\fR\&. For active variables declared as an array of basic types, the value written is the difference, in basic machine units, between the offsets of consecutive elements in an array\&. For active variables not declared as an array of basic types, zero is written to
+\fIparams\fR\&. For active variables not backed by a buffer object, \-1 is written to
+\fIparams\fR, regardless of the variable type\&.
+.PP
+For the property
+\fBGL_MATRIX_STRIDE\fR, a single integer identifying the stride between columns of a column\-major matrix or rows of a row\-major matrix is written to
+\fIparams\fR\&. For active variables declared a single matrix or array of matrices, the value written is the difference, in basic machine units, between the offsets of consecutive columns or rows in each matrix\&. For active variables not declared as a matrix or array of matrices, zero is written to
+\fIparams\fR\&. For active variables not backed by a buffer object, \-1 is written to
+\fIparams\fR, regardless of the variable type\&.
+.PP
+For the property
+\fBGL_IS_ROW_MAJOR\fR, a single integer identifying whether an active variable is a row\-major matrix is written to
+\fIparams\fR\&. For active variables backed by a buffer object, declared as a single matrix or array of matrices, and stored in row\-major order, one is written to
+\fIparams\fR\&. For all other active variables, zero is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_ATOMIC_COUNTER_BUFFER_INDEX\fR, a single integer identifying the index of the active atomic counter buffer containing an active variable is written to
+\fIparams\fR\&. If the variable is not an atomic counter uniform, the value \-1 is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_BUFFER_BINDING\fR, to index of the buffer binding point associated with the active uniform block, shader storage block, atomic counter buffer or transform feedback buffer is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_BUFFER_DATA_SIZE\fR, then the implementation\-dependent minimum total buffer object size, in basic machine units, required to hold all active variables associated with an active uniform block, shader storage block, or atomic counter buffer is written to
+\fIparams\fR\&. If the final member of an active shader storage block is array with no declared size, the minimum buffer size is computed assuming the array was declared as an array with one element\&.
+.PP
+For the property
+\fBGL_NUM_ACTIVE_VARIABLES\fR, the number of active variables associated with an active uniform block, shader storage block, atomic counter buffer or transform feedback buffer is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_ACTIVE_VARIABLES\fR, an array of active variable indices associated with an active uniform block, shader storage block, atomic counter buffer or transform feedback buffer is written to
+\fIparams\fR\&. The number of values written to
+\fIparams\fR
+for an active resource is given by the value of the property
+\fBGL_NUM_ACTIVE_VARIABLES\fR
+for the resource\&.
+.PP
+For the properties
+\fBGL_REFERENCED_BY_VERTEX_SHADER\fR,
+\fBGL_REFERENCED_BY_TESS_CONTROL_SHADER\fR,
+\fBGL_REFERENCED_BY_TESS_EVALUATION_SHADER\fR,
+\fBGL_REFERENCED_BY_GEOMETRY_SHADER\fR,
+\fBGL_REFERENCED_BY_FRAGMENT_SHADER\fR, and
+\fBGL_REFERENCED_BY_COMPUTE_SHADER\fR, a single integer is written to
+\fIparams\fR, identifying whether the active resource is referenced by the vertex, tessellation control, tessellation evaluation, geometry, or fragment shaders, respectively, in the program object\&. The value one is written to
+\fIparams\fR
+if an active variable is referenced by the corresponding shader, or if an active uniform block, shader storage block, or atomic counter buffer contains at least one variable referenced by the corresponding shader\&. Otherwise, the value zero is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_TOP_LEVEL_ARRAY_SIZE\fR, a single integer identifying the number of active array elements of the top\-level shader storage block member containing to the active variable is written to
+\fIparams\fR\&. If the top\-level block member is not declared as an array, the value one is written to
+\fIparams\fR\&. If the top\-level block member is an array with no declared size, the value zero is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_TOP_LEVEL_ARRAY_STRIDE\fR, a single integer identifying the stride between array elements of the top\-level shader storage block member containing the active variable is written to
+\fIparams\fR\&. For top\-level block members declared as arrays, the value written is the difference, in basic machine units, between the offsets of the active variable for consecutive elements in the top\-level array\&. For top\-level block members not declared as an array, zero is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_LOCATION\fR, a single integer identifying the assigned location for an active uniform, input, output, or subroutine uniform variable is written to
+\fIparams\fR\&. For input, output, or uniform variables with locations specified by a layout qualifier, the specified location is used\&. For vertex shader input or fragment shader output variables without a layout qualifier, the location assigned when a program is linked is written to
+\fIparams\fR\&. For all other input and output variables, the value \-1 is written to
+\fIparams\fR\&. For uniforms in uniform blocks, the value \-1 is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_LOCATION_INDEX\fR, a single integer identifying the fragment color index of an active fragment shader output variable is written to
+\fIparams\fR\&. If the active variable is an output for a non\-fragment shader, the value \-1 will be written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_IS_PER_PATCH\fR, a single integer identifying whether the input or output is a per\-patch attribute\&. If the active variable is a per\-patch attribute (declared with the
+patch
+qualifier), the value one is written to
+\fIparams\fR; otherwise, the value zero is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_LOCATION_COMPONENT\fR, a single integer indicating the first component of the location assigned to an active input or output variable is written to
+\fIparams\fR\&. For input and output variables with a component specified by a
+layout
+qualifier, the specified component is written\&. For all other input and output variables, the value zero is written\&.
+.PP
+For the property
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_INDEX\fR, a single integer identifying the index of the active transform feedback buffer associated with an active variable is written to
+\fIparams\fR\&. For variables corresponding to the special names
+"gl_NextBuffer",
+"gl_SkipComponents1",
+"gl_SkipComponents2",
+"gl_SkipComponents3", and
+"gl_SkipComponents4", \-1 is written to
+\fIparams\fR\&.
+.PP
+For the property
+\fBGL_TRANSFORM_FEEDBACK_BUFFER_STRIDE\fR, a single integer identifying the stride, in basic machine units, between consecutive vertices written to the transform feedback buffer is written to
+\fIparams\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIprogram\fR
+is not the name of an existing program object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIpropCount\fR
+is zero\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIprogramInterface\fR
+is not one of the accepted interface types\&.
+.PP
+\fBGL_INVLALID_ENUM\fR
+is generated if any value in
+\fIprops\fR
+is not one of the accepted tokens for the interface
+\fIprogramInterface\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetProgramResourceiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetProgramResourceName\fR(),
+\fBglGetProgramResourceIndex\fR(),
+\fBglGetProgramResourceLocation\fR(),
+\fBglGetProgramResourceLocationIndex\fR()\&.
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

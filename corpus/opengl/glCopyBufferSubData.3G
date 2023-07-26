@@ -1,0 +1,383 @@
+'\" t
+.\"     Title: glCopyBufferSubData
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLCOPYBUFFERSUBDATA" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glCopyBufferSubData, glCopyNamedBufferSubData \- copy all or part of the data store of a buffer object to the data store of another buffer object
+.SH "C SPECIFICATION"
+.HP \w'void\ glCopyBufferSubData('u
+.BI "void glCopyBufferSubData(GLenum\ " "readTarget" ", GLenum\ " "writeTarget" ", GLintptr\ " "readOffset" ", GLintptr\ " "writeOffset" ", GLsizeiptr\ " "size" ");"
+.HP \w'void\ glCopyNamedBufferSubData('u
+.BI "void glCopyNamedBufferSubData(GLuint\ " "readBuffer" ", GLuint\ " "writeBuffer" ", GLintptr\ " "readOffset" ", GLintptr\ " "writeOffset" ", GLsizeiptr\ " "size" ");"
+.SH "PARAMETERS"
+.PP
+\fIreadTarget\fR
+.RS 4
+Specifies the target to which the source buffer object is bound for
+\fBglCopyBufferSubData\fR
+.RE
+.PP
+\fIwriteTarget\fR
+.RS 4
+Specifies the target to which the destination buffer object is bound for
+\fBglCopyBufferSubData\fR\&.
+.RE
+.PP
+\fIreadBuffer\fR
+.RS 4
+Specifies the name of the source buffer object for
+\fBglCopyNamedBufferSubData\fR\&.
+.RE
+.PP
+\fIwriteBuffer\fR
+.RS 4
+Specifies the name of the destination buffer object for
+\fBglCopyNamedBufferSubData\fR\&.
+.RE
+.PP
+\fIreadOffset\fR
+.RS 4
+Specifies the offset, in basic machine units, within the data store of the source buffer object at which data will be read\&.
+.RE
+.PP
+\fIwriteOffset\fR
+.RS 4
+Specifies the offset, in basic machine units, within the data store of the destination buffer object at which data will be written\&.
+.RE
+.PP
+\fIsize\fR
+.RS 4
+Specifies the size, in basic machine units, of the data to be copied from the source buffer object to the destination buffer object\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglCopyBufferSubData\fR
+and
+\fBglCopyNamedBufferSubData\fR
+copy part of the data store attached to a source buffer object to the data store attached to a destination buffer object\&. The number of basic machine units indicated by
+\fIsize\fR
+is copied from the source at offset
+\fIreadOffset\fR
+to the destination at
+\fIwriteOffset\fR\&.
+\fIreadOffset\fR,
+\fIwriteOffset\fR
+and
+\fIsize\fR
+are in terms of basic machine units\&.
+.PP
+For
+\fBglCopyBufferSubData\fR,
+\fIreadTarget\fR
+and
+\fIwriteTarget\fR
+specify the targets to which the source and destination buffer objects are bound, and must each be one of the buffer binding targets in the following table:
+.TS
+allbox tab(:);
+lB lB.
+T{
+\fBBuffer Binding Target\fR
+T}:T{
+\fBPurpose\fR
+T}
+.T&
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l
+l l.
+T{
+\fBGL_ARRAY_BUFFER\fR
+T}:T{
+Vertex attributes
+T}
+T{
+\fBGL_ATOMIC_COUNTER_BUFFER\fR
+T}:T{
+Atomic counter storage
+T}
+T{
+\fBGL_COPY_READ_BUFFER\fR
+T}:T{
+Buffer copy source
+T}
+T{
+\fBGL_COPY_WRITE_BUFFER\fR
+T}:T{
+Buffer copy destination
+T}
+T{
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+T}:T{
+Indirect compute dispatch commands
+T}
+T{
+\fBGL_DRAW_INDIRECT_BUFFER\fR
+T}:T{
+Indirect command arguments
+T}
+T{
+\fBGL_ELEMENT_ARRAY_BUFFER\fR
+T}:T{
+Vertex array indices
+T}
+T{
+\fBGL_PIXEL_PACK_BUFFER\fR
+T}:T{
+Pixel read target
+T}
+T{
+\fBGL_PIXEL_UNPACK_BUFFER\fR
+T}:T{
+Texture data source
+T}
+T{
+\fBGL_QUERY_BUFFER\fR
+T}:T{
+Query result buffer
+T}
+T{
+\fBGL_SHADER_STORAGE_BUFFER\fR
+T}:T{
+Read\-write storage for shaders
+T}
+T{
+\fBGL_TEXTURE_BUFFER\fR
+T}:T{
+Texture data buffer
+T}
+T{
+\fBGL_TRANSFORM_FEEDBACK_BUFFER\fR
+T}:T{
+Transform feedback buffer
+T}
+T{
+\fBGL_UNIFORM_BUFFER\fR
+T}:T{
+Uniform block storage
+T}
+.TE
+.sp 1
+.PP
+Any of these targets may be used, but the targets
+\fBGL_COPY_READ_BUFFER\fR
+and
+\fBGL_COPY_WRITE_BUFFER\fR
+are provided specifically to allow copies between buffers without disturbing other GL state\&.
+.PP
+\fIreadOffset\fR,
+\fIwriteOffset\fR
+and
+\fIsize\fR
+must all be greater than or equal to zero\&. Furthermore, $readOffset+size$ must not exceeed the size of the source buffer object, and $writeOffset+size$ must not exceeed the size of the buffer bound to
+\fIwriteTarget\fR\&. If the source and destination are the same buffer object, then the source and destination ranges must not overlap\&.
+.SH "NOTES"
+.PP
+The
+\fBGL_DISPATCH_INDIRECT_BUFFER\fR
+and
+\fBGL_SHADER_STORAGE_BUFFER\fR
+targets are available only if the GL version is 4\&.3 or greater\&.
+.PP
+The
+\fBGL_QUERY_BUFFER\fR
+target is available only if the GL version is 4\&.4 or greater\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated by
+\fBglCopyBufferSubData\fR
+if
+\fIreadTarget\fR
+or
+\fIwriteTarget\fR
+is not one of the buffer binding targets listed above\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglCopyBufferSubData\fR
+if zero is bound to
+\fIreadTarget\fR
+or
+\fIwriteTarget\fR\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated by
+\fBglCopyNamedBufferSubData\fR
+if
+\fIreadBuffer\fR
+or
+\fIwriteBuffer\fR
+is not the name of an existing buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if any of
+\fIreadOffset\fR,
+\fIwriteOffset\fR
+or
+\fIsize\fR
+is negative, if $readOffset + size$ is greater than the size of the source buffer object (its value of
+\fBGL_BUFFER_SIZE\fR), or if $writeOffset + size$ is greater than the size of the destination buffer object\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if the source and destination are the same buffer object, and the ranges $[readOffset,readOffset+size)$ and $[writeOffset,writeOffset+size)$ overlap\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if either the source or destination buffer object is mapped with
+\fBglMapBufferRange\fR()
+or
+\fBglMapBuffer\fR(), unless they were mapped with the
+\fBGL_MAP_PERSISTENT\fR
+bit set in the
+\fBglMapBufferRange\fR
+\fIaccess\fR
+flags\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c
+l c c c c c c c c c c c c.
+T{
+\fBglCopyBufferSubData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+T{
+\fBglCopyNamedBufferSubData\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenBuffers\fR(),
+\fBglBindBuffer\fR(),
+\fBglBufferData\fR(),
+\fBglBufferSubData\fR(),
+\fBglGetBufferSubData\fR(),
+\fBglMapBuffer\fR(),
+\fBglMapBufferRange\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br

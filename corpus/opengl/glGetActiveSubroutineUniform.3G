@@ -1,0 +1,220 @@
+'\" t
+.\"     Title: glGetActiveSubroutineUniform
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLGETACTIVESUBROUTIN" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glGetActiveSubroutineUniform \- query a property of an active shader subroutine uniform
+.SH "C SPECIFICATION"
+.HP \w'void\ glGetActiveSubroutineUniformiv('u
+.BI "void glGetActiveSubroutineUniformiv(GLuint\ " "program" ", GLenum\ " "shadertype" ", GLuint\ " "index" ", GLenum\ " "pname" ", GLint\ *" "values" ");"
+.SH "PARAMETERS"
+.PP
+\fIprogram\fR
+.RS 4
+Specifies the name of the program containing the subroutine\&.
+.RE
+.PP
+\fIshadertype\fR
+.RS 4
+Specifies the shader stage from which to query for the subroutine parameter\&.
+\fIshadertype\fR
+must be one of
+\fBGL_VERTEX_SHADER\fR,
+\fBGL_TESS_CONTROL_SHADER\fR,
+\fBGL_TESS_EVALUATION_SHADER\fR,
+\fBGL_GEOMETRY_SHADER\fR
+or
+\fBGL_FRAGMENT_SHADER\fR\&.
+.RE
+.PP
+\fIindex\fR
+.RS 4
+Specifies the index of the shader subroutine uniform\&.
+.RE
+.PP
+\fIpname\fR
+.RS 4
+Specifies the parameter of the shader subroutine uniform to query\&.
+\fIpname\fR
+must be
+\fBGL_NUM_COMPATIBLE_SUBROUTINES\fR,
+\fBGL_COMPATIBLE_SUBROUTINES\fR,
+\fBGL_UNIFORM_SIZE\fR
+or
+\fBGL_UNIFORM_NAME_LENGTH\fR\&.
+.RE
+.PP
+\fIvalues\fR
+.RS 4
+Specifies the address of a into which the queried value or values will be placed\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglGetActiveSubroutineUniform\fR
+queries a parameter of an active shader subroutine uniform\&.
+\fIprogram\fR
+contains the name of the program containing the uniform\&.
+\fIshadertype\fR
+specifies the stage which the uniform location, given by
+\fIindex\fR, is valid\&.
+\fIindex\fR
+must be between zero and the value of
+\fBGL_ACTIVE_SUBROUTINE_UNIFORMS\fR
+minus one for the shader stage\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_NUM_COMPATIBLE_SUBROUTINES\fR, a single integer indicating the number of subroutines that can be assigned to the uniform is returned in
+\fIvalues\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_COMPATIBLE_SUBROUTINES\fR, an array of integers is returned in
+\fIvalues\fR, with each integer specifying the index of an active subroutine that can be assigned to the selected subroutine uniform\&. The number of integers returned is the same as the value returned for
+\fBGL_NUM_COMPATIBLE_SUBROUTINES\fR\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_UNIFORM_SIZE\fR, a single integer is returned in
+\fIvalues\fR\&. If the selected subroutine uniform is an array, the declared size of the array is returned; otherwise, one is returned\&.
+.PP
+If
+\fIpname\fR
+is
+\fBGL_UNIFORM_NAME_LENGTH\fR, a single integer specifying the length of the subroutine uniform name (including the terminating null character) is returned in
+\fIvalues\fR\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fIshadertype\fR
+or
+\fIpname\fR
+is not one of the accepted values\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIindex\fR
+is greater than or equal to the value of
+\fBGL_ACTIVE_SUBROUTINES\fR\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIprogram\fR
+is not the name of an existing program object\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGetProgramStage\fR()
+with argument
+\fBGL_ACTIVE_SUBROUTINE_UNIFORMS\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglGetActiveSubroutineUniformiv\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGetSubroutineIndex\fR(),
+\fBglGetActiveSubroutineUniformName\fR(),
+\fBglGetProgramStage\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group.
+.br

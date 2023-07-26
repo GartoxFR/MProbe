@@ -1,0 +1,206 @@
+'\" t
+.\"     Title: glBindSamplers
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLBINDSAMPLERS" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glBindSamplers \- bind one or more named sampler objects to a sequence of consecutive sampler units
+.SH "C SPECIFICATION"
+.HP \w'void\ glBindSamplers('u
+.BI "void glBindSamplers(GLuint\ " "first" ", GLsizei\ " "count" ", const\ GLuint\ *" "samplers" ");"
+.SH "PARAMETERS"
+.PP
+\fIfirst\fR
+.RS 4
+Specifies the first sampler unit to which a sampler object is to be bound\&.
+.RE
+.PP
+\fIcount\fR
+.RS 4
+Specifies the number of samplers to bind\&.
+.RE
+.PP
+\fIsamplers\fR
+.RS 4
+Specifies the address of an array of names of existing sampler objects\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglBindSamplers\fR
+binds samplers from an array of existing sampler objects to a specified number of consecutive sampler units\&.
+\fIcount\fR
+specifies the number of sampler objects whose names are stored in the array
+\fIsamplers\fR\&. That number of sampler names is read from the array and bound to the
+\fIcount\fR
+consecutive sampler units starting from
+\fIfirst\fR\&.
+.PP
+If the name zero appears in the
+\fIsamplers\fR
+array, any existing binding to the sampler unit is reset\&. Any non\-zero entry in
+\fIsamplers\fR
+must be the name of an existing sampler object\&. When a non\-zero entry in
+\fIsamplers\fR
+is present, that sampler object is bound to the corresponding sampler unit\&. If
+\fIsamplers\fR
+is
+\fBNULL\fR
+then it is as if an appropriately sized array containing only zeros had been specified\&.
+.PP
+\fBglBindSamplers\fR
+is equivalent to the following pseudo code:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    for (i = 0; i < count; i++) {
+        if (samplers == NULL) {
+            glBindSampler(first + i, 0);
+        } else {
+            glBindSampler(first + i, samplers[i]);
+        }
+    }
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Each entry in
+\fIsamplers\fR
+will be checked individually and if found to be invalid, the state for that sampler unit will not be changed and an error will be generated\&. However, the state for other sampler units referenced by the command will still be updated\&.
+.SH "NOTES"
+.PP
+\fBglBindSamplers\fR
+is available only if the GL version is 4\&.4 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIfirst\fR
++
+\fIcount\fR
+is greater than the number of sampler units supported by the implementation\&.
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if any value in
+\fIsamplers\fR
+is not zero or the name of an existing sampler object\&.
+.SH "ASSOCIATED GETS"
+.PP
+\fBglGet\fR()
+with argument
+\fBGL_SAMPLER_BINDING\fR
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglBindSamplers\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenSamplers\fR(),
+\fBglBindSampler\fR(),
+\fBglDeleteSamplers\fR(),
+\fBglGet\fR(),
+\fBglSamplerParameter\fR(),
+\fBglGetSamplerParameter\fR(),
+\fBglGenTextures\fR(),
+\fBglBindTexture\fR(),
+\fBglDeleteTextures\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2013\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2013-2014 Khronos Group
+.br

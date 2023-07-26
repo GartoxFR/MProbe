@@ -1,0 +1,180 @@
+'\" t
+.\"     Title: glQueryCounter
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets v1.79.2 <http://docbook.sf.net/>
+.\"      Date: 05/21/2022
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GLQUERYCOUNTER" "3G" "05/21/2022" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+glQueryCounter \- record the GL time into a query object after all previous commands have reached the GL server but have not yet necessarily executed\&.
+.SH "C SPECIFICATION"
+.HP \w'void\ glQueryCounter('u
+.BI "void glQueryCounter(GLuint\ " "id" ", GLenum\ " "target" ");"
+.SH "PARAMETERS"
+.PP
+\fIid\fR
+.RS 4
+Specify the name of a query object into which to record the GL time\&.
+.RE
+.PP
+\fItarget\fR
+.RS 4
+Specify the counter to query\&.
+\fItarget\fR
+must be
+\fBGL_TIMESTAMP\fR\&.
+.RE
+.SH "DESCRIPTION"
+.PP
+\fBglQueryCounter\fR
+causes the GL to record the current time into the query object named
+\fIid\fR\&.
+\fItarget\fR
+must be
+\fBGL_TIMESTAMP\fR\&. The time is recorded after all previous commands on the GL client and server state and the framebuffer have been fully realized\&. When the time is recorded, the query result for that object is marked available\&.
+\fBglQueryCounter\fR
+timer queries can be used within a
+\fBglBeginQuery\fR()
+/
+
+\fBglEndQuery\fR
+block where the target is
+\fBGL_TIME_ELAPSED\fR
+and it does not affect the result of that query object\&.
+.SH "NOTES"
+.PP
+\fBglQueryCounter\fR
+is available only if the GL version is 3\&.3 or higher\&.
+.SH "ERRORS"
+.PP
+\fBGL_INVALID_OPERATION\fR
+is generated if
+\fIid\fR
+is the name of a query object that is already in use within a
+\fBglBeginQuery\fR()
+/
+
+\fBglEndQuery\fR
+block\&.
+.PP
+\fBGL_INVALID_VALUE\fR
+is generated if
+\fIid\fR
+is not the name of a query object returned from a previous call to
+\fBglGenQueries\fR()\&.
+.PP
+\fBGL_INVALID_ENUM\fR
+is generated if
+\fItarget\fR
+is not
+\fBGL_TIMESTAMP\fR\&.
+.SH "VERSION SUPPORT"
+.TS
+allbox tab(:);
+lB cB s s s s s s s s s s s
+lB cB cB cB cB cB cB cB cB cB cB cB cB.
+T{
+
+T}:T{
+\fBOpenGL Version\fR
+T}
+T{
+\fBFunction / Feature Name\fR
+T}:T{
+\fB2\&.0\fR
+T}:T{
+\fB2\&.1\fR
+T}:T{
+\fB3\&.0\fR
+T}:T{
+\fB3\&.1\fR
+T}:T{
+\fB3\&.2\fR
+T}:T{
+\fB3\&.3\fR
+T}:T{
+\fB4\&.0\fR
+T}:T{
+\fB4\&.1\fR
+T}:T{
+\fB4\&.2\fR
+T}:T{
+\fB4\&.3\fR
+T}:T{
+\fB4\&.4\fR
+T}:T{
+\fB4\&.5\fR
+T}
+.T&
+l c c c c c c c c c c c c.
+T{
+\fBglQueryCounter\fR
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+\-
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}:T{
+✔
+T}
+.TE
+.sp 1
+.SH "SEE ALSO"
+.PP
+\fBglGenQueries\fR(),
+\fBglBeginQuery\fR(),
+
+\fBglEndQuery\fR,
+\fBglDeleteQueries\fR(),
+\fBglGetQueryObject\fR(),
+\fBglGetQueryiv\fR(),
+\fBglGet\fR()
+.SH "COPYRIGHT"
+.PP
+Copyright
+\(co
+2010\-2014 Khronos Group\&. This material may be distributed subject to the terms and conditions set forth in the Open Publication License, v 1\&.0, 8 June 1999\&.
+\m[blue]\fBhttp://opencontent\&.org/openpub/\fR\m[]\&.
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2010-2014 Khronos Group
+.br
