@@ -11,7 +11,6 @@ implemented in different language
 - Rust toolchain (see the [Rust book](https://doc.rust-lang.org/book/ch01-01-installation.html))
 - Python3 and pip3
 - matplotlib (`pip3 install matplotlib`)
-- `lapacke` and `openblas` (`sudo pacman -S lapacke openblas` or `brew install lapacke openblas`)
 
 ## Building
 
