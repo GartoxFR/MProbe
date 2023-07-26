@@ -305,36 +305,106 @@
     en prenant les version dont la compilation à été mesurée précédemment.
 
 *** Version
-    - CPython `3.8`
+    - CPython `3.6.1`
+
+    C'est la version la plus récente que j'ai réussi à compiler avec TCC
 
 
 *** Sources
-    - Download - {https://github.com/python/cpython/archive/refs/heads/3.8.tar.gz}
-    - sha256 - 174e8c544c7decb32c5ff200281916808bb0277f98d1670f359de8d3cef33b62
+    - Download - {https://github.com/python/cpython/archive/refs/tags/v3.6.1.tar.gz}
+    - sha256 - 31b36182e40d3a3ebc9de2916c43255f54228377a49d429bfa6c2abb158f27c6
 
 *** Commandes
 **** Mesure avec gcc
 
      @code bash
      CC=/data/ewan/gcc/out/bin/gcc \
-     ../cpython-3.8/configure
+     ../cpython-3.6.1/configure \
+     --prefix="/data/ewan/cpython/gcc-out"
 
      mprobe --method rss -o /data/ewan/results/cpython_gcc.json \
      -s 10000  \
      --title "Compilation de cpython avec gcc" \
      -- make -j 1 \
      | ts -s "%H:%M:%S %.s" | tee /data/ewan/results/cpython_gcc_logs
+
+     make install -j
      @end
 
 **** Mesure avec clang
      @code bash
      CC=/data/ewan/clang/out/bin/clang \
-     ../cpython-3.8/configure
+     ../cpython-3.6.1/configure \
+     --prefix="/data/ewan/cpython/clang-out"
 
      mprobe --method rss -o /data/ewan/results/cpython_clang.json \
      -s 10000  \
      --title "Compilation de cpython avec clang" \
      -- make -j 1  \
      | ts -s "%H:%M:%S %.s" | tee /data/ewan/results/cpython_clang_logs
+
+     make install -j
     
+     @end
+
+**** Mesure avec tcc
+     Notes : 
+     - Ne compile pas si on utilise `tcc -ar` au lieu du `ar` système
+     - Lors du make install, tous les tests ne passent pas donc on a pas une installation 
+       complète. Cependant elle à l'air suffisante
+
+     @code bash
+     CC=/data/ewan/tcc/out/bin/tcc CXX=false \
+     ../cpython-3.6.1/configure \
+     --prefix="/data/ewan/cpython/tcc-out"
+
+     sed -i "s/-Xlinker -export-dynamic/-rdynamic/" Makefile
+
+     mprobe --method rss -o /data/ewan/results/cpython_tcc.json \
+     -s 10000  \
+     --title "Compilation de cpython avec tcc" \
+     -- make -j 1  \
+     | ts -s "%H:%M:%S %.s" | tee /data/ewan/results/cpython_tcc_logs
+
+     make install
+     @end
+
+** OpenJDK
+*** Dépendances
+    libfontconfig-dev
+    libfreetype6-dev
+    libcups2-dev
+    libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev
+    libasound2-dev
+    libffi-dev
+
+*** Version
+    - OpenJDK 20
+
+*** Sources 
+    - Sources - {https://github.com/openjdk/jdk20/archive/refs/heads/master.tar.gz}
+    - Bootstrap jdk - {https://download.java.net/java/GA/jdk20.0.2/6e380f22cbe7469fa75fb448bd903d8e/9/GPL/openjdk-20.0.2_linux-x64_bin.tar.gz}
+
+*** Commandes
+**** Mesure GCC
+     @code bash
+     CC=/data/ewan/gcc/out/bin/gcc CXX=/data/ewan/gcc/out/bin/g++ bash ../jdk20-master/configure --with-boot-jdk=/data/ewan/java/jdk-20.0.2 \
+     --with-jobs=1
+
+     mprobe --method rss -o /data/ewan/results/openjdk_gcc.json \
+     -s 100000  \
+     --title "Compilation de OpenJDK avec GCC" \
+     -- make images LOG=info \
+     | ts -s "%H:%M:%S %.s" | tee /data/ewan/results/openjdk_gcc_logs
+     @end
+**** Mesure Clang
+     @code bash
+     CC=/data/ewan/clang/out/bin/clang CXX=/data/ewan/clang/out/bin/clang++ bash ../jdk20-master/configure --with-boot-jdk=/data/ewan/java/jdk-20.0.2 \
+     --with-jobs=1 --with-toolchain-type=clang --disable-warnings-as-errors
+
+     mprobe --method rss -o /data/ewan/results/openjdk_clang.json \
+     -s 100000  \
+     --title "Compilation de OpenJDK avec Clang" \
+     -- make images LOG=info \
+     | ts -s "%H:%M:%S %.s" | tee /data/ewan/results/openjdk_clang_logs
      @end

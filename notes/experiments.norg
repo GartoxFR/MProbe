@@ -1,0 +1,38 @@
+* Script exp.sh
+  Le script exp.sh permet de lancer un jeu d'expérience situé dans le dossier
+  spécifié en paramètre.
+
+  L'arborescence du dossier d'expérience est reconstruit dans le dossier `$OUTPUT`.
+  Chaque fichier d'expérience devient un dossier dans les résultats contenant un
+  `build.json` et un `exec.json`. 
+
+* Fichiers d'expérience
+  Un fichier `sh` est utilisé pour décrire une expérience. Ce fichier se contente d'exporter
+  des variables d'environnement que le fichier exp.sh utilisera pour lancer les mesures.
+
+  @code bash
+  # Example pour tf_idf en cpp compilé avec gcc sur luuna
+
+  # Variable spécifiant le dossier d'éxecution de l'expérience
+  export WD=$TEST_ROOT/cpp/tf_idf/code
+
+  # Titre des courbes générées
+  export BUILD_TITLE="Compilation de tf_idf C++ (gcc)"
+  export EXEC_TITLE="Éxectution de tf_idf C++ (gcc)"
+
+  # Commande de clean
+  export CLEAN="make clean"
+  # Commande de build
+  export BUILD="make GCC=/data/ewan/gcc/out/bin/g++"
+
+
+  # Commande d'éxecution
+  export EXEC="bin/tf_idf 'war' /data/ewan/corpus/gutenberg/*"
+
+  # Périodes d'échantillonage en μs
+  export BUILD_SAMPLE_PERIOD=100
+  export EXEC_SAMPLE_PERIOD=100
+
+  # Autre export possible si besoin comme ici pour utilisé la bonnne libcpp
+  export LD_LIBRARY_PATH=/data/ewan/gcc/out/lib64:$LD_LIBRARY_PATH 
+  @end
