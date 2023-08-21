@@ -5,7 +5,6 @@ export EXEC_TITLE="Éxectution de hashmap C (gcc)"
 
 export CLEAN="make clean"
 export BUILD="make GCC=/data/ewan/gcc/out/bin/gcc"
-export LD_LIBRARY_PATH=/data/ewan/gcc/out/lib64:$LD_LIBRARY_PATH 
 export EXEC="bin/hashmap 1000000"
 
 export BUILD_SAMPLE_PERIOD=100
