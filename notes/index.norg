@@ -47,11 +47,11 @@
 
   - (x) Pour C et CPP, mettre O2 ou O3
 
-  - (-) Autres toolchain
+  - (x) Autres toolchain
   -- (x) gcc
   -- (x) g++
   -- (x) CPython
-  -- ( ) JVM
+  -- (x) JVM
 
   - (x) Lire "Reflections on truting trust" de Ken THOMPSON
 
@@ -74,7 +74,7 @@
 
   - (x) Mesurer LLVM
 
-  - ( ) Essayer CPython par TCC en creusant un peu
+  - (x) Essayer CPython par TCC en creusant un peu
   - (x) Capture et horodatage des logs
   -- (x) GCC with logs
   -- (x) Clang with logs
@@ -82,14 +82,21 @@
   -- (x) rustc with logs
   -- (x) tcc with logs
   -- (x) CPython with logs
-  - (-) Programme tf idf pour chaque langage
+  - (x) Programme tf idf pour chaque langage
   -- (x) Rust
   -- (x) C++
-  -- ( ) C
+  -- (x) C
   -- (x) Python
   -- (x) Java
 
-  - Découpler code de l'expe : pouvoir lancer plusieurs expé sur le même code
+  - (x) Découpler code de l'expe : pouvoir lancer plusieurs expé sur le même code
+
+  - ( ) Test simple de mesure de consommation des HashMaps
+  -- ( ) Rust
+  -- ( ) C
+  -- ( ) CPP
+  -- ( ) Java
+  -- ( ) Python
 
 
   - (_) Ajouter aux metadata :
@@ -108,8 +115,6 @@
   
 
 * Meetings
-  - {@ Thursday 20 July 2023} 10h
-  - {@ Wednesday 26 July 2023} 14h
   - {@ Monday 21 August 2023} 10h
 
 * Idées

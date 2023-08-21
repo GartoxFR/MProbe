@@ -12,11 +12,6 @@ int main(int argc, char **argv) {
     size_t alloc;
     size_t write;
 
-    int r = sscanf(argv[1], "%ld", &alloc);
-    if (r == 0 || r == EOF) {
-        cerr << "axwy <alloc MB> <write MB>" << endl;
-        return 1;
-    }
     stringstream ss;
 
     ss << argv[1] << " " << argv[2];
