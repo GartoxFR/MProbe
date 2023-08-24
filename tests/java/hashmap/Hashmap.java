@@ -16,9 +16,9 @@ public class Hashmap {
             System.exit(1);
         }
 
-        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < write; i++) {
-            map.put(Integer.toString(i), i);
+            map.put(i, i);
         }
     }
 }

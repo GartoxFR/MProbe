@@ -6,13 +6,14 @@
 #include <math.h>
 
 struct entry {
-    char* key;
+    uint32_t key;
     uint32_t value;
 };
 
 uint64_t hash(const void* e, uint64_t seed0, uint64_t seed1) {
     const struct entry* entry = e;
-    return hashmap_sip(entry->key, strlen(entry->key), seed0, seed1);
+    uint64_t hash = hashmap_sip(&entry->key, sizeof(entry->key), seed0, seed1);
+    return hash;
 }
 
 int compare(const void* e1, const void* e2, void* data) {
@@ -20,12 +21,12 @@ int compare(const void* e1, const void* e2, void* data) {
     const struct entry* entry1 = e1;
     const struct entry* entry2 = e2;
 
-    return strcmp(entry1->key, entry2->key);
+    return entry2->key - entry1->key;
 }
 
 void elfree(void* e) {
-    const struct entry* entry = e;
-    free(entry->key);
+    // const struct entry* entry = e;
+    // free(entry->key);
 }
 
 int main(int argc, char** argv) {
@@ -40,14 +41,12 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    struct hashmap* map = hashmap_new(sizeof(struct entry), 0, 0, 0, hash, compare, elfree, NULL);
+    struct hashmap* map = hashmap_new(sizeof(struct entry), 0, 0, 0, hash, compare, NULL, NULL);
 
     for (uint32_t i = 0; i < count; i++) {
-        int size = i == 0 ? 2 : (int)(ceil(log10(i))+1) ;
-        char* key = malloc(size);
-        snprintf(key, size, "%d", i);
 
-        hashmap_set(map, &(struct entry) { .key = key, .value = i});
+
+        hashmap_set(map, &(struct entry) { .key = i, .value = i});
     }
 
     hashmap_free(map);

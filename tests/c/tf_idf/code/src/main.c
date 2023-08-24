@@ -50,7 +50,7 @@ static int count_entry_cmp(const void* a, const void* b, void* udata) {
 static uint64_t count_entry_hash(const void* item, uint64_t seed0,
                                  uint64_t seed1) {
     const struct count_entry* entry = item;
-    return hashmap_sip(&entry->id, 1, seed0, seed1);
+    return hashmap_sip(&entry->id, sizeof(entry->id), seed0, seed1);
 }
 
 static void process_line(const char* line, struct hashmap* term_count,

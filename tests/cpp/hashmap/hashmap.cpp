@@ -22,10 +22,10 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    unordered_map<string, uint32_t> map;
+    unordered_map<uint32_t, uint32_t> map;
     for (uint32_t i = 0; i < count; i++) {
         string key = to_string(i);
-        map.insert(make_pair(std::move(key), i));
+        map.insert(make_pair(i, i));
     }
 
     return 0;

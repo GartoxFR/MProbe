@@ -5,7 +5,7 @@ BIN = build/hashmap
 .PHONY = probe_exec probe_build
 
 probe_exec: $(BIN) 
-	$(PROBE) -o $(PROBE_OUTPUT) -- $(BIN) 1000000
+	$(PROBE) -o $(PROBE_OUTPUT) -s 100 -- $(BIN) 100000000
 
 probe_build: 
 	mkdir -p build

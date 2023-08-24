@@ -5,7 +5,7 @@ BIN := $(abspath target/release/hashmap)
 -include target/release/hashmap.d
 
 probe_exec: $(BIN) 
-	$(PROBE) -o $(PROBE_OUTPUT) --title "Execution de hashmap Rust"  -- $(BIN) 1000000
+	$(PROBE) -o $(PROBE_OUTPUT) -s 100 --title "Execution de hashmap Rust"  -- $(BIN) 100000000
 
 probe_build: 
 	@cargo clean

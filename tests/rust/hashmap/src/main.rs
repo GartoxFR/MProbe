@@ -8,8 +8,10 @@ fn main() {
         process::exit(1);
     };
 
-    let map: HashMap<_, _> = (0..x).map(|i| (i.to_string(), i)).collect();
-
+    let mut map = HashMap::new();
+    for i in 0..x {
+        map.insert(i, i);
+    }
     black_box(map);
 }
 

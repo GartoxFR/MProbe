@@ -12,6 +12,6 @@ if __name__ == "__main__":
     map = {}
 
     for i in range(0, x):
-        map[str(i)] = i
+        map[i] = i
     
     exit(0)
