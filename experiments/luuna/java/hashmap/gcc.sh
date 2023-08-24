@@ -6,7 +6,7 @@ export EXEC_TITLE="Éxectution de hashmap Java (OpenJDK built with gcc)"
 export CLEAN=""
 JAVA_HOME=/data/ewan/java/build_gcc/images/jdk
 export BUILD="$JAVA_HOME/bin/javac Hashmap.java"
-export EXEC="$JAVA_HOME/bin/java Hashmap 1000000"
+export EXEC="$JAVA_HOME/bin/java Hashmap 100000000"
 
 export BUILD_SAMPLE_PERIOD=100
 export EXEC_SAMPLE_PERIOD=100

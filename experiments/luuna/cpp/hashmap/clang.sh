@@ -5,7 +5,7 @@ export EXEC_TITLE="Éxectution de hashmap C++ (clang)"
 
 export CLEAN="rm -f hashmap"
 export BUILD="/data/ewan/clang/out/bin/clang++ -O3 -o hashmap hashmap.cpp"
-export EXEC="./hashmap 1000000"
+export EXEC="./hashmap 100000000"
 
 export BUILD_SAMPLE_PERIOD=100
 export EXEC_SAMPLE_PERIOD=100
