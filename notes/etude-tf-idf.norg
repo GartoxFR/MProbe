@@ -39,8 +39,8 @@
    Selon moi, cette version de l'expérience reflète mieux la consommation mémoire de la seule
    hashmap. 
 
-   Ses résultat se rapprochent plus de ceux de tf_idf avec Rust qui consomme nettement moins de mémoire.
+   Ces résultat se rapprochent plus de ceux de tf_idf avec Rust qui consomme nettement moins de mémoire.
    On remarque aussi qu'augmenter la taille de la map creuse l'écart entre Rust, C et C++.
 
-   - ( ) Question - Doit-on garder plutôt cette expérience pour la hashmap ? (Potentiel biais de confirmation)
+   - (x) Question - Doit-on garder plutôt cette expérience pour la hashmap ? (Potentiel biais de confirmation)
 
