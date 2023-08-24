@@ -1,0 +1,46 @@
+* Résultat à analyzer
+  Lors de l'éxecution du programme tf_idf, on remarque que les versions C et C++ consomment
+  2 fois plus de mémoire que la version rust sur les 2 corpus opengl et gutenberg.
+  Ce résultat est étonnant du fait de la réputation de C et C++ de ne pas utiliser plus de mémoire
+  que nécessaire en permettant de tout contrôler. C'est pourquoi on soupsonne les versions C et C++
+  de ne pas être correctes au niveau de leurs gestions mémoire malgré la correctness des sorties
+
+* Pistes explorés
+** Vérifier la consommation d'une simple hashmap dans tous les languages
+   Ce test a pour but de vérifier si les différences d'implémentation des Hashmap
+   des librairie de ces langages ne pouvait pas expliquer la différence en consommation mémoire.
+
+   Cependant ces tests montrent que les consommation mémoire sont très comparable avec rust qui consomme
+   environ 20% de plus. Cela nous fait donc rejeter l'hypothèse que simplement les implémentation de hashmap
+   expliquent ces écarts.
+
+** Vérifier la taille des hashmaps dans tf_idf
+   - Méthode `.size()` en rust et c++
+   - Taille quasiment identiques. Elles devraient être identiques mais ne le sont pas
+   à cause du split qui n'est pas exactement le même.
+
+** Vérifier la capacité des hashmaps dans tf_idf
+   - Méthodes `.capacity()` et `.bucket_count()` en Rust et C++ respectivements
+   - Elles sont aussi quasiment identiques, pas de quoi expliquer le facteur 2
+    
+** Dupliquer le corpus pour ne pas ajouter de mot unique mais ajouter des fichiers
+   - En rust, la consommation mémoire augmente de 44%
+   - En C++, la consommation mémoire augmente de 60%
+   - Plus on ajoute de fichiers et plus l'écart entre rust et cpp semble se creuser
+
+** Remplacer `unordered_map` par `map`
+   - Aucun changement sur l'ordre de grandeur
+
+** Revoir l'expérience de la simple hashmap
+   Afin de limiter les bruits causés car les allocations de chaines de caractère, j'ai 
+   remplacé la hashmap<string, int> par une hashmap<int,int> qui est aussi très utilisée
+   dans le programme tf_idf. 
+
+   Selon moi, cette version de l'expérience reflète mieux la consommation mémoire de la seule
+   hashmap. 
+
+   Ses résultat se rapprochent plus de ceux de tf_idf avec Rust qui consomme nettement moins de mémoire.
+   On remarque aussi qu'augmenter la taille de la map creuse l'écart entre Rust, C et C++.
+
+   - ( ) Question - Doit-on garder plutôt cette expérience pour la hashmap ? (Potentiel biais de confirmation)
+

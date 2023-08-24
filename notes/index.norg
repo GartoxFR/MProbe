@@ -112,6 +112,7 @@
   - {:smaps-overhead:}[Probleme avec smaps]
   - {:toolchains:}[Notes sur les toolchains]
   - {:experiments:}[Notes sur le script d'expérimentation]
+  - {:etude-tf-idf:}[Analyze des résultats de tf_idf]
   
 
 * Meetings
